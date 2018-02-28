@@ -57,8 +57,21 @@ public:
 	// Returns success / failure (failure is when the node does not exist)
 	bool setEdgeVal(u_int nodeId1 , u_int nodeId2 , const E & newVal);
 
-	// TODO
-	// getConnections(node);	// Returns all connected nodes with edge values
+    // Get the node with id 'id' , returns a Node with id of -1 if not found
+    Node<N,E> getNodeByIndex(u_int nodeId) const;
+
+
+	class NodeNotFound {
+    public:
+		NodeNotFound(u_int id) : id(id) {}
+
+        u_int id;
+    };
+
+	// Returns all connected nodes with edge values
+    // If it can't find any Node with the given nodeId, it throws NodeNotFound exception
+	std::vector<std::pair<Node<N,E>*, E>>getConnections(u_int nodeId);
+
 
 	// TODO
 	// getNumEdges
@@ -185,6 +198,31 @@ bool Graph<N,E>::setEdgeVal(u_int nodeId1 , u_int nodeId2 ,const E & newVal) {
 
 	// Set the new edge value
 	nodes.at(node1Index).setEdgeVal(nodeId2 , newVal);
+}
+
+template<typename N, typename E>
+std::vector<std::pair<Node<N, E> *, E>> Graph<N, E>::getConnections(u_int nodeId) {
+    Node<N,E> selectedNode = getNodeByIndex(nodeId);
+
+    if(selectedNode.id == 0) { // not found
+        throw NodeNotFound(nodeId);
+    } else {
+        return selectedNode.neighborNodes;
+    }
+}
+
+template<typename N, typename E>
+Node<N, E> Graph<N, E>::getNodeByIndex(u_int nodeId) const {
+
+    for (int i=0 ; i < nodes.size() ; i++){
+        if(nodes.at(i).id == nodeId) {
+            return nodes.at(i);    // Found it
+        }
+    }
+
+    // Node not found
+    throw NodeNotFound(nodeId);
+
 }
 
 #endif /* GRAPH_H_ */
