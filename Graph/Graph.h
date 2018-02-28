@@ -56,6 +56,14 @@ public:
 
 	// Returns success / failure (failure is when the node does not exist)
 	bool setEdgeVal(u_int nodeId1 , u_int nodeId2 , const E & newVal);
+
+	// TODO
+	// getConnections(node);	// Returns all connected nodes with edge values
+
+	// TODO
+	// getNumEdges
+
+	u_int getNumNodes() const;
 };
 
 
@@ -70,7 +78,13 @@ public:
 
 template <typename N , typename E>
 Graph<N,E>::Graph(int graphSize) {
-	nodes.resize(graphSize);
+	nodes.reserve(graphSize);
+}
+
+
+template <typename N , typename E>
+u_int Graph<N,E>::getNumNodes() const {
+	return nodes.size();
 }
 
 

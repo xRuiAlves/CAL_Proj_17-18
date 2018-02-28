@@ -23,10 +23,12 @@ int main(){
 	g.addEdge(nodeId2,nodeId4,216);
 	g.addEdge(nodeId2,nodeId5,1337);
 
-	std::cout << "Connection between Node 1 and Node 2: " << g.getEdgeVal(nodeId1,nodeId2).first << std::endl;
-	std::cout << "Connection between Node 2 and Node 4: " << g.getEdgeVal(nodeId2,nodeId4).first << std::endl;
-	std::cout << "Connection between Node 2 and Node 5: " << g.getEdgeVal(nodeId2,nodeId5).first << std::endl;
+	std::cout << "Edge value between Node 1 and Node 2: " << g.getEdgeVal(nodeId1,nodeId2).first << std::endl;
+	std::cout << "Edge value between Node 2 and Node 4: " << g.getEdgeVal(nodeId2,nodeId4).first << std::endl;
+	std::cout << "Edge value between Node 2 and Node 5: " << g.getEdgeVal(nodeId2,nodeId5).first << std::endl;
+	std::cout << "Edge value between Node 5 and Node 2: " << g.getEdgeVal(nodeId2,nodeId5).first << std::endl;
 
+	std::cout << "\nGraph Size: " << g.getNumNodes() << std::endl;
 
 
 	std::cout << "\nProgram ran successfully.\n" << std::endl;
