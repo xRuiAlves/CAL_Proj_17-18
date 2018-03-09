@@ -1,6 +1,6 @@
 #include <iostream>
 #include "Graph.h"
-#include "Algorithms/dijkstra.h"
+//#include "Algorithms/dijkstra.h"
 
 int main(){
 
@@ -34,10 +34,10 @@ int main(){
 	std::cout << "Edge value between Node 1 and Node 2: " << g.getEdgeVal(nodeId1,nodeId2).first << std::endl;
 	std::cout << "Edge value between Node 2 and Node 4: " << g.getEdgeVal(nodeId2,nodeId4).first << std::endl;
 	std::cout << "Edge value between Node 2 and Node 5: " << g.getEdgeVal(nodeId2,nodeId5).first << std::endl;
-	std::cout << "Edge value between Node 5 and Node 2: " << g.getEdgeVal(nodeId2,nodeId5).first << std::endl;
+	//std::cout << "Edge value between Node 5 and Node 2: " << g.getEdgeVal(nodeId2,nodeId5).first << std::endl;
 
 	std::cout << "\nGraph Size: " << g.getNumNodes() << std::endl;
-
+/*
     try {
         auto n2Connections = g.getConnections(6);
 
@@ -55,7 +55,7 @@ int main(){
 
     for (auto node : path) {
         std::cout << "--" << node.data << std::endl;
-    }
+    }*/
 
 	std::cout << "\nProgram ran successfully.\n" << std::endl;
 

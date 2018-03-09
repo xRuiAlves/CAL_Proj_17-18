@@ -12,7 +12,8 @@
 #include <vector>
 #include <iostream>
 #include <cstdlib>
-#include "Node.h"
+
+#include "GraphElements.h"
 
 // Graph class
 // N is Node Data Type and E is Edge Data Type
@@ -70,11 +71,7 @@ public:
 
 	// Returns all connected nodes with edge values
     // If it can't find any Node with the given nodeId, it throws NodeNotFound exception
-	std::vector<std::pair<Node<N,E>*, E>>getConnections(u_int nodeId);
-
-
-	// TODO
-	// getNumEdges
+	std::vector< Edge<N,E> > getEdges(u_int nodeId);
 
 	u_int getNumNodes() const;
 };
@@ -128,7 +125,6 @@ bool Graph<N,E>::addEdge(u_int nodeId1 , u_int nodeId2 , E weight) {
 
 	// Add the node connections
 	nodes.at(node1index).addNodeConnection(&nodes.at(node2index) , weight);
-	nodes.at(node2index).addNodeConnection(&nodes.at(node1index) , weight);
 	return true;	// Success
 }
 
@@ -201,28 +197,14 @@ bool Graph<N,E>::setEdgeVal(u_int nodeId1 , u_int nodeId2 ,const E & newVal) {
 }
 
 template<typename N, typename E>
-std::vector<std::pair<Node<N, E> *, E>> Graph<N, E>::getConnections(u_int nodeId) {
-    Node<N,E> selectedNode = getNodeByIndex(nodeId);
+std::vector< Edge<N,E> > Graph<N, E>::getEdges(u_int nodeId) {
+    int nodeIndex = getNodeIndex(nodeId);
 
-    if(selectedNode.id == 0) { // not found
+    if(nodeIndex == -1) { // not found
         throw NodeNotFound(nodeId);
     } else {
-        return selectedNode.neighborNodes;
+        return nodes.at(nodeIndex).edges;
     }
-}
-
-template<typename N, typename E>
-Node<N, E> Graph<N, E>::getNodeByIndex(u_int nodeId) const {
-
-    for (int i=0 ; i < nodes.size() ; i++){
-        if(nodes.at(i).id == nodeId) {
-            return nodes.at(i);    // Found it
-        }
-    }
-
-    // Node not found
-    throw NodeNotFound(nodeId);
-
 }
 
 #endif /* GRAPH_H_ */
