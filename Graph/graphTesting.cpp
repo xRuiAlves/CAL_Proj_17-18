@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Graph.h"
+#include "DNode.h"
 //#include "Algorithms/dijkstra.h"
 
 int main(){
@@ -37,6 +38,36 @@ int main(){
 	//std::cout << "Edge value between Node 5 and Node 2: " << g.getEdgeVal(nodeId2,nodeId5).first << std::endl;
 
 	std::cout << "\nGraph Size: " << g.getNumNodes() << std::endl;
+
+
+	// Testing DNode creation
+	DNode dn1(0 , 1 , 100);
+	DNode dn2(1 , 3);
+
+	std::cout << "\n" << std::endl;
+
+	std::cout << "Dijkstra Node 1" << std::endl;
+	std::cout << "Node Id: " << dn1.getNodeId() << std::endl;
+	std::cout << "Last Node Id: " << dn1.getLastNodeId() << std::endl;
+	std::cout << "Weight: " << dn1.getTotalWeight() << std::endl;
+
+	std::cout << "\nDijkstra Node 2" << std::endl;
+	std::cout << "Node Id: " << dn2.getNodeId() << std::endl;
+	std::cout << "Last Node Id: " << dn2.getLastNodeId() << std::endl;
+	std::cout << "Weight: " << dn2.getTotalWeight() << std::endl;
+
+	std::cout << "\nApplying Setters...\n" << std::endl;
+
+	dn1.setNodeId(20);
+	dn1.setLastNodeId(15);
+	dn1.setTotalWeight(999.80);
+
+	std::cout << "Dijkstra Node 1" << std::endl;
+	std::cout << "Node Id: " << dn1.getNodeId() << std::endl;
+	std::cout << "Last Node Id: " << dn1.getLastNodeId() << std::endl;
+	std::cout << "Weight: " << dn1.getTotalWeight() << std::endl;
+
+
 /*
     try {
         auto n2Connections = g.getConnections(6);
