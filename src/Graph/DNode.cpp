@@ -13,11 +13,24 @@ DNode::DNode(u_int nodeId , u_int lastNodeId , double totalWeight) {
 	this->totalWeight = totalWeight;
 }
 
+DNode::DNode(u_int nodeId, double totalWeight) {
+    this->nodeId = nodeId;
+    this->lastNodeId = UINT_MAX;
+    this->totalWeight = totalWeight;
+}
+
 DNode::DNode(u_int nodeId) {
 	this->nodeId = nodeId;
 	this->lastNodeId = UINT_MAX;
 	this->totalWeight = DBL_MAX;
 }
+
+DNode::DNode() {
+    this->nodeId = UINT_MAX;
+    this->lastNodeId = UINT_MAX;
+    this->totalWeight = DBL_MAX;
+}
+
 
 void DNode::setNodeId(u_int nodeId) {
 	this->nodeId = nodeId;

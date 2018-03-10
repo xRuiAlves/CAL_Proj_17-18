@@ -68,9 +68,9 @@ int main(){
 	std::cout << "Last Node Id: " << dn1.getLastNodeId() << std::endl;
 	std::cout << "Weight: " << dn1.getTotalWeight() << std::endl;
 
-    for(Node<char> n : Dijkstra(g,nodeId0,nodeId5)){
-		cout << n.id << " - " << n.data << endl;
-	}
+    Dijkstra<char> dijkstra = Dijkstra<char>(g);
+    dijkstra.calcOptimalPath(0,5);
+    dijkstra.printSolution();
 /*
     try {
         auto n2Connections = g.getConnections(6);

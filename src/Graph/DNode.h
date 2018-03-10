@@ -18,7 +18,9 @@ private:
 
 public:
 	DNode(u_int nodeId , u_int lastNodeId , double totalWeight);
+    DNode(u_int nodeId, double totalWeight);
 	DNode(u_int nodeId);
+    DNode();
 
 	void setNodeId(u_int nodeId);
 	void setLastNodeId(u_int lastNodeId);
