@@ -59,7 +59,7 @@ public:
 	bool setEdgeVal(u_int nodeId1 , u_int nodeId2 , const double & newVal);
 
     // Get the node with id 'id' , returns a Node with id of -1 if not found
-    Node<N> getNodeByIndex(u_int nodeId) const;
+    Node<N> getNodeById(u_int id) const;
 
 
 	class NodeNotFound {
@@ -100,7 +100,7 @@ u_int Graph<N>::getNumNodes() const {
 
 template <typename N>
 int Graph<N>::addNode(const N & data){
-	nodes.push_back( Node<N>(data) );
+	nodes.push_back( Node<N>(data , nodes.size()) );
 
 	// Return the node's id
 	return nodes.at(nodes.size()-1).id;
@@ -206,5 +206,11 @@ std::vector< Edge<N> > Graph<N>::getEdges(u_int nodeId) {
         return nodes.at(nodeIndex).edges;
     }
 }
+
+template <typename N>
+Node<N> Graph<N>::getNodeById(u_int nodeId) const{ //ID == INDEX = true
+    return nodes.at(nodeId);
+}
+
 
 #endif /* GRAPH_H_ */

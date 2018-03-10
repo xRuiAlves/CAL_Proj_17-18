@@ -21,8 +21,6 @@ class Edge;
 ////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////
 
-static u_int nodeCount = 0;
-
 // Node class, used by graph class
 // Every node has its own unique ID, which makes the node Unique and "locatable"
 // N is Node Data Type and E is Edge Data Type
@@ -30,10 +28,10 @@ template <typename N>
 class Node{
 private:
 	// Gets the connection with the Node (with id) passed in as parameter index , -1 if not found
-	int getConnectionIndex(u_int otherNodeId) const{
+	int getConnectionIndex(u_int destNodeId) const{
 		// Search for the connection
 		for (int i=0 ; i<edges.size() ; i++){
-			if (edges.at(i).otherNode->id == otherNodeId){
+			if (edges.at(i).destNode->id == destNodeId){
 				return i;
 			}
 		}
@@ -43,10 +41,10 @@ private:
 	}
 
 	// Gets the connection with the Node (with Pointer) passed in as parameter index , -1 if not found
-	int getConnectionIndexPtr(Node<N> * otherNodePtr) const{
+	int getConnectionIndexPtr(Node<N> * destNodePtr) const{
 		// Search for the connection
 		for (int i=0 ; i<edges.size() ; i++){
-			if (edges.at(i).otherNode == otherNodePtr){
+			if (edges.at(i).destNode == destNodePtr){
 				return i;
 			}
 		}
@@ -63,7 +61,7 @@ public:
 	Node();
 
 	// Construct node with its value
-	Node(const N & data);
+	Node(const N & data , u_int id);
 
 
 	// Add a connection
@@ -86,9 +84,9 @@ Node<N>::Node() {
 
 
 template <typename N>
-Node<N>::Node(const N & data) {
+Node<N>::Node(const N & data , u_int id) {
 	this->data = data;
-	this->id = ++nodeCount;
+	this->id = id;
 }
 
 
@@ -147,23 +145,23 @@ bool Node<N>::setEdgeVal(u_int otherNodeId , const double & newWeight) {
 template <typename N>
 class Edge{
 public:
-	Node<N> * otherNode;
+	Node<N> * destNode;
 	double value;
 
 	Edge();
-	Edge(Node<N>* otherNode , const double & value);
+	Edge(Node<N>* destNode , const double & value);
 };
 
 template <typename N>
-Edge<N>::Edge(Node<N>* otherNode , const double & value) {
+Edge<N>::Edge(Node<N>* destNode , const double & value) {
 	this->value = value;
-	this->otherNode = otherNode;
+	this->destNode = destNode;
 }
 
 template <typename N>
 Edge<N>::Edge() {
 	this->value = UNDEFINED_VALUE;
-	this->otherNode = nullptr;
+	this->destNode = nullptr;
 }
 
 

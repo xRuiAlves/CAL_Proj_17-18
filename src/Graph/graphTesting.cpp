@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Graph.h"
 #include "DNode.h"
+#include "../Algorithms/Dijkstra.h"
 //#include "Algorithms/dijkstra.h"
 
 int main(){
@@ -9,14 +10,14 @@ int main(){
 
 	Graph<char> g(10);
 
-	int nodeId1 = g.addNode('a');
-	int nodeId2 = g.addNode('b');
-	int nodeId3 = g.addNode('c');
-	int nodeId4 = g.addNode('d');
-	int nodeId5 = g.addNode('e');
-    int nodeId6 = g.addNode('f');
-    int nodeId7 = g.addNode('g');
-    int nodeId8 = g.addNode('h');
+	int nodeId0 = g.addNode('a');
+	int nodeId1 = g.addNode('b');
+	int nodeId2 = g.addNode('c');
+	int nodeId3 = g.addNode('d');
+	int nodeId4 = g.addNode('e');
+    int nodeId5 = g.addNode('f');
+    int nodeId6 = g.addNode('g');
+    int nodeId7 = g.addNode('h');
 
 
 	std::cout << "Node 1 value: " << g.getNodeVal(nodeId1).first << std::endl;
@@ -25,12 +26,12 @@ int main(){
 	std::cout << "Node 4 value: " << g.getNodeVal(nodeId4).first << std::endl;
 	std::cout << "Node 5 value: " << g.getNodeVal(nodeId5).first << std::endl << std::endl;
 
-	g.addEdge(nodeId1,nodeId2,314);
-	g.addEdge(nodeId2,nodeId4,216);
-	g.addEdge(nodeId2,nodeId5,1337);
-    g.addEdge(nodeId2, nodeId6, 512);
-    g.addEdge(nodeId2, nodeId3, 16);
-    g.addEdge(nodeId3, nodeId6, 16);
+	g.addEdge(nodeId0,nodeId1,314);
+	g.addEdge(nodeId1,nodeId3,216);
+	g.addEdge(nodeId1,nodeId4,1337);
+    g.addEdge(nodeId1, nodeId5, 512);
+    g.addEdge(nodeId1, nodeId2, 16);
+    g.addEdge(nodeId2, nodeId5, 16);
 
 	std::cout << "Edge value between Node 1 and Node 2: " << g.getEdgeVal(nodeId1,nodeId2).first << std::endl;
 	std::cout << "Edge value between Node 2 and Node 4: " << g.getEdgeVal(nodeId2,nodeId4).first << std::endl;
@@ -42,7 +43,7 @@ int main(){
 
 	// Testing DNode creation
 	DNode dn1(0 , 1 , 100);
-	DNode dn2(1 , 3);
+	DNode dn2(1);
 
 	std::cout << "\n" << std::endl;
 
@@ -67,7 +68,9 @@ int main(){
 	std::cout << "Last Node Id: " << dn1.getLastNodeId() << std::endl;
 	std::cout << "Weight: " << dn1.getTotalWeight() << std::endl;
 
-
+    for(Node<char> n : Dijkstra(g,nodeId0,nodeId5)){
+		cout << n.id << " - " << n.data << endl;
+	}
 /*
     try {
         auto n2Connections = g.getConnections(6);

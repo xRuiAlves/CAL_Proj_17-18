@@ -13,9 +13,9 @@ DNode::DNode(u_int nodeId , u_int lastNodeId , double totalWeight) {
 	this->totalWeight = totalWeight;
 }
 
-DNode::DNode(u_int nodeId , u_int lastNodeId) {
+DNode::DNode(u_int nodeId) {
 	this->nodeId = nodeId;
-	this->lastNodeId = lastNodeId;
+	this->lastNodeId = UINT_MAX;
 	this->totalWeight = DBL_MAX;
 }
 
@@ -43,4 +43,15 @@ double DNode::getTotalWeight() const {
 	return totalWeight;
 }
 
+bool DNode::operator<(const DNode& d2) const{
+    if(this->totalWeight == d2.getTotalWeight()){
+        return this->nodeId < d2.nodeId;
+    } else {
+        return this->totalWeight < d2.getTotalWeight();
+    }
+}
+
+bool DNode::operator==(const DNode& d2) const{
+    return this->nodeId == d2.nodeId;
+}
 

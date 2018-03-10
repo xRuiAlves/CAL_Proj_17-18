@@ -9,7 +9,6 @@
 #define DNODE_H_
 
 #include "defs.h"
-#include <float.h>
 
 class DNode {
 private:
@@ -19,7 +18,7 @@ private:
 
 public:
 	DNode(u_int nodeId , u_int lastNodeId , double totalWeight);
-	DNode(u_int nodeId , u_int lastNodeId);
+	DNode(u_int nodeId);
 
 	void setNodeId(u_int nodeId);
 	void setLastNodeId(u_int lastNodeId);
@@ -28,6 +27,9 @@ public:
 	u_int getNodeId() const;
 	u_int getLastNodeId() const;
 	double getTotalWeight() const;
+
+    bool operator<(const DNode&) const;
+    bool operator==(const DNode&) const;
 };
 
 
