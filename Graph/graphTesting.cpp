@@ -6,7 +6,7 @@ int main(){
 
 	std::cout << "Up and running...\n" << std::endl;
 
-	Graph<char,int> g(10);
+	Graph<char> g(10);
 
 	int nodeId1 = g.addNode('a');
 	int nodeId2 = g.addNode('b');

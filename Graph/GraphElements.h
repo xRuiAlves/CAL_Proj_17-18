@@ -10,9 +10,8 @@
 
 #include "defs.h"
 
-
 // Edge class forward declaration
-template <typename N , typename E>
+template <typename N>
 class Edge;
 
 
@@ -27,7 +26,7 @@ static u_int nodeCount = 0;
 // Node class, used by graph class
 // Every node has its own unique ID, which makes the node Unique and "locatable"
 // N is Node Data Type and E is Edge Data Type
-template <typename N , typename E>
+template <typename N>
 class Node{
 private:
 	// Gets the connection with the Node (with id) passed in as parameter index , -1 if not found
@@ -44,7 +43,7 @@ private:
 	}
 
 	// Gets the connection with the Node (with Pointer) passed in as parameter index , -1 if not found
-	int getConnectionIndexPtr(Node<N,E> * otherNodePtr) const{
+	int getConnectionIndexPtr(Node<N> * otherNodePtr) const{
 		// Search for the connection
 		for (int i=0 ; i<edges.size() ; i++){
 			if (edges.at(i).otherNode == otherNodePtr){
@@ -58,7 +57,7 @@ private:
 public:
 	u_int id;
 	N data;
-	std::vector< Edge<N,E> > edges;
+	std::vector< Edge<N> > edges;
 
 	// Empty Constructor is needed for Graph
 	Node();
@@ -68,46 +67,46 @@ public:
 
 
 	// Add a connection
-	bool addNodeConnection(Node<N,E> * nodePtr , const E & weight);
+	bool addNodeConnection(Node<N> * nodePtr , const double & weight);
 
 	// Returns a pair with the Edge value and a boolean that says if the connection with the other node exists or not ;
 	// if the boolean is false, value makes no sense
-	std::pair<E , bool> getEdgeVal(u_int otherNodeId) const;
+	std::pair<double , bool> getEdgeVal(u_int otherNodeId) const;
 
 	// Returns success / failure (failure is when the connection with the other node does not exist)
-	bool setEdgeVal(u_int otherNodeId , const E & newWeight);
+	bool setEdgeVal(u_int otherNodeId , const double & newWeight);
 
 };
 
 
-template <typename N , typename E>
-Node<N,E>::Node() {
+template <typename N>
+Node<N>::Node() {
 	this->id = 0;
 }
 
 
-template <typename N , typename E>
-Node<N,E>::Node(const N & data) {
+template <typename N>
+Node<N>::Node(const N & data) {
 	this->data = data;
 	this->id = ++nodeCount;
 }
 
 
-template <typename N , typename E>
-bool Node<N,E>::addNodeConnection(Node<N,E> * nodePtr , const E & weight){
+template <typename N>
+bool Node<N>::addNodeConnection(Node<N> * nodePtr , const double & weight){
 	// Verify if nodePtr isn't null / isn't self / isn't already connected
 	if (nodePtr == NULL || nodePtr == this || getConnectionIndexPtr(nodePtr) != -1){
 		return false;
 	}
 
 	// Add the node connection
-	edges.push_back( Edge<N,E>(nodePtr, weight) );
+	edges.push_back( Edge<N>(nodePtr, weight) );
 	return true;
 }
 
 
-template <typename N , typename E>
-std::pair<E , bool> Node<N,E>::getEdgeVal(u_int otherNodeId) const {
+template <typename N>
+std::pair<double , bool> Node<N>::getEdgeVal(u_int otherNodeId) const {
 	// Find if the node with id 'otherNodeId' is in my connections ; If so, return the edge value
 	int otherNodeIndex = getConnectionIndex(otherNodeId);
 
@@ -116,11 +115,11 @@ std::pair<E , bool> Node<N,E>::getEdgeVal(u_int otherNodeId) const {
 	}
 
 	// This node does not connect with other node...
-	return std::make_pair(E() , false);
+	return std::make_pair(UNDEFINED_VALUE , false);
 }
 
-template <typename N , typename E>
-bool Node<N,E>::setEdgeVal(u_int otherNodeId , const E & newWeight) {
+template <typename N>
+bool Node<N>::setEdgeVal(u_int otherNodeId , const double & newWeight) {
 	// Find if the node with id 'otherNodeId' is in my connections
 	int otherNodeIndex = getConnectionIndex(otherNodeId);
 
@@ -145,28 +144,25 @@ bool Node<N,E>::setEdgeVal(u_int otherNodeId , const E & newWeight) {
 ////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////
 
-template <typename N , typename E>
+template <typename N>
 class Edge{
 public:
-	Node<N,E> * otherNode;
-	E value;
+	Node<N> * otherNode;
+	double value;
 
 	Edge();
-	Edge(Node<N,E>* otherNode , const E & value);
-
-
-
-
+	Edge(Node<N>* otherNode , const double & value);
 };
 
-template <typename N , typename E>
-Edge<N,E>::Edge(Node<N,E>* otherNode , const E & value) {
+template <typename N>
+Edge<N>::Edge(Node<N>* otherNode , const double & value) {
 	this->value = value;
 	this->otherNode = otherNode;
 }
 
-template <typename N , typename E>
-Edge<N,E>::Edge() {
+template <typename N>
+Edge<N>::Edge() {
+	this->value = UNDEFINED_VALUE;
 	this->otherNode = nullptr;
 }
 

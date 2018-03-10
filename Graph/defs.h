@@ -8,6 +8,10 @@
 #ifndef DEFS_H_
 #define DEFS_H_
 
+
+
+#define UNDEFINED_VALUE 0
+
 typedef unsigned int u_int;
 
 
