@@ -26,7 +26,12 @@ class Edge;
 // N is Node Data Type and E is Edge Data Type
 template <typename N>
 class Node{
+protected:
+    u_int id;
+    N data;
+
 private:
+
 	// Gets the connection with the Node (with id) passed in as parameter index , -1 if not found
 	int getConnectionIndex(u_int destNodeId) const{
 		// Search for the connection
@@ -53,8 +58,7 @@ private:
 		return -1;
 	}
 public:
-	u_int id;
-	N data;
+
 	std::vector< Edge<N> > edges;
 
 	// Empty Constructor is needed for Graph
@@ -74,6 +78,13 @@ public:
 	// Returns success / failure (failure is when the connection with the other node does not exist)
 	bool setEdgeVal(u_int otherNodeId , const double & newWeight);
 
+    u_int getId() const{
+        return this->id;
+    }
+
+    N getData() const{
+        return this->data;
+    }
 };
 
 

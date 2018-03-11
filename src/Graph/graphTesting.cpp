@@ -42,34 +42,33 @@ int main(){
 
 
 	// Testing DNode creation
-	DNode dn1(0 , 1 , 100);
-	DNode dn2(1);
+	DNode<char> dn1(g.getNodeById(0) , 1 , 100);
+	DNode<char> dn2(g.getNodeById(1));
 
 	std::cout << "\n" << std::endl;
 
 	std::cout << "Dijkstra Node 1" << std::endl;
-	std::cout << "Node Id: " << dn1.getNodeId() << std::endl;
+	std::cout << "Node Id: " << dn1.getId() << std::endl;
 	std::cout << "Last Node Id: " << dn1.getLastNodeId() << std::endl;
 	std::cout << "Weight: " << dn1.getTotalWeight() << std::endl;
 
 	std::cout << "\nDijkstra Node 2" << std::endl;
-	std::cout << "Node Id: " << dn2.getNodeId() << std::endl;
+	std::cout << "Node Id: " << dn2.getId() << std::endl;
 	std::cout << "Last Node Id: " << dn2.getLastNodeId() << std::endl;
 	std::cout << "Weight: " << dn2.getTotalWeight() << std::endl;
 
 	std::cout << "\nApplying Setters...\n" << std::endl;
 
-	dn1.setNodeId(20);
 	dn1.setLastNodeId(15);
 	dn1.setTotalWeight(999.80);
 
 	std::cout << "Dijkstra Node 1" << std::endl;
-	std::cout << "Node Id: " << dn1.getNodeId() << std::endl;
+	std::cout << "Node Id: " << dn1.getId() << std::endl;
 	std::cout << "Last Node Id: " << dn1.getLastNodeId() << std::endl;
 	std::cout << "Weight: " << dn1.getTotalWeight() << std::endl;
 
-    Dijkstra<char> dijkstra = Dijkstra<char>(g);
-    dijkstra.calcOptimalPath(0,5);
+    Dijkstra<char> dijkstra = Dijkstra<char>(g, g.getNodeById(0), g.getNodeById(5));
+    dijkstra.calcOptimalPath();
     dijkstra.printSolution();
 /*
     try {

@@ -12,57 +12,53 @@
 
 using namespace std;
 
-
+template<typename N>
 struct DNodeHash {
-    bool operator()(const DNode &d1, const DNode &d2) const {
+    bool operator()(const DNode<N> &d1, const DNode<N> &d2) const {
         return d1 == d2;
     }
 
-    int operator()(const DNode &d) const {
-        return d.getNodeId();
+    int operator()(const DNode<N> &d) const {
+        return d.getId();
     }
 };
-
-typedef unordered_set<DNode, DNodeHash, DNodeHash> DNodeHashTable;
-
 
 template<typename N>
 class Dijkstra {
 
     const Graph<N> &graph;
-    set<DNode> pQueue;
-    DNodeHashTable checkedDNodes;
+    set<DNode<N> > pQueue;
+    unordered_set<DNode<N>, DNodeHash<N>, DNodeHash<N>> checkedDNodes;
 
     //Variables for current calculation
-    u_int finishNodeId = UINT_MAX;
-    u_int startNodeId = UINT_MAX;
+    const Node<N> &finishNode;
+    const Node<N> &startNode;
     double solutionTotalCost = DBL_MAX;
-    DNode topDNode;
-    Node<N> topNode;
+    DNode<N> topDNode;
 
     vector<Node<N> > lastSolution;
 
     //Sets all queue's elements to the nodes in the graph and then puts the first node on top
     void populateQueue() {
         for (u_int i = 0; i < graph.getNumNodes(); i++) {
-            if(i == this->startNodeId){
-                pQueue.emplace(i,0);
+            if(i == this->startNode.getId()){
+                pQueue.emplace(graph.getNodeById(i),0);
             }else {
-                pQueue.emplace(i);
+                pQueue.emplace(graph.getNodeById(i));
             }
         }
     }
 
     //Gets the node in the queue for a specified id
-    DNode getDNodeInQueueById(u_int id) {
-        for (DNode d : pQueue) {
-            if (d.getNodeId() == id) {
+    DNode<N> getDNodeInQueueById(u_int id) {
+        for (DNode<N> d : pQueue) {
+            if (d.getId() == id) {
                 return d;
             }
         }
     }
 
-    void updateDNodeOnQueue(const DNode &currDNode) {
+    void updateDNodeOnQueue(const DNode<N> &currDNode) {
 
         //check if the current node has been analised (if it has, it will be in checkedDNodes)
         auto dNodeIt = this->checkedDNodes.find(currDNode);
@@ -75,8 +71,8 @@ class Dijkstra {
         }
 
         //if it has not been analised and the current path offers a better way, update it on the priority queue
-        for (DNode d : pQueue) {
-            if (d.getNodeId() == currDNode.getNodeId()) {
+        for (DNode<N> d : pQueue) {
+            if (d.getId() == currDNode.getId()) {
                 if (currDNode.getTotalWeight() < d.getTotalWeight()) {
                     pQueue.erase(d);
                     pQueue.insert(currDNode);
@@ -89,33 +85,32 @@ class Dijkstra {
     //Takes the finish node that should be on top of the queue and creates a path from recurrent previous nodes
     vector<Node<N> > buildPath() {
         vector<Node<N> > result;
-        u_int currDNodeId = this->finishNodeId;
+        u_int currDNodeId = this->finishNode.getId();
         while (currDNodeId != UINT_MAX) {
-            result.insert(result.begin(), this->graph.getNodeById(currDNodeId));
-            currDNodeId = (*(this->checkedDNodes.find(DNode(currDNodeId)))).getLastNodeId();
+            result.insert(result.begin(), getCheckedNode(currDNodeId));
+            currDNodeId = getCheckedNode(currDNodeId).getLastNodeId();
         }
         return result;
     }
 
     //Goes through queue's top node's children and updates them in the queue
     void updateQueue(){
-        for (Edge<N> e : this->topNode.edges) {
-            DNode currDNode = getDNodeInQueueById(e.destNode->id); //get edge's destination
+        for (Edge<N> e : this->topDNode.edges) {
+            DNode<N> currDNode = getDNodeInQueueById(e.destNode->getId()); //get edge's destination
             currDNode.setTotalWeight(topDNode.getTotalWeight() + e.value); //update node's value
-            currDNode.setLastNodeId(topDNode.getNodeId()); //set node's last node id (for path building later)
+            currDNode.setLastNodeId(topDNode.getId()); //set node's last node id (for path building later)
             updateDNodeOnQueue(currDNode); //
         }
     }
 
-    //Sets values of topNode and topDNode based on the current pQueue
-    void updateTopNode(){
+    //Sets values of topDNode based on the current pQueue
+    void updateTopDNode(){
         this->topDNode = *(pQueue.begin());
-        this->topNode = graph.getNodeById(topDNode.getNodeId());
     }
 
     //Checks if the node on top of the queue is a dead end
-    bool isTopNodeDeadEnd(){
-        if (this->topNode.edges.empty() && this->topDNode.getNodeId() != this->finishNodeId) {
+    bool isTopDNodeDeadEnd(){
+        if (this->topDNode.edges.empty() && this->topDNode != finishNode) {
             this->pQueue.erase(this->pQueue.begin());
             return true;
         }
@@ -124,7 +119,7 @@ class Dijkstra {
 
     //checks if the optimal solution has been found (if final node is on top of the queue)
     bool foundOptimalSolution(){
-        if (this->topDNode.getNodeId() == this->finishNodeId) {
+        if (this->topDNode == this->finishNode) {
             this->solutionTotalCost = this->pQueue.begin()->getTotalWeight();
             this->checkedDNodes.insert(topDNode);
             return true;
@@ -132,21 +127,24 @@ class Dijkstra {
         return false;
     }
 
+    //retrived a node in checkedNodes by its id
+    DNode<N> getCheckedNode(u_int id){
+        return *(this->checkedDNodes.find(DNode<N>(id)));
+    }
+
 public:
 
-    Dijkstra(const Graph<N> &graph): graph(graph){}
+    Dijkstra(const Graph<N> &graph, const Node<N> &startNode, const Node<N> &finishNode): graph(graph), startNode(startNode), finishNode(finishNode){}
 
     //CALCULATE OPTIMAL PATH
-    vector<Node<N> > calcOptimalPath(u_int startNodeId, u_int finishNodeId) {
-        this->finishNodeId = finishNodeId;
-        this->startNodeId = startNodeId;
+    vector<Node<N> > calcOptimalPath() {
         populateQueue();
-        updateTopNode();
+        updateTopDNode();
         while (!pQueue.empty()) {
             //Analise the node on top of the priority queue
 
             //Check if node is a dead end
-            if(isTopNodeDeadEnd()) {
+            if(isTopDNodeDeadEnd()) {
                 continue;
             }
 
@@ -162,7 +160,7 @@ public:
             //Delete parent from pQueue and put it in the hash table
             pQueue.erase(this->topDNode);
             checkedDNodes.insert(this->topDNode);
-            updateTopNode(); //set this->topNode and this->topDNode
+            updateTopDNode(); //set this->topDNode
         }
         this->lastSolution = vector<Node<N> >();
         return lastSolution;
@@ -170,18 +168,18 @@ public:
 
     void printSolution(){
         cout << endl;
-        if(startNodeId == UINT_MAX){
+        if(pQueue.empty()){
             cout << "No solution available. Run calcOptimalSolution before printing" << endl;
             return;
         }
-        cout << "Dijkstra optimal path between " << this->startNodeId << " and " << this->finishNodeId << endl;
+        cout << "Dijkstra optimal path between " << this->startNode.getId() << " and " << this->finishNode.getId() << endl;
         if(lastSolution.empty()){
             cout << "No path could be calculated. Could not print." << endl;
             return;
         }
-        cout << "Successfully generated with a total weight of " << this->checkedDNodes.find(DNode(finishNodeId))->getTotalWeight() << ":" << endl;
+        cout << "Successfully generated with a total weight of " << getCheckedNode(finishNode.getId()).getTotalWeight() << ":" << endl;
         for(Node<char> n : lastSolution){
-            cout << n.id << " - " << n.data << endl;
+            cout << n.getId() << " - " << n.getData() << endl;
         }
     }
 };
