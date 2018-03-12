@@ -40,7 +40,7 @@ class Dijkstra {
     DNode topDNode;
     Node<N> topNode;
 
-    vector<Node<N> > lastSolution;
+    vector<u_int> lastSolution;
 
     //Sets all queue's elements to the nodes in the graph and then puts the first node on top
     void populateQueue() {
@@ -87,14 +87,14 @@ class Dijkstra {
     }
 
     //Takes the finish node that should be on top of the queue and creates a path from recurrent previous nodes
-    vector<Node<N> > buildPath() {
-        vector<Node<N> > result;
+    void buildPath() {
+        lastSolution.clear();
         u_int currDNodeId = this->finishNodeId;
+
         while (currDNodeId != UINT_MAX) {
-            result.insert(result.begin(), this->graph.getNodeById(currDNodeId));
+            lastSolution.insert(lastSolution.begin(), currDNodeId);
             currDNodeId = (*(this->checkedDNodes.find(DNode(currDNodeId)))).getLastNodeId();
         }
-        return result;
     }
 
     //Goes through queue's top node's children and updates them in the queue
@@ -137,7 +137,7 @@ public:
     Dijkstra(const Graph<N> &graph): graph(graph){}
 
     //CALCULATE OPTIMAL PATH
-    vector<Node<N> > calcOptimalPath(u_int startNodeId, u_int finishNodeId) {
+    vector<u_int> calcOptimalPath(u_int startNodeId, u_int finishNodeId) {
         this->finishNodeId = finishNodeId;
         this->startNodeId = startNodeId;
         populateQueue();
@@ -152,7 +152,7 @@ public:
 
             //Check if already reached the optimal solution (finish node will be on top of the queue)
             if(foundOptimalSolution()) {
-                this->lastSolution = buildPath();
+                buildPath();    //Fills 'lastSolution' with the computed solution
                 return lastSolution;
             }
 
@@ -164,7 +164,9 @@ public:
             checkedDNodes.insert(this->topDNode);
             updateTopNode(); //set this->topNode and this->topDNode
         }
-        this->lastSolution = vector<Node<N> >();
+
+        //No solution found, return empty vector
+        this->lastSolution = vector<u_int>();
         return lastSolution;
     }
 
@@ -180,8 +182,8 @@ public:
             return;
         }
         cout << "Successfully generated with a total weight of " << this->checkedDNodes.find(DNode(finishNodeId))->getTotalWeight() << ":" << endl;
-        for(Node<char> n : lastSolution){
-            cout << n.id << " - " << n.data << endl;
+        for(u_int nodeID : lastSolution){
+            cout << nodeID << " - " << graph.getNodeById(nodeID).data << endl;
         }
     }
 };
