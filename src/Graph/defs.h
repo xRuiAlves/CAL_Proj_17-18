@@ -10,6 +10,8 @@
 
 #include <float.h>
 #include <limits.h>
+#include <vector>
+#include <cstddef>
 
 #define UNDEFINED_VALUE 0
 

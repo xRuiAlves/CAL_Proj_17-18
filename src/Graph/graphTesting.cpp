@@ -35,20 +35,39 @@ int main(){
 	dijkstra1.printSolution();
 
 
+	// Testing DNode creation
+	DNode<char> dn1(g.getNodeById(0) , 1 , 100);
+	DNode<char> dn2(g.getNodeById(1));
 
 
+	std::cout << "Dijkstra Node 1" << std::endl;
+	std::cout << "Node Id: " << dn1.getId() << std::endl;
+	std::cout << "Last Node Id: " << dn1.getLastNodeId() << std::endl;
+	std::cout << "Weight: " << dn1.getTotalWeight() << std::endl;
 
-	// Initialize Graph 2 (Empty Graph)
-	std::cout << "\n\n***************************************";
-	std::cout << "\nTesting Graph 2 (Empty Graph) ..." << std::endl;
-	Graph<unsigned int> graph2(0);
+	std::cout << "\nDijkstra Node 2" << std::endl;
+	std::cout << "Node Id: " << dn2.getId() << std::endl;
+	std::cout << "Last Node Id: " << dn2.getLastNodeId() << std::endl;
+	std::cout << "Weight: " << dn2.getTotalWeight() << std::endl;
 
 	Dijkstra<unsigned int> dijkstra2(graph2);
 	dijkstra2.calcOptimalPath(0,5);
 	dijkstra2.printSolution();
 
+	dn1.setLastNodeId(15);
+	dn1.setTotalWeight(999.80);
 
+	std::cout << "Dijkstra Node 1" << std::endl;
+	std::cout << "Node Id: " << dn1.getId() << std::endl;
+	std::cout << "Last Node Id: " << dn1.getLastNodeId() << std::endl;
+	std::cout << "Weight: " << dn1.getTotalWeight() << std::endl;
 
+    Dijkstra<char> dijkstra = Dijkstra<char>(g, g.getNodeById(0), g.getNodeById(5));
+    dijkstra.calcOptimalPath();
+    dijkstra.printSolution();
+/*
+    try {
+        auto n2Connections = g.getConnections(6);
 
 
 	// Initialize Graph 3 (No solution)

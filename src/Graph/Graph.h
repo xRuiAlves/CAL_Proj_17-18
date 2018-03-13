@@ -26,7 +26,7 @@ private:
 	// Get the index of the node with id 'id' , -1 if not found
 	int getNodeIndex(u_int nodeId) const {
 		for (int i=0 ; i<nodes.size() ; i++){
-			if(nodes.at(i).id == nodeId) {
+			if(nodes.at(i).getId() == nodeId) {
 				return i;	// Found it
 			}
 		}
@@ -103,7 +103,7 @@ int Graph<N>::addNode(const N & data){
 	nodes.push_back( Node<N>(data , nodes.size()) );
 
 	// Return the node's id
-	return nodes.at(nodes.size()-1).id;
+	return nodes.at(nodes.size()-1).getId();
 }
 
 
@@ -138,7 +138,7 @@ std::pair<N,bool> Graph<N>::getNodeVal(u_int nodeId) const {
 		return std::make_pair(N() , false);
 	}
 	else {
-		return std::make_pair(nodes.at(nodeIndex).data , true);
+		return std::make_pair(this->nodes.at(nodeIndex).getData() , true);
 	}
 }
 
