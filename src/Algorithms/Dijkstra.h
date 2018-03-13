@@ -122,7 +122,7 @@ class Dijkstra {
         return false;
     }
 
-    //checks if the optimal solution has been found (if final node is on top of the queue)
+    //Checks if the optimal solution has been found (if final node is on top of the queue)
     bool foundOptimalSolution(){
         if (this->topDNode.getNodeId() == this->finishNodeId) {
             this->solutionTotalCost = this->pQueue.begin()->getTotalWeight();
@@ -132,12 +132,22 @@ class Dijkstra {
         return false;
     }
 
+    //Checks if a Node Id is valid within the graph
+    bool isNodeIdValid(u_int nodeID){
+        return (nodeID < graph.getNumNodes());
+    }
+
 public:
 
     Dijkstra(const Graph<N> &graph): graph(graph){}
 
     //CALCULATE OPTIMAL PATH
     vector<u_int> calcOptimalPath(u_int startNodeId, u_int finishNodeId) {
+        if( !(isNodeIdValid(startNodeId) && isNodeIdValid(finishNodeId)) ){
+            lastSolution.empty();
+            return lastSolution;
+        }
+
         this->finishNodeId = finishNodeId;
         this->startNodeId = startNodeId;
         populateQueue();
@@ -166,7 +176,7 @@ public:
         }
 
         //No solution found, return empty vector
-        this->lastSolution = vector<u_int>();
+        lastSolution.clear();
         return lastSolution;
     }
 
