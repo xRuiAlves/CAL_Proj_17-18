@@ -7,6 +7,8 @@
 
 #include "../Graph/Graph.h"
 #include "../Graph/DNode.h"
+#include "../Utilities/defs.h"
+#include "../Utilities/exceptions.h"
 #include <set>
 #include <unordered_set>
 
@@ -131,9 +133,20 @@ class Dijkstra {
         return *(this->checkedDNodes.find(DNode<N>(id)));
     }
 
+    //Checks if a Node Id is valid within the graph
+    bool isNodeIdValid(u_int nodeID){
+        return (nodeID < graph.getNumNodes());
+    }
+
 public:
 
-    Dijkstra(const Graph<N> &graph, const Node<N> &startNode, const Node<N> &finishNode): graph(graph), startNode(startNode), finishNode(finishNode){}
+    Dijkstra(const Graph<N> &graph, const Node<N> &startNode, const Node<N> &finishNode): graph(graph), startNode(startNode), finishNode(finishNode){
+        if( !(isNodeIdValid(startNode.getId()) && isNodeIdValid(finishNode.getId())) ){
+            // Invalid Node Found
+            throw InvalidNodeId();
+        }
+
+    }
 
     //CALCULATE OPTIMAL PATH
     vector<u_int> calcOptimalPath() {

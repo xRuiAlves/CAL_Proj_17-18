@@ -8,7 +8,7 @@
 #ifndef DNODE_H_
 #define DNODE_H_
 
-#include "defs.h"
+#include "../Utilities/defs.h"
 #include "GraphElements.h"
 
 template<typename N>

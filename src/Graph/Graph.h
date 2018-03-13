@@ -8,7 +8,8 @@
 #ifndef GRAPH_H_
 #define GRAPH_H_
 
-#include "defs.h"
+#include "../Utilities/defs.h"
+#include "../Utilities/exceptions.h"
 #include <vector>
 #include <iostream>
 #include <cstdlib>
@@ -61,13 +62,6 @@ public:
     // Get the node with id 'id' , returns a Node with id of -1 if not found
     Node<N> getNodeById(u_int id) const;
 
-
-	class NodeNotFound {
-    public:
-		NodeNotFound(u_int id) : id(id) {}
-
-        u_int id;
-    };
 
 	// Returns all connected nodes with edge values
     // If it can't find any Node with the given nodeId, it throws NodeNotFound exception
@@ -209,7 +203,12 @@ std::vector< Edge<N> > Graph<N>::getEdges(u_int nodeId) {
 
 template <typename N>
 Node<N> Graph<N>::getNodeById(u_int nodeId) const{ //ID == INDEX = true
-    return nodes.at(nodeId);
+	if(nodeId >= nodes.size()) {
+		throw InvalidNodeId();
+	}
+	else{
+		return nodes.at(nodeId);
+	}
 }
 
 

@@ -8,7 +8,7 @@
 #ifndef GRAPH_ELEMENTS_H_
 #define GRAPH_ELEMENTS_H_
 
-#include "defs.h"
+#include "../Utilities/defs.h"
 
 // Edge class forward declaration
 template <typename N>
