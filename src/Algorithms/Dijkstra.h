@@ -83,11 +83,11 @@ class Dijkstra {
     }
 
     //Takes the finish node that should be on top of the queue and creates a path from recurrent previous nodes
-    vector<Node<N> > buildPath() {
-        vector<Node<N> > result;
+    void buildPath() {
+        lastSolution.clear();
         u_int currDNodeId = this->finishNode.getId();
         while (currDNodeId != UINT_MAX) {
-            result.insert(result.begin(), getCheckedNode(currDNodeId));
+            lastSolution.insert(lastSolution.begin(), currDNodeId);
             currDNodeId = getCheckedNode(currDNodeId).getLastNodeId();
         }
     }
@@ -136,7 +136,7 @@ public:
     Dijkstra(const Graph<N> &graph, const Node<N> &startNode, const Node<N> &finishNode): graph(graph), startNode(startNode), finishNode(finishNode){}
 
     //CALCULATE OPTIMAL PATH
-    vector<Node<N> > calcOptimalPath() {
+    vector<u_int> calcOptimalPath() {
         populateQueue();
         updateTopDNode();
         while (!pQueue.empty()) {
@@ -179,8 +179,8 @@ public:
             return;
         }
         cout << "Successfully generated with a total weight of " << getCheckedNode(finishNode.getId()).getTotalWeight() << ":" << endl;
-        for(Node<char> n : lastSolution){
-            cout << n.getId() << " - " << n.getData() << endl;
+        for(u_int nodeId : lastSolution){
+            cout << nodeId << " - " << graph.getNodeById(nodeId).getData() << endl;
         }
     }
 };
