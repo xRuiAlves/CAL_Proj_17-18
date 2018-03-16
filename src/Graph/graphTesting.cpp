@@ -45,15 +45,15 @@ int main() {
 
 
 
+
+
     // Initialize Graph 2 (Empty Graph)
     std::cout << "\n\n***************************************";
     std::cout << "\nTesting Graph 2 (Empty Graph) ..." << std::endl;
     Graph<unsigned int> graph2(0);
 
     try {
-        Node<unsigned int> startNode = graph2.getNodeById(0);
-        Node<unsigned int> finishNode = graph2.getNodeById(5);
-        Dijkstra<unsigned int> dijkstra2(graph2 , startNode , finishNode);
+        Dijkstra<unsigned int> dijkstra2(graph2 , graph2.getNodeById(0) , graph2.getNodeById(5));
         dijkstra2.calcOptimalPath();
         dijkstra2.printSolution();
     }
@@ -78,19 +78,23 @@ int main() {
     graph3.addEdge(nodeId0,nodeId1,13);
     graph3.addEdge(nodeId0,nodeId2,15);
     graph3.addEdge(nodeId2,nodeId0,20);
-    graph3.addEdge(nodeId3,nodeId2,71.75);
+    graph3.addEdge(nodeId2,nodeId3,71.75);
     graph3.addEdge(nodeId3,nodeId0,71.75);
+    graph3.addEdge(nodeId0 , nodeId3 , 90);
 
     try {
-        Node<bool> startNode = graph3.getNodeById(0);
-        Node<bool> finishNode = graph3.getNodeById(3);
-        Dijkstra<bool> dijkstra3(graph3 , startNode , finishNode);
+        Dijkstra<bool> dijkstra3(graph3 , graph3.getNodeById(0) , graph3.getNodeById(3));
         dijkstra3.calcOptimalPath();
         dijkstra3.printSolution();
+
     }
     catch (const Exception & except){
         std::cout << "Invalid Node IDs. Can't process Dijkstra with these arguments." << std::endl;
     }
+
+
+
+
 
 
     std::cout << "\nProgram ran successfully." << std::endl;

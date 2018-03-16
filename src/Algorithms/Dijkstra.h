@@ -51,26 +51,30 @@ class Dijkstra {
         }
     }
 
-    //Gets the node in the queue for a specified id
+    bool isCheckedNode(const DNode<N> &currDNode){
+        //check if the current node has been analised (if it has, it will be in checkedDNodes)
+        return this->checkedDNodes.find(currDNode) != this->checkedDNodes.end();
+    }
+
+    //Gets the node in the queue for a specified id (returns node with weight -1 if it cant find it)
     DNode<N> getDNodeInQueueById(u_int id) {
+        DNode<N> badResult = DNode<N>(id);
+        badResult.setTotalWeight(-1); //means node is not in queue
+
+        if(isCheckedNode(DNode<N>(id))) return badResult;
+
         for (DNode<N> d : pQueue) {
             if (d.getId() == id) {
                 return d;
             }
         }
+
+        return badResult;
     }
 
-    void updateDNodeOnQueue(const DNode<N> &currDNode) {
+    void updateDNodeOnQueue(DNode<N> currDNode) {
 
-        //check if the current node has been analised (if it has, it will be in checkedDNodes)
-        auto dNodeIt = this->checkedDNodes.find(currDNode);
-        if (dNodeIt != this->checkedDNodes.end()) { //Exists in checkedDNodes
-            if (currDNode.getTotalWeight() < dNodeIt->getTotalWeight()) {
-                this->pQueue.erase(*dNodeIt);
-                this->pQueue.insert(currDNode);
-                return;
-            }
-        }
+        if(isCheckedNode(currDNode)) return;
 
         //if it has not been analised and the current path offers a better way, update it on the priority queue
         for (DNode<N> d : pQueue) {
@@ -98,9 +102,11 @@ class Dijkstra {
     void updateQueue(){
         for (Edge<N> e : this->topDNode.edges) {
             DNode<N> currDNode = getDNodeInQueueById(e.destNode->getId()); //get edge's destination
-            currDNode.setTotalWeight(topDNode.getTotalWeight() + e.value); //update node's value
-            currDNode.setLastNodeId(topDNode.getId()); //set node's last node id (for path building later)
-            updateDNodeOnQueue(currDNode); //
+            if(currDNode.getTotalWeight() >= 0) {
+                currDNode.setTotalWeight(topDNode.getTotalWeight() + e.value); //update node's value
+                currDNode.setLastNodeId(topDNode.getId()); //set node's last node id (for path building later)
+                updateDNodeOnQueue(currDNode); //
+            }
         }
     }
 
@@ -111,8 +117,7 @@ class Dijkstra {
 
     //Checks if the node on top of the queue is a dead end
     bool isTopDNodeDeadEnd(){
-        if (this->topDNode.edges.empty() && this->topDNode != finishNode) {
-            this->pQueue.erase(this->pQueue.begin());
+        if (this->topDNode.edges.empty()) {
             return true;
         }
         return false;
@@ -150,15 +155,11 @@ public:
 
     //CALCULATE OPTIMAL PATH
     vector<u_int> calcOptimalPath() {
+        checkedDNodes.clear();
         populateQueue();
         updateTopDNode();
         while (!pQueue.empty()) {
             //Analise the node on top of the priority queue
-
-            //Check if node is a dead end
-            if(isTopDNodeDeadEnd()) {
-                continue;
-            }
 
             //Check if already reached the optimal solution (finish node will be on top of the queue)
             if(foundOptimalSolution()) {
@@ -166,11 +167,18 @@ public:
                 return lastSolution;
             }
 
+            //Check if node is a dead end
+            if(isTopDNodeDeadEnd()) {
+                this->pQueue.erase(this->pQueue.begin());
+                updateTopDNode();
+                continue;
+            }
+
             //Analise next nodes and updateQueue
             updateQueue();
 
             //Delete parent from pQueue and put it in the hash table
-            pQueue.erase(this->topDNode);
+            pQueue.erase(pQueue.begin());
             checkedDNodes.insert(this->topDNode);
             updateTopDNode(); //set this->topDNode
         }
@@ -182,7 +190,7 @@ public:
 
     void printSolution(){
         cout << endl;
-        if(pQueue.empty()){
+        if(checkedDNodes.empty()){
             cout << "No solution available. Run calcOptimalSolution before printing" << endl;
             return;
         }
