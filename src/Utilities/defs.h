@@ -12,6 +12,7 @@
 #include <limits.h>
 #include <vector>
 #include <cstddef>
+#include <iostream>
 
 #define UNDEFINED_VALUE 0
 

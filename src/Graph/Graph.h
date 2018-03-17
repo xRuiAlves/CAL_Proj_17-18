@@ -18,11 +18,11 @@
 
 // Graph class
 // N is Node Data Type and E is Edge Data Type
-template <typename N>
+
 class Graph
 {
 private:
-	std::vector< Node<N> > nodes;
+	std::vector< Node > nodes;
 
 	// Get the index of the node with id 'id' , -1 if not found
 	int getNodeIndex(u_int nodeId) const {
@@ -37,20 +37,13 @@ private:
 	}
 
 public:
-	Graph(int graphSize);
+	Graph();
 
 	// Add a new node to the graph
-	int addNode(const N & data);
+	int addNode(double x, double y, string name);
 
 	// Add a new edge connecting two nodes
 	bool addEdge(u_int nodeId1 , u_int nodeId2 , const double & weight);
-
-	// Returns a pair with the Node value and a boolean that says if the node exists or not ;
-	// if the boolean is false, value makes no sense
-	std::pair<N,bool> getNodeVal(u_int nodeId) const;
-
-	// Returns success / failure (failure is when the node does not exist)
-	bool setNodeVal(u_int nodeId , N newVal);
 
 	// Returns a pair with the Edge value and a boolean that says if the node exists or not ;
 	// if the boolean is false, value makes no sense
@@ -60,12 +53,12 @@ public:
 	bool setEdgeVal(u_int nodeId1 , u_int nodeId2 , const double & newVal);
 
     // Get the node with id 'id' , returns a Node with id of -1 if not found
-    Node<N> getNodeById(u_int id) const;
+    Node getNodeById(u_int id) const;
 
 
 	// Returns all connected nodes with edge values
     // If it can't find any Node with the given nodeId, it throws NodeNotFound exception
-	std::vector< Edge<N> > getEdges(u_int nodeId);
+	const std::vector< Edge > &getEdges(u_int nodeId);
 
 	u_int getNumNodes() const;
 };
@@ -77,83 +70,46 @@ public:
 //     METHODS IMPLEMENTATION     ///
 /////////////////////////////////////
 
+Graph::Graph(){}
 
-
-
-template <typename N>
-Graph<N>::Graph(int graphSize) {
-	nodes.reserve(graphSize);
-}
-
-
-template <typename N>
-u_int Graph<N>::getNumNodes() const {
+u_int Graph::getNumNodes() const {
 	return nodes.size();
 }
 
 
-template <typename N>
-int Graph<N>::addNode(const N & data){
-	nodes.push_back( Node<N>(data , nodes.size()) );
+
+int Graph::addNode(double x, double y, string name){
+	int id = nodes.size();
+	nodes.push_back( Node(id, x, y, name) );
 
 	// Return the node's id
-	return nodes.at(nodes.size()-1).getId();
+	return id;
 }
 
 
-template <typename N>
-bool Graph<N>::addEdge(u_int nodeId1 , u_int nodeId2 , const double & weight) {
+
+bool Graph::addEdge(u_int nodeId1 , u_int nodeId2 , const double & weight) {
 	if (nodeId1 == nodeId2) {
 		return false;
 	}
 
 	int node1index = getNodeIndex(nodeId1);
-	if(node1index == -1){	// Node 1 not found
+	if (node1index == -1) {    // Node 1 not found
 		return false;
 	}
 
 	int node2index = getNodeIndex(nodeId2);
-	if(node2index == -1){	// Node 2 not found
+	if (node2index == -1) {    // Node 2 not found
 		return false;
 	}
 
 	// Add the node connections
-	nodes.at(node1index).addNodeConnection(&nodes.at(node2index) , weight);
-	return true;	// Success
+	nodes.at(node1index).addNodeConnection(node2index, weight);
+	return true;    // Success
 }
 
 
-template <typename N>
-std::pair<N,bool> Graph<N>::getNodeVal(u_int nodeId) const {
-	int nodeIndex = getNodeIndex(nodeId);
-
-	// Check if node exists
-	if(nodeIndex == -1) {
-		return std::make_pair(N() , false);
-	}
-	else {
-		return std::make_pair(this->nodes.at(nodeIndex).getData() , true);
-	}
-}
-
-
-template <typename N>
-bool Graph<N>::setNodeVal(u_int nodeId , N newVal) {
-	int nodeIndex = getNodeIndex(nodeId);
-
-	// Check if the node exists
-	if(nodeIndex == -1) {
-		return false;
-	}
-	else {
-		nodes.at(nodeIndex).val = newVal;
-		return true;
-	}
-}
-
-
-template <typename N>
-std::pair<double,bool> Graph<N>::getEdgeVal(u_int nodeId1 , u_int nodeId2) const {
+std::pair<double,bool> Graph::getEdgeVal(u_int nodeId1 , u_int nodeId2) const {
 	// Get nodes indexes
 	int node1Index = getNodeIndex(nodeId1);
 	int node2Index = getNodeIndex(nodeId2);
@@ -175,34 +131,18 @@ std::pair<double,bool> Graph<N>::getEdgeVal(u_int nodeId1 , u_int nodeId2) const
 }
 
 
-template <typename N>
-bool Graph<N>::setEdgeVal(u_int nodeId1 , u_int nodeId2 ,const double & newVal) {
-	// Get nodes indexes
-	int node1Index = getNodeIndex(nodeId1);
-	int node2Index = getNodeIndex(nodeId2);
-
-	// Nodes not found
-	if (node1Index == -1  ||  node2Index == -1){
-		return false;
-	}
-
-	// Set the new edge value
-	nodes.at(node1Index).setEdgeVal(nodeId2 , newVal);
-}
-
-template <typename N>
-std::vector< Edge<N> > Graph<N>::getEdges(u_int nodeId) {
+const std::vector< Edge > &Graph::getEdges(u_int nodeId) {
     int nodeIndex = getNodeIndex(nodeId);
 
     if(nodeIndex == -1) { // not found
         throw NodeNotFound(nodeId);
     } else {
-        return nodes.at(nodeIndex).edges;
+        return nodes.at(nodeIndex).getEdges();
     }
 }
 
-template <typename N>
-Node<N> Graph<N>::getNodeById(u_int nodeId) const{ //ID == INDEX = true
+
+Node Graph::getNodeById(u_int nodeId) const{ //ID == INDEX = true
 	if(nodeId >= nodes.size()) {
 		throw InvalidNodeId();
 	}

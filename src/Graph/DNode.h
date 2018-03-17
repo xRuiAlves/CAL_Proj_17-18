@@ -11,36 +11,34 @@
 #include "../Utilities/defs.h"
 #include "GraphElements.h"
 
-template<typename N>
-class DNode: public Node<N>{
+
+class DNode: public Node{
 private:
 	u_int lastNodeId;
 	double totalWeight;
 
 public:
-    DNode(Node<N> node , u_int lastNodeId , double totalWeight):Node<N>(node) {
+    DNode() : Node(){
+        this->lastNodeId = UINT_MAX;
+        this->totalWeight = DBL_MAX;
+    }
+
+    DNode(Node node , u_int lastNodeId , double totalWeight):Node(node) {
         this->lastNodeId = lastNodeId;
         this->totalWeight = totalWeight;
     }
 
-    DNode(Node<N> node, double totalWeight) :Node<N>(node){
+    DNode(Node node, double totalWeight) :Node(node){
         this->lastNodeId = UINT_MAX;
         this->totalWeight = totalWeight;
     }
 
-    DNode(Node<N> node) :Node<N>(node){
+    DNode(Node node) : Node(node){
         this->lastNodeId = UINT_MAX;
         this->totalWeight = DBL_MAX;
     }
 
-    DNode() {
-        this->id = UINT_MAX;
-        this->lastNodeId = UINT_MAX;
-        this->totalWeight = DBL_MAX;
-    }
-
-    DNode(u_int id) {
-        this->id = id;
+    DNode(u_int id) : Node(id){
         this->lastNodeId = UINT_MAX;
         this->totalWeight = DBL_MAX;
     }
@@ -61,7 +59,7 @@ public:
         return totalWeight;
     }
 
-    bool operator<(const DNode<N>& d2) const{
+    bool operator<(const DNode& d2) const{
         if(this->totalWeight == d2.getTotalWeight()){
             return this->id < d2.id;
         } else {
@@ -69,11 +67,11 @@ public:
         }
     }
 
-    bool operator==(const DNode<N>& d2) const{
+    bool operator==(const DNode& d2) const{
         return this->id == d2.id;
     }
 
-    bool operator!=(const DNode<N>& d2) const{
+    bool operator!=(const DNode& d2) const{
         return !(this->id == d2.id);
     }
 

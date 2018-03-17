@@ -14,29 +14,29 @@
 
 using namespace std;
 
-template<typename N>
+
 struct DNodeHash {
-    bool operator()(const DNode<N> &d1, const DNode<N> &d2) const {
+    bool operator()(const DNode &d1, const DNode &d2) const {
         return d1 == d2;
     }
 
-    int operator()(const DNode<N> &d) const {
+    int operator()(const DNode &d) const {
         return d.getId();
     }
 };
 
-template<typename N>
+
 class Dijkstra {
 
-    const Graph<N> &graph;
-    set<DNode<N> > pQueue;
-    unordered_set<DNode<N>, DNodeHash<N>, DNodeHash<N>> checkedDNodes;
+    const Graph &graph;
+    set<DNode > pQueue;
+    unordered_set<DNode, DNodeHash, DNodeHash> checkedDNodes;
 
     //Variables for current calculation
-    const Node<N> &finishNode;
-    const Node<N> &startNode;
+    const Node &finishNode;
+    const Node &startNode;
     double solutionTotalCost = DBL_MAX;
-    DNode<N> topDNode;
+    DNode topDNode;
 
     vector<u_int> lastSolution;
 
@@ -51,19 +51,19 @@ class Dijkstra {
         }
     }
 
-    bool isCheckedNode(const DNode<N> &currDNode){
+    bool isCheckedNode(const DNode &currDNode){
         //check if the current node has been analised (if it has, it will be in checkedDNodes)
         return this->checkedDNodes.find(currDNode) != this->checkedDNodes.end();
     }
 
     //Gets the node in the queue for a specified id (returns node with weight -1 if it cant find it)
-    DNode<N> getDNodeInQueueById(u_int id) {
-        DNode<N> badResult = DNode<N>(id);
+    DNode getDNodeInQueueById(u_int id) {
+        DNode badResult = DNode(id);
         badResult.setTotalWeight(-1); //means node is not in queue
 
-        if(isCheckedNode(DNode<N>(id))) return badResult;
+        if(isCheckedNode(DNode(id))) return badResult;
 
-        for (DNode<N> d : pQueue) {
+        for (DNode d : pQueue) {
             if (d.getId() == id) {
                 return d;
             }
@@ -72,12 +72,12 @@ class Dijkstra {
         return badResult;
     }
 
-    void updateDNodeOnQueue(DNode<N> currDNode) {
+    void updateDNodeOnQueue(DNode currDNode) {
 
         if(isCheckedNode(currDNode)) return;
 
         //if it has not been analised and the current path offers a better way, update it on the priority queue
-        for (DNode<N> d : pQueue) {
+        for (DNode d : pQueue) {
             if (d.getId() == currDNode.getId()) {
                 if (currDNode.getTotalWeight() < d.getTotalWeight()) {
                     pQueue.erase(d);
@@ -100,8 +100,8 @@ class Dijkstra {
 
     //Goes through queue's top node's children and updates them in the queue
     void updateQueue(){
-        for (Edge<N> e : this->topDNode.edges) {
-            DNode<N> currDNode = getDNodeInQueueById(e.destNode->getId()); //get edge's destination
+        for (Edge e : this->topDNode.getEdges()) {
+            DNode currDNode = getDNodeInQueueById(e.destNodeId); //get edge's destination
             if(currDNode.getTotalWeight() >= 0) {
                 currDNode.setTotalWeight(topDNode.getTotalWeight() + e.value); //update node's value
                 currDNode.setLastNodeId(topDNode.getId()); //set node's last node id (for path building later)
@@ -117,7 +117,7 @@ class Dijkstra {
 
     //Checks if the node on top of the queue is a dead end
     bool isTopDNodeDeadEnd(){
-        if (this->topDNode.edges.empty()) {
+        if (this->topDNode.getEdges().empty()) {
             return true;
         }
         return false;
@@ -134,8 +134,8 @@ class Dijkstra {
     }
 
     //retrived a node in checkedNodes by its id
-    DNode<N> getCheckedNode(u_int id){
-        return *(this->checkedDNodes.find(DNode<N>(id)));
+    DNode getCheckedNode(u_int id){
+        return *(this->checkedDNodes.find(DNode(id)));
     }
 
     //Checks if a Node Id is valid within the graph
@@ -145,7 +145,7 @@ class Dijkstra {
 
 public:
 
-    Dijkstra(const Graph<N> &graph, const Node<N> &startNode, const Node<N> &finishNode): graph(graph), startNode(startNode), finishNode(finishNode){
+    Dijkstra(const Graph &graph, const Node &startNode, const Node &finishNode): graph(graph), startNode(startNode), finishNode(finishNode){
         if( !(isNodeIdValid(startNode.getId()) && isNodeIdValid(finishNode.getId())) ){
             // Invalid Node Found
             throw InvalidNodeId();
@@ -195,13 +195,13 @@ public:
             return;
         }
         cout << "Dijkstra optimal path between " << this->startNode.getId() << " and " << this->finishNode.getId() << endl;
-        if(lastSolution.empty()){
+        if(getCheckedNode(finishNode.getId()).getTotalWeight() == DBL_MAX){
             cout << "No path could be calculated. Could not print." << endl;
             return;
         }
         cout << "Successfully generated with a total weight of " << getCheckedNode(finishNode.getId()).getTotalWeight() << ":" << endl;
         for(u_int nodeId : lastSolution){
-            cout << nodeId << " - " << graph.getNodeById(nodeId).getData() << endl;
+            cout << nodeId << endl;
         }
     }
 };
