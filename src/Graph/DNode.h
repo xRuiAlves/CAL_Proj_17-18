@@ -1,15 +1,8 @@
-/*
- * DNode.h
- *
- *  Created on: 10/03/2018
- *      Author: Rui Alves
- */
-
 #ifndef DNODE_H_
 #define DNODE_H_
 
 #include "../Utilities/defs.h"
-#include "GraphElements.h"
+#include "Node.h"
 
 
 class DNode: public Node{
@@ -18,65 +11,23 @@ private:
 	double totalWeight;
 
 public:
-    DNode() : Node(){
-        this->lastNodeId = UINT_MAX;
-        this->totalWeight = DBL_MAX;
-    }
+    // Constructors
+    DNode();
+    DNode(Node node , u_int lastNodeId , double totalWeight);
+    DNode(Node node, double totalWeight);
+    DNode(Node node);
+    DNode(u_int id);
 
-    DNode(Node node , u_int lastNodeId , double totalWeight):Node(node) {
-        this->lastNodeId = lastNodeId;
-        this->totalWeight = totalWeight;
-    }
+    // Getters and Setters
+    void setLastNodeId(u_int lastNodeId);
+    void setTotalWeight(double totalWeight);
+    u_int getLastNodeId() const;
+    double getTotalWeight() const;
 
-    DNode(Node node, double totalWeight) :Node(node){
-        this->lastNodeId = UINT_MAX;
-        this->totalWeight = totalWeight;
-    }
-
-    DNode(Node node) : Node(node){
-        this->lastNodeId = UINT_MAX;
-        this->totalWeight = DBL_MAX;
-    }
-
-    DNode(u_int id) : Node(id){
-        this->lastNodeId = UINT_MAX;
-        this->totalWeight = DBL_MAX;
-    }
-
-    void setLastNodeId(u_int lastNodeId) {
-        this->lastNodeId = lastNodeId;
-    }
-
-    void setTotalWeight(double totalWeight) {
-        this->totalWeight = totalWeight;
-    }
-
-    u_int getLastNodeId() const {
-        return lastNodeId;
-    }
-
-    double getTotalWeight() const {
-        return totalWeight;
-    }
-
-    bool operator<(const DNode& d2) const{
-        if(this->totalWeight == d2.getTotalWeight()){
-            return this->id < d2.id;
-        } else {
-            return this->totalWeight < d2.getTotalWeight();
-        }
-    }
-
-    bool operator==(const DNode& d2) const{
-        return this->id == d2.id;
-    }
-
-    bool operator!=(const DNode& d2) const{
-        return !(this->id == d2.id);
-    }
-
-
-
+    // Operators
+    bool operator<(const DNode& d2) const;
+    bool operator==(const DNode& d2) const;
+    bool operator!=(const DNode& d2) const;
 };
 
 

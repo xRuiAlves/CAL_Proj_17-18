@@ -14,7 +14,6 @@
 
 using namespace std;
 
-
 struct DNodeHash {
     bool operator()(const DNode &d1, const DNode &d2) const {
         return d1 == d2;
@@ -26,13 +25,17 @@ struct DNodeHash {
 };
 
 
-class Dijkstra {
+typedef unordered_set<DNode, DNodeHash, DNodeHash> DNodeHashTable;
 
+
+class Dijkstra {
+private:
+    // Data Structures
     const Graph &graph;
     set<DNode > pQueue;
-    unordered_set<DNode, DNodeHash, DNodeHash> checkedDNodes;
+    DNodeHashTable checkedDNodes;
 
-    //Variables for current calculation
+    // Variables for current calculation
     const Node &finishNode;
     const Node &startNode;
     double solutionTotalCost = DBL_MAX;
@@ -40,7 +43,7 @@ class Dijkstra {
 
     vector<u_int> lastSolution;
 
-    //Sets all queue's elements to the nodes in the graph and then puts the first node on top
+    // Sets all queue's elements to the nodes in the graph and then puts the first node on top
     void populateQueue() {
         for (u_int i = 0; i < graph.getNumNodes(); i++) {
             if(i == this->startNode.getId()){
@@ -51,12 +54,12 @@ class Dijkstra {
         }
     }
 
+    // Check if the current node has been analised (if it has, it will be in checkedDNodes)
     bool isCheckedNode(const DNode &currDNode){
-        //check if the current node has been analised (if it has, it will be in checkedDNodes)
-        return this->checkedDNodes.find(currDNode) != this->checkedDNodes.end();
+        return (checkedDNodes.find(currDNode) != checkedDNodes.end());
     }
 
-    //Gets the node in the queue for a specified id (returns node with weight -1 if it cant find it)
+    // Gets the node in the queue for a specified id (returns node with weight -1 if it cant find it)
     DNode getDNodeInQueueById(u_int id) {
         DNode badResult = DNode(id);
         badResult.setTotalWeight(-1); //means node is not in queue
@@ -88,7 +91,7 @@ class Dijkstra {
         }
     }
 
-    //Takes the finish node that should be on top of the queue and creates a path from recurrent previous nodes
+    // Takes the finish node that should be on top of the queue and creates a path from recurrent previous nodes
     void buildPath() {
         lastSolution.clear();
         u_int currDNodeId = this->finishNode.getId();
@@ -98,7 +101,7 @@ class Dijkstra {
         }
     }
 
-    //Goes through queue's top node's children and updates them in the queue
+    // Goes through queue's top node's children and updates them in the queue
     void updateQueue(){
         for (Edge e : this->topDNode.getEdges()) {
             DNode currDNode = getDNodeInQueueById(e.destNodeId); //get edge's destination
@@ -110,12 +113,12 @@ class Dijkstra {
         }
     }
 
-    //Sets values of topDNode based on the current pQueue
+    // Sets values of topDNode based on the current pQueue
     void updateTopDNode(){
         this->topDNode = *(pQueue.begin());
     }
 
-    //Checks if the node on top of the queue is a dead end
+    // Checks if the node on top of the queue is a dead end
     bool isTopDNodeDeadEnd(){
         if (this->topDNode.getEdges().empty()) {
             return true;
@@ -123,7 +126,7 @@ class Dijkstra {
         return false;
     }
 
-    //Checks if the optimal solution has been found (if final node is on top of the queue)
+    // Checks if the optimal solution has been found (if final node is on top of the queue)
     bool foundOptimalSolution(){
         if (this->topDNode == this->finishNode) {
             this->solutionTotalCost = this->pQueue.begin()->getTotalWeight();
@@ -133,12 +136,12 @@ class Dijkstra {
         return false;
     }
 
-    //retrived a node in checkedNodes by its id
+    // Retrived a node in checkedNodes by its id
     DNode getCheckedNode(u_int id){
         return *(this->checkedDNodes.find(DNode(id)));
     }
 
-    //Checks if a Node Id is valid within the graph
+    // Checks if a Node Id is valid within the graph
     bool isNodeIdValid(u_int nodeID){
         return (nodeID < graph.getNumNodes());
     }

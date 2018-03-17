@@ -1,7 +1,3 @@
-//
-// Created by rui on 13-03-2018.
-//
-
 #ifndef EXCEPTIONS_H
 #define EXCEPTIONS_H
 
