@@ -3,6 +3,7 @@
 
 #include "../Utilities/defs.h"
 #include "Edge.h"
+#include <cmath>
 
 
 // Node class, used by graph class
@@ -46,12 +47,12 @@ public:
     // Add a connection
     bool addNodeConnection(u_int destNodeId, const double & weight);
 
+    // Get Euclidian Distance to other node
+    double getDistanceToOtherNode(const Node & otherNode) const;
+
     // Returns a pair with the Edge value and a boolean that says if the connection with the other node exists or not ;
     // if the boolean is false, value makes no sense
     std::pair<double , bool> getEdgeVal(u_int otherNodeId) const;
-
-    // Returns success / failure (failure is when the connection with the other node does not exist)
-    bool setEdgeVal(u_int otherNodeId , const double & newWeight);
 
     // Returns the node ID
     u_int getId() const;

@@ -63,3 +63,12 @@ u_int Node::getId() const{
 u_int Node::getNumEdges() const{
     return edges.size();
 }
+
+
+double Node::getDistanceToOtherNode(const Node & otherNode) const{
+    std::pair<double,double> distanceVector = std::make_pair(
+            otherNode.x - this->x ,
+            otherNode.y - this->y );
+
+    return sqrt(distanceVector.first*distanceVector.first + distanceVector.second*distanceVector.second);
+}
