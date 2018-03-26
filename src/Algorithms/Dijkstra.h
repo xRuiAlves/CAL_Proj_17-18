@@ -36,10 +36,10 @@ private:
     DNodeHashTable checkedDNodes;
 
     // Variables for current calculation
-    const Node &finishNode;
-    const Node &startNode;
+    Node finishNode;
+    Node startNode;
     double solutionTotalCost = DBL_MAX;
-    DNode topDNode;
+    DNode topDNode;     // TODO: Not necessary, should be removed later !!!
 
     vector<u_int> lastSolution;
 
@@ -55,12 +55,12 @@ private:
     }
 
     // Check if the current node has been analised (if it has, it will be in checkedDNodes)
-    bool isCheckedNode(const DNode &currDNode){
+    bool isCheckedNode(const DNode &currDNode) const {
         return (checkedDNodes.find(currDNode) != checkedDNodes.end());
     }
 
     // Gets the node in the queue for a specified id (returns node with weight -1 if it cant find it)
-    DNode getDNodeInQueueById(u_int id) {
+    DNode getDNodeInQueueById(u_int id) const {
         DNode badResult = DNode(id);
         badResult.setTotalWeight(-1); //means node is not in queue
 
@@ -75,14 +75,20 @@ private:
         return badResult;
     }
 
-    void updateDNodeOnQueue(DNode currDNode) {
+    double calcTotalWeight(const DNode & d) const {
+        return d.getTotalWeight();
+    }
 
-        if(isCheckedNode(currDNode)) return;
+    void updateDNodeOnQueue(const DNode & currDNode) {
 
-        //if it has not been analised and the current path offers a better way, update it on the priority queue
+        if(isCheckedNode(currDNode)){
+            return;
+        }
+
+        // If it has not been analised and the current path offers a better way, update it on the priority queue
         for (DNode d : pQueue) {
             if (d.getId() == currDNode.getId()) {
-                if (currDNode.getTotalWeight() < d.getTotalWeight()) {
+                if (calcTotalWeight(currDNode) < calcTotalWeight(d)) {
                     pQueue.erase(d);
                     pQueue.insert(currDNode);
                     return;
@@ -93,7 +99,6 @@ private:
 
     // Takes the finish node that should be on top of the queue and creates a path from recurrent previous nodes
     void buildPath() {
-        lastSolution.clear();
         u_int currDNodeId = this->finishNode.getId();
         while (currDNodeId != UINT_MAX) {
             lastSolution.insert(lastSolution.begin(), currDNodeId);
@@ -119,53 +124,57 @@ private:
     }
 
     // Checks if the node on top of the queue is a dead end
-    bool isTopDNodeDeadEnd(){
-        if (this->topDNode.getEdges().empty()) {
-            return true;
-        }
-        return false;
+    bool isTopDNodeDeadEnd() const {
+        return (this->topDNode.getEdges().empty());
     }
 
     // Checks if the optimal solution has been found (if final node is on top of the queue)
-    bool foundOptimalSolution(){
-        if (this->topDNode == this->finishNode) {
-            this->solutionTotalCost = this->pQueue.begin()->getTotalWeight();
-            this->checkedDNodes.insert(topDNode);
-            return true;
-        }
-        return false;
+    bool foundOptimalSolution() const{
+        return (this->topDNode == this->finishNode);
     }
 
     // Retrived a node in checkedNodes by its id
-    DNode getCheckedNode(u_int id){
+    DNode getCheckedNode(u_int id) const{
         return *(this->checkedDNodes.find(DNode(id)));
     }
 
     // Checks if a Node Id is valid within the graph
-    bool isNodeIdValid(u_int nodeID){
+    bool isNodeIdValid(u_int nodeID) const{
         return (nodeID < graph.getNumNodes());
+    }
+
+    // Clears the data structures for new calculation and populates DNodes pQueue
+    void initDataStructures() {
+        pQueue.clear();
+        checkedDNodes.clear();
+        lastSolution.clear();
+        populateQueue();
+        updateTopDNode();
     }
 
 public:
 
-    Dijkstra(const Graph &graph, const Node &startNode, const Node &finishNode): graph(graph), startNode(startNode), finishNode(finishNode){
+    Dijkstra(const Graph &graph): graph(graph) {}
+
+    // CALCULATE OPTIMAL PATH
+    vector<u_int> calcOptimalPath(const Node &startNode, const Node &finishNode) {
+        this->startNode = startNode;
+        this->finishNode = finishNode;
+
+        // Verify if ids are valid
         if( !(isNodeIdValid(startNode.getId()) && isNodeIdValid(finishNode.getId())) ){
-            // Invalid Node Found
             throw InvalidNodeId();
         }
 
-    }
+        initDataStructures();
 
-    //CALCULATE OPTIMAL PATH
-    vector<u_int> calcOptimalPath() {
-        checkedDNodes.clear();
-        populateQueue();
-        updateTopDNode();
         while (!pQueue.empty()) {
             //Analise the node on top of the priority queue
 
             //Check if already reached the optimal solution (finish node will be on top of the queue)
             if(foundOptimalSolution()) {
+                this->solutionTotalCost = this->topDNode.getTotalWeight();
+                this->checkedDNodes.insert(topDNode);
                 buildPath();    //Fills 'lastSolution' with the computed solution
                 return lastSolution;
             }
