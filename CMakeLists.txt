@@ -7,4 +7,4 @@ include_directories(cute_lib)
 
 file(GLOB_RECURSE SOURCE_FILES "src/*/*.cpp")
 
-add_executable(CAL ${SOURCE_FILES})
+add_executable(CAL ${SOURCE_FILES} src/Algorithms/AStar.cpp src/Algorithms/AStar.h src/Algorithms/Dijkstra.cpp)
