@@ -26,13 +26,16 @@ vector<u_int> Dijkstra::calcOptimalPath(const Node &startNode, const Node &finis
             this->solutionTotalCost = this->topDNode.getTotalWeight();
             this->checkedDNodes.insert(topDNode);
             buildPath();    //Fills 'lastSolution' with the computed solution
-            return lastSolution;
+            break;
         }
 
         //Check if node is a dead end
         if(isTopDNodeDeadEnd()) {
-            this->pQueue.erase(this->pQueue.begin());
-            updateTopDNode();
+            this->pQueue.erase(topDNode);//TODO make function compatible w A*
+            if(pQueue.empty()) { // to avoid doing stuff when the pQueue has no elements, eliminating out of bounds access
+                break;
+            }
+            updateTopDNode();//TODO make function compatible w A* (updates both top nodes A & D)
             continue;
         }
 
@@ -40,13 +43,11 @@ vector<u_int> Dijkstra::calcOptimalPath(const Node &startNode, const Node &finis
         updateQueue();
 
         //Delete parent from pQueue and put it in the hash table
-        pQueue.erase(pQueue.begin());
+        pQueue.erase(pQueue.find(topDNode));
         checkedDNodes.insert(this->topDNode);
         updateTopDNode(); //set this->topDNode
     }
 
-    //No solution found, return empty vector
-    lastSolution.clear();
     return lastSolution;
 }
 
@@ -63,7 +64,14 @@ void Dijkstra::printSolution(){
     }
     cout << "Successfully generated with a total weight of " << getCheckedNode(finishNode.getId()).getTotalWeight() << ":" << endl;
     for(u_int nodeId : lastSolution){
-        cout << nodeId << endl;
+        cout << nodeId
+             << " - W : "
+             << checkedDNodes.find(nodeId)->getTotalWeight()
+             << " distToEnd: "
+             << checkedDNodes.find(nodeId)->getDistanceToOtherNode(finishNode)
+             << " Path Weight: "
+             << checkedDNodes.find(nodeId)->getTotalWeight() - checkedDNodes.find(nodeId)->getDistanceToOtherNode(finishNode)
+             << endl;
     }
 }
 
@@ -119,9 +127,14 @@ void Dijkstra::updateDNodeOnQueue(const DNode & currDNode) {
 
 // Takes the finish node that should be on top of the queue and creates a path from recurrent previous nodes
 void Dijkstra::buildPath() {
+
+    lastSolution.clear();
+
     u_int currDNodeId = this->finishNode.getId();
     while (currDNodeId != UINT_MAX) {
+        cout << "ID: " << currDNodeId << endl;
         lastSolution.insert(lastSolution.begin(), currDNodeId);
+        cout << "Inserted!" << endl;
         currDNodeId = getCheckedNode(currDNodeId).getLastNodeId();
     }
 }
@@ -149,8 +162,8 @@ bool Dijkstra::isTopDNodeDeadEnd() const {
 }
 
 // Checks if the optimal solution has been found (if final node is on top of the queue)
-bool Dijkstra::foundOptimalSolution() const{
-    return (this->topDNode == this->finishNode);
+bool Dijkstra::foundOptimalSolution() {
+    return (this->topDNode.getId() == this->finishNode.getId());
 }
 
 // Retrived a node in checkedNodes by its id

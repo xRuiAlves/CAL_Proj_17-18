@@ -50,7 +50,7 @@ protected:
     bool isCheckedNode(const DNode &currDNode) const;
 
     // Gets the node in the queue for a specified id (returns node with weight -1 if it cant find it)
-    DNode getDNodeInQueueById(u_int id) const;
+    virtual DNode getDNodeInQueueById(u_int id) const;
 
     void updateDNodeOnQueue(const DNode & currDNode);
 
@@ -67,7 +67,7 @@ protected:
     bool isTopDNodeDeadEnd() const;
 
     // Checks if the optimal solution has been found (if final node is on top of the queue)
-    bool foundOptimalSolution() const;
+    virtual bool foundOptimalSolution();
 
     // Retrived a node in checkedNodes by its id
     DNode getCheckedNode(u_int id) const;

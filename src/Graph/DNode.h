@@ -6,7 +6,7 @@
 
 
 class DNode: public Node{
-private:
+protected:
 	u_int lastNodeId;
 	double totalWeight;
 

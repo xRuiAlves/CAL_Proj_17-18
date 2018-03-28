@@ -48,24 +48,26 @@ int main() {
 
     generateRandomGridGraph(100, g1);
 
-    /*
+/*
     u_int id0 = g1.addNode(0,0,"Rio Tinto");
     u_int id1 = g1.addNode(10, 10, "Maia");
     u_int id2 = g1.addNode(2,2,"Areosa");
     u_int id3 = g1.addNode(-10, -10, "Sra da Hora");
     u_int id4 = g1.addNode(-15, -15, "Matosinhos");
     u_int id5 = g1.addNode(-10, -5, "S. Mamede");
-    u_int id6 = g1.addNode(-1000, 1000, "Castro d'Aire");
+    u_int id6 = g1.addNode(-0.001, -0.001, "Castro d'Aire");
 
     g1.addEdge(id0,id2,2);
     g1.addEdge(id0,id1,2);
+    g1.addEdge(id0, id6, 1);
     g1.addEdge(id1, id3, 4);
     g1.addEdge(id3, id1, 3);
     g1.addEdge(id3, id4, 2);
     g1.addEdge(id5,id4,1);
     g1.addEdge(id4,id5,1);
-    */
+    g1.addEdge(id6, id5, 9);
 
+*/
 
     Dijkstra d = Dijkstra(g1);
 
@@ -90,21 +92,26 @@ int main() {
 
     */
 
+
+    cout << "\n\n---------DIJKSTRA_1---------\n\n";
     milliseconds t0 = duration_cast< milliseconds >(
             system_clock::now().time_since_epoch()
     );
-    d.calcOptimalPath(g1.getNodeById(3), g1.getNodeById(73));
+    d.calcOptimalPath(g1.getNodeById(4), g1.getNodeById(22));
     d.printSolution();
 
     milliseconds t0b = duration_cast< milliseconds >(
             system_clock::now().time_since_epoch()
     );
+/*
+    cout << "\n\n---------DIJKSTRA_2---------\n\n";
+
 
 
     d.calcOptimalPath(g1.getNodeById(34), g1.getNodeById(65));
     d.printSolution();
 
-
+*/
     milliseconds t1 = duration_cast< milliseconds >(
             system_clock::now().time_since_epoch()
     );
@@ -130,18 +137,20 @@ int main() {
 
     */
 
-
+    cout << "\n\n---------A*_1---------\n\n";
     milliseconds t2 = duration_cast< milliseconds >(
             system_clock::now().time_since_epoch()
     );
 
-    a.calcOptimalPath(g1.getNodeById(3), g1.getNodeById(73));
+    a.calcOptimalPath(g1.getNodeById(4), g1.getNodeById(22));
     a.printSolution();
-
 
     milliseconds t2b = duration_cast< milliseconds >(
             system_clock::now().time_since_epoch()
     );
+/*
+    cout << "\n\n---------A*_2---------\n\n";
+
 
     a.calcOptimalPath(g1.getNodeById(34), g1.getNodeById(65));
     a.printSolution();
@@ -149,13 +158,14 @@ int main() {
     milliseconds t3 = duration_cast< milliseconds >(
             system_clock::now().time_since_epoch()
     );
-
-    cout << "Dijkstra time #1: " << t0b.count() - t0.count() << " milliseconds" << endl;
+*/
+    cout << "\n\nDijkstra time #1: " << t0b.count() - t0.count() << " milliseconds" << endl;
     cout << "A* time #1: " << t2b.count() - t2.count() << " milliseconds" << endl;
 
+    /*
     cout << "Dijkstra time #2: " << t1.count() - t0b.count() << " milliseconds" << endl;
     cout << "A* time #2: " << t3.count() - t2b.count() << " milliseconds" << endl;
-
+    */
     std::cout << "\nProgram ran successfully." << std::endl;
 
     return 0;

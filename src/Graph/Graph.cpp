@@ -5,8 +5,8 @@ Graph::Graph(){
 }
 
 
-int Graph::addNode(double x, double y, std::string name){
-    int id = nodes.size();
+u_int Graph::addNode(double x, double y, const std::string & name){
+    u_int id = nodes.size();
     nodes.push_back( Node(id, x, y, name) );
 
     // Return the node's id

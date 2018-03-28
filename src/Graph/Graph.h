@@ -30,7 +30,7 @@ public:
 	Graph();
 
 	// Add a new node to the graph
-	int addNode(double x, double y, std::string name);
+	u_int addNode(double x, double y, const std::string& name);
 
 	// Add a new edge connecting two nodes
 	bool addEdge(u_int nodeId1 , u_int nodeId2 , const double & weight);
