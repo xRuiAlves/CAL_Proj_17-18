@@ -13,18 +13,26 @@ class AStar : public Dijkstra {
 public:
     AStar(const Graph &graph);
 private:
-    vector<u_int> currentBestSolution;
-    double currentBestSolutionWeight;
     set<ANode> pQueueWeighted; // stores the ANodes with the A* weight function
-
-
-
-
-    void updateQueue();
+    ANode topANode;
 
     void populateQueue();
 
     bool foundOptimalSolution();
+
+    bool isTopNodeDeadEnd() const;
+
+    bool queueIsEmpty() const;
+
+    void removeNodeFromQueue();
+
+    void updateTopNode();
+
+    void updateNodeOnQueue(const DNode & currDNode);
+
+    void updateQueue();
+
+    void buildPath();
 
     // DNode getDNodeInQueueById(u_int id) const;
 };

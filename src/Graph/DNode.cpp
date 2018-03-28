@@ -7,19 +7,25 @@ DNode::DNode() : Node(){
 }
 
 
-DNode::DNode(Node node , u_int lastNodeId , double totalWeight):Node(node) {
+DNode::DNode(const Node &  node , u_int lastNodeId , double totalWeight):Node(node) {
     this->lastNodeId = lastNodeId;
     this->totalWeight = totalWeight;
 }
 
 
-DNode::DNode(Node node, double totalWeight) :Node(node){
+DNode::DNode(u_int id , u_int lastNodeId) {
+    this->id = id;
+    this->lastNodeId = lastNodeId;
+}
+
+
+DNode::DNode(const Node &  node, double totalWeight) :Node(node){
     this->lastNodeId = UINT_MAX;
     this->totalWeight = totalWeight;
 }
 
 
-DNode::DNode(Node node) : Node(node){
+DNode::DNode(const Node &  node) : Node(node){
     this->lastNodeId = UINT_MAX;
     this->totalWeight = DBL_MAX;
 }

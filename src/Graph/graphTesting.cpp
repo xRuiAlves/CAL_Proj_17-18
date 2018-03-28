@@ -28,6 +28,7 @@ void generateRandomGridGraph(int n, Graph & g) {
                 for (int dj = -1; dj <= 1; dj++) {
                     if ((di != 0) != (dj != 0) && i + di >= 0 && i + di < n && j + dj >= 0 && j + dj < n) {
                         //g.addEdge(make_pair(i,j), make_pair(i+di,j+dj), dis(gen));
+                        //g.addEdge((i * j), ((i + di) * (j + dj)), g.getNodeById(i*j).getDistanceToOtherNode(g.getNodeById((i + di) * (j + dj))));
                         g.addEdge((i * j), ((i + di) * (j + dj)), dis(gen));
                     }
                 }
@@ -46,9 +47,9 @@ int main() {
 
 
 
-    generateRandomGridGraph(100, g1);
+    generateRandomGridGraph(150, g1);
 
-/*
+    /*
     u_int id0 = g1.addNode(0,0,"Rio Tinto");
     u_int id1 = g1.addNode(10, 10, "Maia");
     u_int id2 = g1.addNode(2,2,"Areosa");
@@ -57,17 +58,17 @@ int main() {
     u_int id5 = g1.addNode(-10, -5, "S. Mamede");
     u_int id6 = g1.addNode(-0.001, -0.001, "Castro d'Aire");
 
-    g1.addEdge(id0,id2,2);
-    g1.addEdge(id0,id1,2);
+    g1.addEdge(id0, id2,2);
+    g1.addEdge(id0, id1,2);
     g1.addEdge(id0, id6, 1);
     g1.addEdge(id1, id3, 4);
     g1.addEdge(id3, id1, 3);
     g1.addEdge(id3, id4, 2);
-    g1.addEdge(id5,id4,1);
-    g1.addEdge(id4,id5,1);
+    g1.addEdge(id5, id4,1);
+    g1.addEdge(id4, id5,1);
     g1.addEdge(id6, id5, 9);
+    */
 
-*/
 
     Dijkstra d = Dijkstra(g1);
 
@@ -97,7 +98,7 @@ int main() {
     milliseconds t0 = duration_cast< milliseconds >(
             system_clock::now().time_since_epoch()
     );
-    d.calcOptimalPath(g1.getNodeById(4), g1.getNodeById(22));
+    d.calcOptimalPath(g1.getNodeById(6), g1.getNodeById(50));
     d.printSolution();
 
     milliseconds t0b = duration_cast< milliseconds >(
@@ -142,7 +143,7 @@ int main() {
             system_clock::now().time_since_epoch()
     );
 
-    a.calcOptimalPath(g1.getNodeById(4), g1.getNodeById(22));
+    a.calcOptimalPath(g1.getNodeById(6), g1.getNodeById(50));
     a.printSolution();
 
     milliseconds t2b = duration_cast< milliseconds >(

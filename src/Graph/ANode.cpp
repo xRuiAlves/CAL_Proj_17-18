@@ -16,21 +16,26 @@ ANode::ANode(double distToFinish) : DNode(){
     this->distanceToFinish = distToFinish;
 }
 
-ANode::ANode(Node node, u_int lastNodeId, double totalWeight, double distToFinish)
+ANode::ANode(const Node &  node, u_int lastNodeId, double totalWeight, double distToFinish)
         : DNode(node, lastNodeId, totalWeight) {
 
     this->distanceToFinish = distToFinish;
 }
 
-ANode::ANode(Node node, double totalWeight, double distToFinish)
+ANode::ANode(const Node &  node, double totalWeight, double distToFinish)
         : DNode(node, totalWeight) {
     this->distanceToFinish = distToFinish;
 }
 
-ANode::ANode(Node node, double distToFinish) : DNode(node) {
+ANode::ANode(const Node &  node, double distToFinish) : DNode(node) {
     this->distanceToFinish = distToFinish;
 }
 
 ANode::ANode(u_int id, double distToFinish) : DNode(id) {
+    this->distanceToFinish = distToFinish;
+}
+
+
+ANode::ANode(const DNode &  dnode, double distToFinish) : DNode(dnode) {
     this->distanceToFinish = distToFinish;
 }

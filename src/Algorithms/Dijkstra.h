@@ -39,7 +39,7 @@ protected:
     Node finishNode;
     Node startNode;
     double solutionTotalCost = DBL_MAX;
-    DNode topDNode;     // TODO: Not necessary, should be removed later !!!
+    DNode topDNode;
 
     vector<u_int> lastSolution;
 
@@ -50,24 +50,31 @@ protected:
     bool isCheckedNode(const DNode &currDNode) const;
 
     // Gets the node in the queue for a specified id (returns node with weight -1 if it cant find it)
-    virtual DNode getDNodeInQueueById(u_int id) const;
+    // virtual DNode getDNodeInQueueById(u_int id) const;
 
-    void updateDNodeOnQueue(const DNode & currDNode);
+    // Updates a DNode in the pQueue
+    virtual void updateNodeOnQueue(const DNode & currDNode);
 
     // Takes the finish node that should be on top of the queue and creates a path from recurrent previous nodes
-    void buildPath();
+    virtual void buildPath();
+
+    // Removes the topDNode from the pQueue
+    virtual void removeNodeFromQueue();
 
     // Goes through queue's top node's children and updates them in the queue
     virtual void updateQueue();
 
     // Sets values of topDNode based on the current pQueue
-    void updateTopDNode();
+    virtual void updateTopNode();
 
     // Checks if the node on top of the queue is a dead end
-    bool isTopDNodeDeadEnd() const;
+    virtual bool isTopNodeDeadEnd() const;
 
     // Checks if the optimal solution has been found (if final node is on top of the queue)
     virtual bool foundOptimalSolution();
+
+    // Verifies if the priority Queue is empty.
+    virtual bool queueIsEmpty() const;
 
     // Retrived a node in checkedNodes by its id
     DNode getCheckedNode(u_int id) const;

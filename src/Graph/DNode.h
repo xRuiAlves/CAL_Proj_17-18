@@ -13,10 +13,11 @@ protected:
 public:
     // Constructors
     DNode();
-    DNode(Node node , u_int lastNodeId , double totalWeight);
-    DNode(Node node, double totalWeight);
-    DNode(Node node);
+    DNode(const Node & node , u_int lastNodeId , double totalWeight);
+    DNode(const Node &  node, double totalWeight);
+    DNode(const Node &  node);
     DNode(u_int id);
+    DNode(u_int id , u_int lastNodeId);
 
     // Getters and Setters
     void setLastNodeId(u_int lastNodeId);
@@ -25,7 +26,7 @@ public:
     double getTotalWeight() const;
 
     // Operators
-    bool operator<(const DNode& d2) const;
+    virtual bool operator<(const DNode& d2) const;
     bool operator==(const DNode& d2) const;
     bool operator!=(const DNode& d2) const;
 };
