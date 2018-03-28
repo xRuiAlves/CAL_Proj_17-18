@@ -68,11 +68,11 @@ void Dijkstra::printSolution(){
 }
 
 void Dijkstra::populateQueue() {
-    for (u_int i = 0; i < graph.getNumNodes(); i++) {
+    for (u_int i = 0; i < this->graph.getNumNodes(); i++) {
         if(i == this->startNode.getId()){
-            pQueue.emplace(graph.getNodeById(i),0);
+            this->pQueue.emplace(this->startNode,0);
         }else {
-            pQueue.emplace(graph.getNodeById(i));
+            this->pQueue.emplace(this->graph.getNodeById(i));
         }
     }
 }
@@ -98,10 +98,6 @@ DNode Dijkstra::getDNodeInQueueById(u_int id) const {
     return badResult;
 }
 
-double Dijkstra::calcTotalWeight(const DNode & d) const {
-
-    return d.getTotalWeight();
-}
 
 void Dijkstra::updateDNodeOnQueue(const DNode & currDNode) {
 
@@ -112,7 +108,7 @@ void Dijkstra::updateDNodeOnQueue(const DNode & currDNode) {
     // If it has not been analised and the current path offers a better way, update it on the priority queue
     for (DNode d : pQueue) {
         if (d.getId() == currDNode.getId()) {
-            if (calcTotalWeight(currDNode) < calcTotalWeight(d)) {
+            if (currDNode.getTotalWeight() < d.getTotalWeight()) {
                 pQueue.erase(d);
                 pQueue.insert(currDNode);
                 return;

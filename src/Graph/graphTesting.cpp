@@ -46,7 +46,7 @@ int main() {
 
 
 
-    generateRandomGridGraph(1000, g1);
+    generateRandomGridGraph(100, g1);
 
     /*
     u_int id0 = g1.addNode(0,0,"Rio Tinto");
@@ -69,9 +69,7 @@ int main() {
 
     Dijkstra d = Dijkstra(g1);
 
-    milliseconds t0 = duration_cast< milliseconds >(
-            system_clock::now().time_since_epoch()
-    );
+
 
     /*
     // Impossible Case #1
@@ -92,10 +90,18 @@ int main() {
 
     */
 
-    d.calcOptimalPath(g1.getNodeById(3), g1.getNodeById(713));
+    milliseconds t0 = duration_cast< milliseconds >(
+            system_clock::now().time_since_epoch()
+    );
+    d.calcOptimalPath(g1.getNodeById(3), g1.getNodeById(73));
     d.printSolution();
 
-    d.calcOptimalPath(g1.getNodeById(134), g1.getNodeById(615));
+    milliseconds t0b = duration_cast< milliseconds >(
+            system_clock::now().time_since_epoch()
+    );
+
+
+    d.calcOptimalPath(g1.getNodeById(34), g1.getNodeById(65));
     d.printSolution();
 
 
@@ -105,9 +111,6 @@ int main() {
 
     AStar a = AStar(g1);
 
-    milliseconds t2 = duration_cast< milliseconds >(
-            system_clock::now().time_since_epoch()
-    );
 
     // Impossible Case #1
     /*a.calcOptimalPath(g1.getNodeById(id5), g1.getNodeById(id3));
@@ -127,18 +130,31 @@ int main() {
 
     */
 
-    a.calcOptimalPath(g1.getNodeById(3), g1.getNodeById(713));
+
+    milliseconds t2 = duration_cast< milliseconds >(
+            system_clock::now().time_since_epoch()
+    );
+
+    a.calcOptimalPath(g1.getNodeById(3), g1.getNodeById(73));
     a.printSolution();
 
-    a.calcOptimalPath(g1.getNodeById(134), g1.getNodeById(615));
+
+    milliseconds t2b = duration_cast< milliseconds >(
+            system_clock::now().time_since_epoch()
+    );
+
+    a.calcOptimalPath(g1.getNodeById(34), g1.getNodeById(65));
     a.printSolution();
 
     milliseconds t3 = duration_cast< milliseconds >(
             system_clock::now().time_since_epoch()
     );
 
-    cout << "Dijkstra time: " << t1.count() - t0.count() << " milliseconds" << endl;
-    cout << "A* time: " << t3.count() - t2.count() << " milliseconds" << endl;
+    cout << "Dijkstra time #1: " << t0b.count() - t0.count() << " milliseconds" << endl;
+    cout << "A* time #1: " << t2b.count() - t2.count() << " milliseconds" << endl;
+
+    cout << "Dijkstra time #2: " << t1.count() - t0b.count() << " milliseconds" << endl;
+    cout << "A* time #2: " << t3.count() - t2b.count() << " milliseconds" << endl;
 
     std::cout << "\nProgram ran successfully." << std::endl;
 

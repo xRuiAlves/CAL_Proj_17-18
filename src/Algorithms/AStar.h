@@ -12,8 +12,9 @@ class AStar : public Dijkstra {
 public:
     AStar(const Graph &graph);
 private:
-    double calcTotalWeight(const DNode & d) const;
+    void updateQueue();
 
+    void populateQueue();
 };
 
 

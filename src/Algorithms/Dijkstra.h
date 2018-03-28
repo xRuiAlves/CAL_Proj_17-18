@@ -44,7 +44,7 @@ protected:
     vector<u_int> lastSolution;
 
     // Sets all queue's elements to the nodes in the graph and then puts the first node on top
-    void populateQueue();
+    virtual void populateQueue();
 
     // Check if the current node has been analised (if it has, it will be in checkedDNodes)
     bool isCheckedNode(const DNode &currDNode) const;
@@ -52,15 +52,13 @@ protected:
     // Gets the node in the queue for a specified id (returns node with weight -1 if it cant find it)
     DNode getDNodeInQueueById(u_int id) const;
 
-    virtual double calcTotalWeight(const DNode & d) const;
-
     void updateDNodeOnQueue(const DNode & currDNode);
 
     // Takes the finish node that should be on top of the queue and creates a path from recurrent previous nodes
     void buildPath();
 
     // Goes through queue's top node's children and updates them in the queue
-    void updateQueue();
+    virtual void updateQueue();
 
     // Sets values of topDNode based on the current pQueue
     void updateTopDNode();
