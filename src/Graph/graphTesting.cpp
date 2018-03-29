@@ -47,7 +47,7 @@ int main() {
 
 
 
-    generateRandomGridGraph(150, g1);
+    generateRandomGridGraph(20, g1);
 
     /*
     u_int id0 = g1.addNode(0,0,"Rio Tinto");

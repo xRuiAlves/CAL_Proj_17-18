@@ -24,9 +24,7 @@ struct DNodeHash {
     }
 };
 
-
 typedef unordered_set<DNode, DNodeHash, DNodeHash> DNodeHashTable;
-
 
 class Dijkstra {
 protected:
