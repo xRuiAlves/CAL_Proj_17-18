@@ -87,7 +87,7 @@ u_int Graph::getNumEdges() const {
     u_int numEdges = 0;
 
     for (Node n : nodes){
-        numEdges = n.getNumEdges();
+        numEdges += n.getNumEdges();
     }
 
     return numEdges;
