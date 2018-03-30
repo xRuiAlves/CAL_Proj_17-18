@@ -25,13 +25,20 @@ typedef unordered_set<Node, NodeHash, NodeHash> NodeHashTable;
 class DFS {
 private:
     const Graph &graph;
-    NodeHashTable visitedNodes; // TODO put in function
+    NodeHashTable visitedNodes;
+
+    bool isNodeVisited(const Node & node) const;
+
+    void visitNode(const Node & node);
 
 public:
     DFS(const Graph & graph);
 
     // Returns hash table with the nodes that are reachable starting in startNode
-    NodeHashTable performDephtFirstSearch(const Node & startNode) const;
+    NodeHashTable performDephtFirstSearch(u_int startNodeId);
+
+    // Prints NodeHashTable contents
+    void printSolution() const;
 };
 
 

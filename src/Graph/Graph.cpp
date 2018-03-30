@@ -70,7 +70,7 @@ const std::vector< Edge > &Graph::getEdges(u_int nodeId) {
 
 Node Graph::getNodeById(u_int nodeId) const{ //ID == INDEX = true
     if(nodeId >= nodes.size()) {
-        throw InvalidNodeId();
+        throw InvalidNodeId(nodeId);
     }
     else{
         return nodes.at(nodeId);

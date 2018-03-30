@@ -3,6 +3,7 @@
 #include "Graph.h"
 #include "../Algorithms/Dijkstra.h"
 #include "../Algorithms/AStar.h"
+#include "../Algorithms/DFS.h"
 #include <ctime>
 #include <chrono>
 #include <random>
@@ -42,14 +43,15 @@ int main() {
     std::cout << "Starting tests ..." << std::endl;
 
 
+    /*************************************/
+    /****          GRAPH INFO         ****/
+    /*************************************/
 
     Graph g1 = Graph();
 
+    generateRandomGridGraph(150, g1);
 
-
-    generateRandomGridGraph(20, g1);
-
-    /*
+/*
     u_int id0 = g1.addNode(0,0,"Rio Tinto");
     u_int id1 = g1.addNode(10, 10, "Maia");
     u_int id2 = g1.addNode(2,2,"Areosa");
@@ -57,6 +59,9 @@ int main() {
     u_int id4 = g1.addNode(-15, -15, "Matosinhos");
     u_int id5 = g1.addNode(-10, -5, "S. Mamede");
     u_int id6 = g1.addNode(-0.001, -0.001, "Castro d'Aire");
+    u_int id7 = g1.addNode(20, 20, "Santo Tirso");
+    u_int id8 = g1.addNode(20, 21, "Nova Iorque");  // Nova Iorque fica mesmo ao lado de Santo Tirso
+    u_int id9 = g1.addNode(15, 16, "Vila Nova de Gaia");
 
     g1.addEdge(id0, id2,2);
     g1.addEdge(id0, id1,2);
@@ -66,107 +71,74 @@ int main() {
     g1.addEdge(id3, id4, 2);
     g1.addEdge(id5, id4,1);
     g1.addEdge(id4, id5,1);
-    g1.addEdge(id6, id5, 9);
-    */
+    g1.addEdge(id6, id5, 9); */
 
+    u_int startNodeID = 6;
+    u_int finishNodeID = 25;
+
+
+
+    /*************************************/
+    /****           DIJKSTRA          ****/
+    /*************************************/
 
     Dijkstra d = Dijkstra(g1);
 
-
-
-    /*
-    // Impossible Case #1
-    d.calcOptimalPath(g1.getNodeById(id5), g1.getNodeById(id3));
-    d.printSolution();
-
-    // Regular Scenario
-    d.calcOptimalPath(g1.getNodeById(id0), g1.getNodeById(id5));
-    d.printSolution();
-
-    // Impossible Case #2 (Isolated Node)
-    d.calcOptimalPath(g1.getNodeById(id6), g1.getNodeById(id0));
-    d.printSolution();
-
-    // Self-Node path
-    d.calcOptimalPath(g1.getNodeById(id0), g1.getNodeById(id0));
-    d.printSolution();
-
-    */
-
-
-    cout << "\n\n---------DIJKSTRA_1---------\n\n";
-    milliseconds t0 = duration_cast< milliseconds >(
-            system_clock::now().time_since_epoch()
-    );
-    d.calcOptimalPath(g1.getNodeById(6), g1.getNodeById(50));
-    d.printSolution();
-
-    milliseconds t0b = duration_cast< milliseconds >(
-            system_clock::now().time_since_epoch()
-    );
-/*
-    cout << "\n\n---------DIJKSTRA_2---------\n\n";
-
-
-
-    d.calcOptimalPath(g1.getNodeById(34), g1.getNodeById(65));
-    d.printSolution();
-
-*/
+    cout << "\n\n---------DIJKSTRA---------\n\n";
     milliseconds t1 = duration_cast< milliseconds >(
             system_clock::now().time_since_epoch()
     );
+    d.calcOptimalPath(startNodeID, finishNodeID);
+    d.printSolution();
+
+    milliseconds t1b = duration_cast< milliseconds >(
+            system_clock::now().time_since_epoch()
+    );
+
+
+
+    /*************************************/
+    /****              A*             ****/
+    /*************************************/
 
     AStar a = AStar(g1);
 
-
-    // Impossible Case #1
-    /*a.calcOptimalPath(g1.getNodeById(id5), g1.getNodeById(id3));
-    a.printSolution();
-
-    // Regular Scenario
-    a.calcOptimalPath(g1.getNodeById(id0), g1.getNodeById(id5));
-    a.printSolution();
-
-    // Impossible Case #2 (Isolated Node)
-    a.calcOptimalPath(g1.getNodeById(id6), g1.getNodeById(id0));
-    a.printSolution();
-
-    // Self-Node path
-    a.calcOptimalPath(g1.getNodeById(id0), g1.getNodeById(id0));
-    a.printSolution();
-
-    */
-
-    cout << "\n\n---------A*_1---------\n\n";
+    cout << "\n\n---------A*---------\n\n";
     milliseconds t2 = duration_cast< milliseconds >(
             system_clock::now().time_since_epoch()
     );
 
-    a.calcOptimalPath(g1.getNodeById(6), g1.getNodeById(50));
+    a.calcOptimalPath(startNodeID, finishNodeID);
     a.printSolution();
 
     milliseconds t2b = duration_cast< milliseconds >(
             system_clock::now().time_since_epoch()
     );
-/*
-    cout << "\n\n---------A*_2---------\n\n";
 
 
-    a.calcOptimalPath(g1.getNodeById(34), g1.getNodeById(65));
-    a.printSolution();
 
+    /*************************************/
+    /****              DFS            ****/
+    /*************************************/
+
+    DFS dfs = DFS(g1);
+
+    cout << "\n\n---------DFS---------\n\n";
     milliseconds t3 = duration_cast< milliseconds >(
             system_clock::now().time_since_epoch()
     );
-*/
-    cout << "\n\nDijkstra time #1: " << t0b.count() - t0.count() << " milliseconds" << endl;
-    cout << "A* time #1: " << t2b.count() - t2.count() << " milliseconds" << endl;
 
-    /*
-    cout << "Dijkstra time #2: " << t1.count() - t0b.count() << " milliseconds" << endl;
-    cout << "A* time #2: " << t3.count() - t2b.count() << " milliseconds" << endl;
-    */
+    NodeHashTable dfsResult = dfs.performDephtFirstSearch(startNodeID);
+    dfs.printSolution();
+
+    milliseconds t3b = duration_cast< milliseconds >(
+            system_clock::now().time_since_epoch()
+    );
+    cout << "\n\nDijkstra time #1: " << t1b.count() - t1.count() << " milliseconds" << endl;
+    cout << "A* time #1: " << t2b.count() - t2.count() << " milliseconds" << endl;
+    cout << "DFS time #1: " << t3b.count() - t3.count() << " milliseconds" << endl;
+
+
     std::cout << "\nProgram ran successfully." << std::endl;
 
     return 0;

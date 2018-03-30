@@ -90,7 +90,7 @@ public:
     Dijkstra(const Graph &graph);
 
     // CALCULATE OPTIMAL PATH
-    vector<u_int> calcOptimalPath(const Node &startNode, const Node &finishNode);
+    vector<u_int> calcOptimalPath(u_int startNodeId, u_int finishNodeId);
 
     //Prints the solution found
     void printSolution();

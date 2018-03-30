@@ -7,13 +7,14 @@
 Dijkstra::Dijkstra(const Graph &graph): graph(graph) {}
 
 // CALCULATE OPTIMAL PATH
-vector<u_int> Dijkstra::calcOptimalPath(const Node &startNode, const Node &finishNode) {
-    this->startNode = startNode;
-    this->finishNode = finishNode;
+vector<u_int> Dijkstra::calcOptimalPath(u_int startNodeId, u_int finishNodeId) {
 
-    // Verify if ids are valid
-    if( !(isNodeIdValid(startNode.getId()) && isNodeIdValid(finishNode.getId())) ){
-        throw InvalidNodeId();
+    try {
+        startNode = graph.getNodeById(startNodeId);
+        finishNode = graph.getNodeById(finishNodeId);
+    }
+    catch(const InvalidNodeId & except) {
+        throw except;
     }
 
     initDataStructures();
@@ -49,7 +50,7 @@ bool Dijkstra::queueIsEmpty() const {
 void Dijkstra::printSolution(){
     cout << endl;
     if(checkedDNodes.empty()){
-        cout << "No solution available. Run calcOptimalSolution before printing" << endl;
+        cout << "No solution available. Run calcOptimalSolution before printing." << endl;
         return;
     }
     cout << "Optimal path between " << this->startNode.getId() << " and " << this->finishNode.getId() << endl;

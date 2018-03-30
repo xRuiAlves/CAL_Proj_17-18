@@ -10,8 +10,11 @@ public:
 
 
 class InvalidNodeId : public Exception {
+private:
 public:
-    InvalidNodeId(){}
+    InvalidNodeId(u_int id) : id(id) {}
+
+    u_int id;
 };
 
 class NodeNotFound : public Exception {
