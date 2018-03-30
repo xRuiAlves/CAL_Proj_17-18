@@ -1,0 +1,45 @@
+/* G - Grafo , Vi - Vértice de Origem , Vf - Vértice de Destino */
+Dijkstra(G,Vi,Vf):          
+    pQueue <- {}              // Fila de prioridade de Vértices
+    
+    // Populate pQueue
+    for Node v : G
+        if equals(v,Vi) then
+            distance(v) <- 0
+        else
+            distance(v) <- INF
+        path(v) <- nil
+        insert(pQueue, v)
+    
+    // Perform Search
+    while notEmpty(pQueue) do
+        v <- pop(pQueue)
+        
+        // Check for finish node
+        if equals(v,Vf) then
+            return buildPath(G,Vf,Vi)
+            
+        for each w : Adjacent(v) do
+            if distance(v) > distance(w) + weight(v,w) then
+                distance(v) <- distance(w) + weight(v,w)
+                path(v) <- w
+                updateNodeOnQueue(pQueue,v)
+    
+    // Loop ended with no solution found
+    return nil
+    
+
+
+buildPath(G,Vf,Vi):
+    path <- {}        // Vetor de vértices que compõe o caminho
+    w <- Vf           // Vf contém em distance(Vf) o peso total
+    
+    while w != Vi do
+        pushFront(path, w)
+        w <- path(w)
+        
+    pushFront(path, Vi)
+    
+    return path
+                        
+                        
