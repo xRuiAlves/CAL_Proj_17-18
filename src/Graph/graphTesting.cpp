@@ -75,7 +75,7 @@ int main() {
     g1.addEdge(id6, id5, 9); */
 
     u_int startNodeID = 6;
-    u_int finishNodeID = 25;
+    u_int finishNodeID = 22;
 
 
 
@@ -85,7 +85,7 @@ int main() {
 
     Dijkstra d = Dijkstra(g1);
 
-    cout << "\n\n---------DIJKSTRA---------\n\n";
+    cout << "\n\n---------DIJKSTRA---------\n";
     milliseconds t1 = duration_cast< milliseconds >(
             system_clock::now().time_since_epoch()
     );
@@ -104,7 +104,7 @@ int main() {
 
     AStar a = AStar(g1);
 
-    cout << "\n\n---------A*---------\n\n";
+    cout << "\n\n---------A*---------\n";
     milliseconds t2 = duration_cast< milliseconds >(
             system_clock::now().time_since_epoch()
     );
@@ -124,7 +124,7 @@ int main() {
 
     DFS dfs = DFS(g1);
 
-    cout << "\n\n---------DFS---------\n\n";
+    cout << "\n\n---------DFS---------\n";
     milliseconds t3 = duration_cast< milliseconds >(
             system_clock::now().time_since_epoch()
     );
@@ -144,7 +144,7 @@ int main() {
 
     BFS bfs = BFS(g1);
 
-    cout << "\n\n---------BFS---------\n\n";
+    cout << "\n\n---------BFS---------\n";
     milliseconds t4 = duration_cast< milliseconds >(
             system_clock::now().time_since_epoch()
     );
@@ -163,6 +163,9 @@ int main() {
     cout << "DFS time: " << t3b.count() - t3.count() << " milliseconds" << endl;
     cout << "BFS time: " << t4b.count() - t4.count() << " milliseconds" << endl;
 
+    cout << "\nGraph Data:" << endl;
+    cout << "Number of nodes: " << g1.getNumNodes() << endl;
+    cout << "Number of edges: " << g1.getNumEdges() << endl << endl;
 
     std::cout << "\nProgram ran successfully." << std::endl;
 
