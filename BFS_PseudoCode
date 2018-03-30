@@ -1,0 +1,15 @@
+performBFS(G,V):            // G - Grafo , V - Vértice de Origem
+    visitedNodes <- {}      // Tabela de Dispersão de nós Visitados
+    queue <- {}             // Fila de Vértices a visitar
+    
+    insert(visitedNodes,V)
+    push(queue,V)
+    
+    while notEmpty(queue) do
+        N <- pop(queue)
+        for each W in Adjacent(N) do
+            if nodeNotVisited(W) then
+                insert(visitedNodes,W)
+                push(queue,W)
+    
+    return visitedNodes

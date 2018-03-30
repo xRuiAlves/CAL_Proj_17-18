@@ -1,0 +1,10 @@
+performDFS(G,V):            // G - Grafo , V - Vértice de Origem
+    visitedNodes <- {}      // Tabela de Dispersão de nós Visitados
+    visitNode(G,V)
+    return visitedNodes
+    
+visitNodeDFS(G,V):
+    if nodeNotVisited(V) then
+        insert(visitedNodes,V)
+        for each W in Adjacent(V) do
+            visitNodeDFS(G,W)
