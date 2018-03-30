@@ -4,6 +4,7 @@
 #include "../Algorithms/Dijkstra.h"
 #include "../Algorithms/AStar.h"
 #include "../Algorithms/DFS.h"
+#include "../Algorithms/BFS.h"
 #include <ctime>
 #include <chrono>
 #include <random>
@@ -49,7 +50,7 @@ int main() {
 
     Graph g1 = Graph();
 
-    generateRandomGridGraph(150, g1);
+    generateRandomGridGraph(20, g1);
 
 /*
     u_int id0 = g1.addNode(0,0,"Rio Tinto");
@@ -128,15 +129,39 @@ int main() {
             system_clock::now().time_since_epoch()
     );
 
-    NodeHashTable dfsResult = dfs.performDephtFirstSearch(startNodeID);
+    NodeHashTable dfsResult = dfs.performSearch(startNodeID);
     dfs.printSolution();
 
     milliseconds t3b = duration_cast< milliseconds >(
             system_clock::now().time_since_epoch()
     );
-    cout << "\n\nDijkstra time #1: " << t1b.count() - t1.count() << " milliseconds" << endl;
-    cout << "A* time #1: " << t2b.count() - t2.count() << " milliseconds" << endl;
-    cout << "DFS time #1: " << t3b.count() - t3.count() << " milliseconds" << endl;
+
+
+
+    /*************************************/
+    /****              BFS            ****/
+    /*************************************/
+
+    BFS bfs = BFS(g1);
+
+    cout << "\n\n---------BFS---------\n\n";
+    milliseconds t4 = duration_cast< milliseconds >(
+            system_clock::now().time_since_epoch()
+    );
+
+    NodeHashTable bfsResult = bfs.performSearch(startNodeID);
+    bfs.printSolution();
+
+    milliseconds t4b = duration_cast< milliseconds >(
+            system_clock::now().time_since_epoch()
+    );
+
+
+
+    cout << "\n\nDijkstra time: " << t1b.count() - t1.count() << " milliseconds" << endl;
+    cout << "A* time: " << t2b.count() - t2.count() << " milliseconds" << endl;
+    cout << "DFS time: " << t3b.count() - t3.count() << " milliseconds" << endl;
+    cout << "BFS time: " << t4b.count() - t4.count() << " milliseconds" << endl;
 
 
     std::cout << "\nProgram ran successfully." << std::endl;
