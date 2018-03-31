@@ -76,18 +76,20 @@ void Dijkstra::removeNodeFromQueue() {
 }
 
 void Dijkstra::populateQueue() {
+    pQueue.clear();
+
     for (u_int i = 0; i < this->graph.getNumNodes(); i++) {
-        if(i == this->startNode.getId()){
+        if (i == this->startNode.getId()) {
             this->pQueue.emplace(this->startNode,0);
-        }else {
+        } else {
             this->pQueue.emplace(this->graph.getNodeById(i));
         }
     }
 }
 
 // Check if the current node has been analised (if it has, it will be in checkedDNodes)
-bool Dijkstra::isCheckedNode(const DNode &currDNode) const {
-    return (checkedDNodes.find(currDNode) != checkedDNodes.end());
+bool Dijkstra::isCheckedNode(u_int nodeId) const {
+    return (checkedDNodes.find(nodeId) != checkedDNodes.end());
 }
 
 /*
@@ -110,13 +112,13 @@ DNode Dijkstra::getDNodeInQueueById(u_int id) const {
 
 void Dijkstra::updateNodeOnQueue(const DNode & currDNode) {
     // If it has not been analised and the current path offers a better way, update it on the priority queue
-    for (DNode d : pQueue) {
-        if (d.getId() == currDNode.getId()) {
-            if (currDNode.getTotalWeight() < d.getTotalWeight()) {
-                pQueue.erase(d);
+    for (set<DNode>::iterator it=pQueue.begin() ; it!=pQueue.end() ; it++) {
+        if (it->getId() == currDNode.getId()) {
+            if (currDNode.getTotalWeight() < it->getTotalWeight()) {
+                pQueue.erase(it);
                 pQueue.insert(currDNode);
-                return;
             }
+            return;
         }
     }
 }
@@ -138,20 +140,19 @@ void Dijkstra::buildPath() {
 
 // Goes through queue's top node's children and updates them in the queue
 void Dijkstra::updateQueue(){
-    pQueue.erase(pQueue.find(topDNode));
+    pQueue.erase(pQueue.begin());
     checkedDNodes.insert(this->topDNode);
 
     for (Edge e : this->topDNode.getEdges()) {
 
-        //get edge's destination
-        DNode currDNode = DNode(this->graph.getNodeById(e.destNodeId));
-
-        if (isCheckedNode(currDNode)) { // Already checked this node
+        if (isCheckedNode(e.destNodeId)) { // Already checked this node
             continue;
         }
 
-        currDNode.setLastNodeId(topDNode.getId());
-        currDNode.setTotalWeight(topDNode.getTotalWeight() + e.value);
+        //get edge's destination
+        DNode currDNode = DNode(this->graph.getNodeById(e.destNodeId),
+                                topDNode.getId(),
+                                topDNode.getTotalWeight() + e.value);
 
         updateNodeOnQueue(currDNode);
     }
@@ -184,7 +185,6 @@ bool Dijkstra::isNodeIdValid(u_int nodeID) const{
 
 // Clears the data structures for new calculation and populates DNodes pQueue
 void Dijkstra::initDataStructures() {
-    pQueue.clear();
     checkedDNodes.clear();
     lastSolution.clear();
     populateQueue();

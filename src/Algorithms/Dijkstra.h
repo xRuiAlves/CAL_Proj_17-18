@@ -45,13 +45,13 @@ protected:
     virtual void populateQueue();
 
     // Check if the current node has been analised (if it has, it will be in checkedDNodes)
-    bool isCheckedNode(const DNode &currDNode) const;
+    bool isCheckedNode(u_int nodeId) const;
 
     // Gets the node in the queue for a specified id (returns node with weight -1 if it cant find it)
     // virtual DNode getDNodeInQueueById(u_int id) const;
 
     // Updates a DNode in the pQueue
-    virtual void updateNodeOnQueue(const DNode & currDNode);
+    void updateNodeOnQueue(const DNode & currDNode);
 
     // Takes the finish node that should be on top of the queue and creates a path from recurrent previous nodes
     virtual void buildPath();
@@ -81,7 +81,7 @@ protected:
     bool isNodeIdValid(u_int nodeID) const;
 
     // Clears the data structures for new calculation and populates DNodes pQueue
-    void initDataStructures();
+    virtual void initDataStructures();
 
 
 

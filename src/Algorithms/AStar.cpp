@@ -8,18 +8,21 @@ AStar::AStar(const Graph &graph) : Dijkstra(graph) , topANode(0) {}
 
 
 void AStar::populateQueue() {
+    pQueueWeighted.clear();
+
+    Node n;
+
     for (u_int i = 0; i < this->graph.getNumNodes(); i++) {
+        n = graph.getNodeById(i);
+        distancesToFinish.push_back(n.getDistanceToOtherNode(finishNode));
 
         if(i == this->startNode.getId()){
             //this->pQueue.emplace(this->graph.getNodeById(i),
             //                     0);
-            this->pQueueWeighted.emplace(this->graph.getNodeById(i),
-                                         0,
-                                         this->graph.getNodeById(i).getDistanceToOtherNode(finishNode));
+            this->pQueueWeighted.emplace(n, 0, n.getDistanceToOtherNode(finishNode));
         } else {
             //this->pQueue.emplace(this->graph.getNodeById(i));
-            this->pQueueWeighted.emplace(this->graph.getNodeById(i),
-                                         this->graph.getNodeById(i).getDistanceToOtherNode(finishNode));
+            this->pQueueWeighted.emplace(n);
         }
     }
 }
@@ -29,16 +32,18 @@ void AStar::updateQueue(){
     checkedDNodes.insert(DNode(topANode));
 
     for (Edge e : this->topANode.getEdges()) {
-        DNode currDNode = DNode(this->graph.getNodeById(e.destNodeId));
 
-        if (isCheckedNode(currDNode)) { // Already checked this node
+        if (isCheckedNode(e.destNodeId)) { // Already checked this node
             continue;
         }
 
-        currDNode.setTotalWeight(topANode.getTotalWeight() + e.value); //update node's value
-        currDNode.setLastNodeId(topANode.getId()); //set node's last node id (for path building later)
-        updateNodeOnQueue(currDNode);
+        //ANode currNode = getANodeById(e.destNodeId);
+        ANode currNode = ANode(graph.getNodeById(e.destNodeId),
+                               topANode.getId(),
+                               topANode.getTotalWeight()+ e.value,
+                               distancesToFinish.at(e.destNodeId));
 
+        updateNodeOnQueue(currNode);
     }
 }
 
@@ -46,48 +51,6 @@ void AStar::updateQueue(){
 bool AStar::foundOptimalSolution() {
     return (this->topANode.getId() == this->finishNode.getId());
 }
-
-/*
-    if (this->topDNode.getId() != this->finishNode.getId()) {
-        return false;
-    }
-
-    checkedDNodes.insert(topDNode);
-
-    if (lastSolution.empty()) {
-        buildPath();
-        currentBestSolution = lastSolution;
-        currentBestSolutionWeight = topDNode.getTotalWeight();
-    } else {
-        buildPath();
-    }
-
-    checkedDNodes.erase(topDNode);
-    this->solutionTotalCost = this->topDNode.getTotalWeight();
-
-
-    if (topDNode.getTotalWeight() < currentBestSolutionWeight) {
-        currentBestSolution = lastSolution;
-        currentBestSolutionWeight = topDNode.getTotalWeight();
-    } else {
-        lastSolution = currentBestSolution;
-    }
-
-    // Check for other potential candidates for best path, that is, nodes with less weight (without the euclidian
-    // distance to the finish node)
-    /*for (DNode d : pQueue) {
-        if ( (d.getTotalWeight()-d.getDistanceToOtherNode(finishNode)) <= topDNode.getTotalWeight()) {
-            this->topDNode = d;
-            return false;
-        }
-    }*/
-
-    // If no other node has potential to become a better path solution, then the optimal solution was found
- /*
-    
-    updateNodeOnQueue(topDNode);
-    return true;
-}*/
 
 void AStar::removeNodeFromQueue() {
     //this->pQueue.erase(topDNode);
@@ -99,41 +62,15 @@ void AStar::updateTopNode(){
     this->topANode = *(pQueueWeighted.begin());
 }
 
-void AStar::updateNodeOnQueue(const DNode & currDNode) {
+void AStar::updateNodeOnQueue(const ANode & currNode) {
 
-    /*
-    bool wasUpdated = false;
-
-    for (DNode d : pQueue) {
-        if (d.getId() == currDNode.getId()) {
-            if (currDNode.getTotalWeight() < d.getTotalWeight()) {
-                pQueue.erase(d);
-                pQueue.insert(currDNode);
-                wasUpdated = true;
-                break;
+    for (set<ANode>::iterator it=pQueueWeighted.begin() ; it!=pQueueWeighted.end() ; it++) {
+        if (it->getId() == currNode.getId()) {
+            if (currNode.getHeuristicWeight() < it->getHeuristicWeight()) {
+                pQueueWeighted.erase(it);
+                pQueueWeighted.insert(currNode);
             }
-        }
-    }
-
-    // Better value was found! Update ANode aswell
-    if (wasUpdated) {
-        for (ANode a : pQueueWeighted) {
-            if (a.getId() == currDNode.getId()) {
-                pQueueWeighted.erase(a);
-                pQueueWeighted.insert(ANode(topDNode , currDNode.getTotalWeight() + currDNode.getDistanceToOtherNode(finishNode)));
-                return;
-            }
-        }
-    }
-     */
-
-    for (ANode a : pQueueWeighted) {
-        if (a.getId() == currDNode.getId()) {
-            if (currDNode.getTotalWeight() < a.getTotalWeight()) {
-                pQueueWeighted.erase(a);
-                pQueueWeighted.insert(ANode(currDNode , currDNode.getTotalWeight() + currDNode.getDistanceToOtherNode(finishNode)));
-                return;
-            }
+            return;
         }
     }
 }
@@ -159,4 +96,3 @@ void AStar::buildPath() {
 bool AStar::queueIsEmpty() const {
     return this->pQueueWeighted.empty();
 }
-

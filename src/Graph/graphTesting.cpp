@@ -30,8 +30,10 @@ void generateRandomGridGraph(int n, Graph & g) {
                 for (int dj = -1; dj <= 1; dj++) {
                     if ((di != 0) != (dj != 0) && i + di >= 0 && i + di < n && j + dj >= 0 && j + dj < n) {
                         //g.addEdge(make_pair(i,j), make_pair(i+di,j+dj), dis(gen));
-                        //g.addEdge((i * j), ((i + di) * (j + dj)), g.getNodeById(i*j).getDistanceToOtherNode(g.getNodeById((i + di) * (j + dj))));
-                        g.addEdge((i * j), ((i + di) * (j + dj)), dis(gen));
+                        g.addEdge((i * j),
+                                  ((i + di) * (j + dj)),
+                                  g.getNodeById(i*j).getDistanceToOtherNode(g.getNodeById((i + di) * (j + dj))));
+                        //g.addEdge((i * j), ((i + di) * (j + dj)), dis(gen));
                     }
                 }
             }
@@ -50,32 +52,33 @@ int main() {
 
     Graph g1 = Graph();
 
-    generateRandomGridGraph(20, g1);
+    generateRandomGridGraph(200, g1);
 
 /*
+
     u_int id0 = g1.addNode(0,0,"Rio Tinto");
-    u_int id1 = g1.addNode(10, 10, "Maia");
-    u_int id2 = g1.addNode(2,2,"Areosa");
-    u_int id3 = g1.addNode(-10, -10, "Sra da Hora");
-    u_int id4 = g1.addNode(-15, -15, "Matosinhos");
-    u_int id5 = g1.addNode(-10, -5, "S. Mamede");
-    u_int id6 = g1.addNode(-0.001, -0.001, "Castro d'Aire");
-    u_int id7 = g1.addNode(20, 20, "Santo Tirso");
-    u_int id8 = g1.addNode(20, 21, "Nova Iorque");  // Nova Iorque fica mesmo ao lado de Santo Tirso
-    u_int id9 = g1.addNode(15, 16, "Vila Nova de Gaia");
+    u_int id1 = g1.addNode(10, 0, "Maia");
+    u_int id2 = g1.addNode(2,0,"Areosa");
+    u_int id3 = g1.addNode(-10, 0, "Sra da Hora");
+    u_int id4 = g1.addNode(-15, 0, "Matosinhos");
+    u_int id5 = g1.addNode(-10, 0, "S. Mamede");
+    u_int id6 = g1.addNode(90, 0, "Castro d'Aire");
+    u_int id7 = g1.addNode(20, 0, "Santo Tirso");
+    u_int id8 = g1.addNode(20, 0, "Nova Iorque");  // Nova Iorque fica mesmo ao lado de Santo Tirso
+    u_int id9 = g1.addNode(15, 0, "Vila Nova de Gaia");
 
     g1.addEdge(id0, id2,2);
-    g1.addEdge(id0, id1,2);
-    g1.addEdge(id0, id6, 1);
-    g1.addEdge(id1, id3, 4);
-    g1.addEdge(id3, id1, 3);
-    g1.addEdge(id3, id4, 2);
-    g1.addEdge(id5, id4,1);
-    g1.addEdge(id4, id5,1);
-    g1.addEdge(id6, id5, 9); */
-
-    u_int startNodeID = 6;
-    u_int finishNodeID = 22;
+    g1.addEdge(id0, id1,10);
+    g1.addEdge(id0, id6, 4);
+    g1.addEdge(id1, id3, 20);
+    g1.addEdge(id3, id1, 20);
+    g1.addEdge(id3, id4, 5);
+    g1.addEdge(id5, id4, 5);
+    g1.addEdge(id4, id5, 5);
+    g1.addEdge(id6, id5, 100);
+*/
+    u_int startNodeID = 2;
+    u_int finishNodeID = 19000;
 
 
 
@@ -130,7 +133,7 @@ int main() {
     );
 
     NodeHashTable dfsResult = dfs.performSearch(startNodeID);
-    dfs.printSolution();
+    //dfs.printSolution();
 
     milliseconds t3b = duration_cast< milliseconds >(
             system_clock::now().time_since_epoch()
@@ -150,7 +153,7 @@ int main() {
     );
 
     NodeHashTable bfsResult = bfs.performSearch(startNodeID);
-    bfs.printSolution();
+    //bfs.printSolution();
 
     milliseconds t4b = duration_cast< milliseconds >(
             system_clock::now().time_since_epoch()

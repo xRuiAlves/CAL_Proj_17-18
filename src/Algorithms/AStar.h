@@ -14,6 +14,7 @@ public:
     AStar(const Graph &graph);
 private:
     set<ANode> pQueueWeighted; // stores the ANodes with the A* weight function
+    vector<double> distancesToFinish;
     ANode topANode;
 
     void populateQueue();
@@ -28,13 +29,11 @@ private:
 
     void updateTopNode();
 
-    void updateNodeOnQueue(const DNode & currDNode);
+    void updateNodeOnQueue(const ANode & currNode);
 
     void updateQueue();
 
     void buildPath();
-
-    // DNode getDNodeInQueueById(u_int id) const;
 };
 
 
