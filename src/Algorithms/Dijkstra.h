@@ -51,7 +51,7 @@ protected:
     // virtual DNode getDNodeInQueueById(u_int id) const;
 
     // Updates a DNode in the pQueue
-    void updateNodeOnQueue(const DNode & currDNode);
+    void updateNodeOnQueue(const DNode & currDNode, set<DNode> & queue);
 
     // Takes the finish node that should be on top of the queue and creates a path from recurrent previous nodes
     virtual void buildPath();
@@ -94,6 +94,8 @@ public:
 
     //Prints the solution found
     void printSolution();
+
+    double getSolutionWeight() const;
 };
 
 #endif //CAL_DIJKSTRA_H

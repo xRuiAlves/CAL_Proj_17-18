@@ -5,6 +5,7 @@
 #include "../Algorithms/AStar.h"
 #include "../Algorithms/DFS.h"
 #include "../Algorithms/BFS.h"
+#include "../Algorithms/DijkstraBiDir.h"
 #include <ctime>
 #include <chrono>
 #include <random>
@@ -53,8 +54,8 @@ int main() {
     Graph g1 = Graph();
 
     generateRandomGridGraph(200, g1);
-
 /*
+
 
     u_int id0 = g1.addNode(0,0,"Rio Tinto");
     u_int id1 = g1.addNode(10, 0, "Maia");
@@ -75,10 +76,10 @@ int main() {
     g1.addEdge(id3, id4, 5);
     g1.addEdge(id5, id4, 5);
     g1.addEdge(id4, id5, 5);
-    g1.addEdge(id6, id5, 100);
-*/
+    g1.addEdge(id6, id5, 100);*/
+
     u_int startNodeID = 2;
-    u_int finishNodeID = 19000;
+    u_int finishNodeID = 6000;
 
 
 
@@ -93,12 +94,12 @@ int main() {
             system_clock::now().time_since_epoch()
     );
     d.calcOptimalPath(startNodeID, finishNodeID);
-    d.printSolution();
 
     milliseconds t1b = duration_cast< milliseconds >(
             system_clock::now().time_since_epoch()
     );
 
+    d.printSolution();
 
 
     /*************************************/
@@ -113,11 +114,12 @@ int main() {
     );
 
     a.calcOptimalPath(startNodeID, finishNodeID);
-    a.printSolution();
 
     milliseconds t2b = duration_cast< milliseconds >(
             system_clock::now().time_since_epoch()
     );
+
+    a.printSolution();
 
 
 
@@ -161,10 +163,57 @@ int main() {
 
 
 
+    /*************************************/
+    /****  DIJKSTRA BI DIRECTIONAL    ****/
+    /*************************************/
+
+    cout << "\n\n---------Dijkstra Bidirectional---------\n";
+
+    DijkstraBiDir dbd = DijkstraBiDir(g1);
+    DNodeHashTable pois;
+    //pois.insert(g1.getNodeById(1));
+    pois.insert(g1.getNodeById(5000));
+    pois.insert(g1.getNodeById(200));
+    pois.insert(g1.getNodeById(300));
+    pois.insert(g1.getNodeById(301));
+    pois.insert(g1.getNodeById(302));
+
+    milliseconds t5 = duration_cast< milliseconds >(
+            system_clock::now().time_since_epoch()
+    );
+
+    dbd.calcOptimalPath(startNodeID, finishNodeID, pois);
+
+    milliseconds t5b = duration_cast< milliseconds >(
+            system_clock::now().time_since_epoch()
+    );
+
+    dbd.printSolution();
+
+    AStar testBidir1 = AStar(g1);
+    AStar testBidir2 = AStar(g1);
+
+    cout << "Checking validity of solution:" << endl;
+
+    for(DNodeHashTable::iterator it = pois.begin(); it != pois.end(); it++){
+        cout << "CALCULATING WEIGHT THROUGH POI " << (*it).getId() << endl;
+        testBidir1.calcOptimalPath(startNodeID, (*it).getId());
+        testBidir2.calcOptimalPath((*it).getId(), finishNodeID);
+        cout << testBidir1.getSolutionWeight() + testBidir2.getSolutionWeight() << endl;
+    }
+
+
+
+    /*************************************/
+    /****      TIME TEST RESULTS      ****/
+    /*************************************/
+
+
     cout << "\n\nDijkstra time: " << t1b.count() - t1.count() << " milliseconds" << endl;
     cout << "A* time: " << t2b.count() - t2.count() << " milliseconds" << endl;
     cout << "DFS time: " << t3b.count() - t3.count() << " milliseconds" << endl;
     cout << "BFS time: " << t4b.count() - t4.count() << " milliseconds" << endl;
+    cout << "DijkstraBiDir time: " << t5b.count() - t5.count() << " milliseconds" << endl;
 
     cout << "\nGraph Data:" << endl;
     cout << "Number of nodes: " << g1.getNumNodes() << endl;

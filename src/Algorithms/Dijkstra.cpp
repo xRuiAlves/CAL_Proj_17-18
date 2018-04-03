@@ -69,6 +69,7 @@ void Dijkstra::printSolution(){
              << checkedDNodes.find(nodeId)->getTotalWeight() - checkedDNodes.find(nodeId)->getDistanceToOtherNode(finishNode) */
              << "  ";
     }
+    cout << endl;
 }
 
 void Dijkstra::removeNodeFromQueue() {
@@ -110,13 +111,13 @@ DNode Dijkstra::getDNodeInQueueById(u_int id) const {
 } */
 
 
-void Dijkstra::updateNodeOnQueue(const DNode & currDNode) {
+void Dijkstra::updateNodeOnQueue(const DNode & currDNode, set<DNode> & queue) {
     // If it has not been analised and the current path offers a better way, update it on the priority queue
-    for (set<DNode>::iterator it=pQueue.begin() ; it!=pQueue.end() ; it++) {
+    for (set<DNode>::iterator it=queue.begin() ; it!=queue.end() ; it++) {
         if (it->getId() == currDNode.getId()) {
             if (currDNode.getTotalWeight() < it->getTotalWeight()) {
-                pQueue.erase(it);
-                pQueue.insert(currDNode);
+                queue.erase(it);
+                queue.insert(currDNode);
             }
             return;
         }
@@ -154,7 +155,7 @@ void Dijkstra::updateQueue(){
                                 topDNode.getId(),
                                 topDNode.getTotalWeight() + e.value);
 
-        updateNodeOnQueue(currDNode);
+        updateNodeOnQueue(currDNode, pQueue);
     }
 }
 
@@ -188,4 +189,8 @@ void Dijkstra::initDataStructures() {
     checkedDNodes.clear();
     lastSolution.clear();
     populateQueue();
+}
+
+double Dijkstra::getSolutionWeight() const{
+    return solutionTotalCost;
 }
