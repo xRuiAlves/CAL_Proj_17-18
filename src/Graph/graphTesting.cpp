@@ -6,6 +6,7 @@
 #include "../Algorithms/DFS.h"
 #include "../Algorithms/BFS.h"
 #include "../Algorithms/DijkstraBiDir.h"
+#include "../Algorithms/TSPNearestNeighbor.h"
 #include <ctime>
 #include <chrono>
 #include <random>
@@ -53,8 +54,8 @@ int main() {
 
     Graph g1 = Graph();
 
-    generateRandomGridGraph(200, g1);
-/*
+    //generateRandomGridGraph(100, g1);
+
 
 
     u_int id0 = g1.addNode(0,0,"Rio Tinto");
@@ -76,10 +77,10 @@ int main() {
     g1.addEdge(id3, id4, 5);
     g1.addEdge(id5, id4, 5);
     g1.addEdge(id4, id5, 5);
-    g1.addEdge(id6, id5, 100);*/
+    g1.addEdge(id6, id5, 100);
 
-    u_int startNodeID = 2;
-    u_int finishNodeID = 6000;
+    u_int startNodeID = 0;
+    u_int finishNodeID = 5;
 
 
 
@@ -135,7 +136,7 @@ int main() {
     );
 
     NodeHashTable dfsResult = dfs.performSearch(startNodeID);
-    //dfs.printSolution();
+    dfs.printSolution();
 
     milliseconds t3b = duration_cast< milliseconds >(
             system_clock::now().time_since_epoch()
@@ -155,7 +156,7 @@ int main() {
     );
 
     NodeHashTable bfsResult = bfs.performSearch(startNodeID);
-    //bfs.printSolution();
+    bfs.printSolution();
 
     milliseconds t4b = duration_cast< milliseconds >(
             system_clock::now().time_since_epoch()
@@ -171,12 +172,7 @@ int main() {
 
     DijkstraBiDir dbd = DijkstraBiDir(g1);
     DNodeHashTable pois;
-    //pois.insert(g1.getNodeById(1));
-    pois.insert(g1.getNodeById(5000));
-    pois.insert(g1.getNodeById(200));
-    pois.insert(g1.getNodeById(300));
-    pois.insert(g1.getNodeById(301));
-    pois.insert(g1.getNodeById(302));
+    pois.insert(g1.getNodeById(3));
 
     milliseconds t5 = duration_cast< milliseconds >(
             system_clock::now().time_since_epoch()
@@ -203,17 +199,37 @@ int main() {
     }
 
 
+    /*************************************/
+    /****     TSP Nearest Neighbor    ****/
+    /*************************************/
+
+    TSPNearestNeighbor t = TSPNearestNeighbor(g1);
+    vector<u_int> tsp_pois = {6,4};
+
+    milliseconds t6 = duration_cast< milliseconds >(
+            system_clock::now().time_since_epoch()
+    );
+
+    t.calcPath(startNodeID, finishNodeID, tsp_pois);
+
+    milliseconds t6b = duration_cast< milliseconds >(
+            system_clock::now().time_since_epoch()
+    );
+
+    t.printSolution();
+
+
 
     /*************************************/
     /****      TIME TEST RESULTS      ****/
     /*************************************/
-
 
     cout << "\n\nDijkstra time: " << t1b.count() - t1.count() << " milliseconds" << endl;
     cout << "A* time: " << t2b.count() - t2.count() << " milliseconds" << endl;
     cout << "DFS time: " << t3b.count() - t3.count() << " milliseconds" << endl;
     cout << "BFS time: " << t4b.count() - t4.count() << " milliseconds" << endl;
     cout << "DijkstraBiDir time: " << t5b.count() - t5.count() << " milliseconds" << endl;
+    cout << "TSP Nearest Neighbor time: " << t6b.count() - t6.count() << " milliseconds" << endl;
 
     cout << "\nGraph Data:" << endl;
     cout << "Number of nodes: " << g1.getNumNodes() << endl;

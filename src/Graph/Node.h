@@ -59,6 +59,8 @@ public:
 
     // Returns the number of edges in the Node
     u_int getNumEdges() const;
+
+    bool operator==(const Node & other) const;
 };
 
 #endif //CAL_NODE_H

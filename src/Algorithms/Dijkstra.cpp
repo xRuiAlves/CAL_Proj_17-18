@@ -60,14 +60,7 @@ void Dijkstra::printSolution(){
     }
     cout << "Successfully generated with a total weight of " << solutionTotalCost << ":" << endl;
     for(u_int nodeId : lastSolution){
-        cout << nodeId  /*
-             << " - W : "
-             << checkedDNodes.find(nodeId)->getTotalWeight()
-             << " distToEnd: "
-             << checkedDNodes.find(nodeId)->getDistanceToOtherNode(finishNode)
-             << " Path Weight: "
-             << checkedDNodes.find(nodeId)->getTotalWeight() - checkedDNodes.find(nodeId)->getDistanceToOtherNode(finishNode) */
-             << "  ";
+        cout << nodeId << " ";
     }
     cout << endl;
 }
@@ -92,24 +85,6 @@ void Dijkstra::populateQueue() {
 bool Dijkstra::isCheckedNode(u_int nodeId) const {
     return (checkedDNodes.find(nodeId) != checkedDNodes.end());
 }
-
-/*
-// Gets the node in the queue for a specified id (returns node with weight -1 if it cant find it)
-DNode Dijkstra::getDNodeInQueueById(u_int id) const {
-    DNode badResult = DNode(id);
-    badResult.setTotalWeight(-1); //means node is not in queue
-
-    if(isCheckedNode(DNode(id))) return badResult;
-
-    for (DNode d : pQueue) {
-        if (d.getId() == id) {
-            return d;
-        }
-    }
-
-    return badResult;
-} */
-
 
 void Dijkstra::updateNodeOnQueue(const DNode & currDNode, set<DNode> & queue) {
     // If it has not been analised and the current path offers a better way, update it on the priority queue

@@ -72,3 +72,8 @@ double Node::getDistanceToOtherNode(const Node & otherNode) const{
 
     return sqrt(distanceVector.first*distanceVector.first + distanceVector.second*distanceVector.second);
 }
+
+
+bool Node::operator==(const Node & other) const{
+    return this->id == other.id;
+}
