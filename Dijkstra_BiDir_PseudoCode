@@ -1,0 +1,21 @@
+/* G - Grafo, Vi - Vértice de Origem , 
+   Vf - Vértice de Destino, POIs - Conjunto de Vértices Intermédios */
+TSP(G,Vi,Vf,POIs):   
+    solutionWasFound <- false    
+   
+    // Realizar expansão Dijkstra a partir de Vi e Vf até topo da 
+    // à condição de paragem ser verificada
+    do
+        performDijkstraStep(G,Vi,Vf)
+        performReverseDijkstraStep(G,Vf,Vi)
+        
+        if pQueuesContainSamePOI() and 
+           pQueuesTops >= bestSolutionThroughPOI then
+            solutionWasFound <- true
+            break
+    while dijkstraExpansionsInProgress()
+            
+    if solutionWasFound then
+        return append(dijkstraResult,reverse(reverseDijkstraResult))
+    else
+        return nil
