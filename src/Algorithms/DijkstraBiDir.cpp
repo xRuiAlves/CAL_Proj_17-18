@@ -12,6 +12,8 @@ void DijkstraBiDir::initDataStructures(){
     reversedEdges.clear();
     populateReversedEdges();
     populateReversedQueue();
+    bestPOIId = UINT_MAX;
+    foundAPOI = false;
 }
 
 void DijkstraBiDir::populateReversedEdges(){
@@ -26,7 +28,7 @@ void DijkstraBiDir::populateReversedEdges(){
     }
 }
 
-vector<u_int> DijkstraBiDir::calcOptimalPath(u_int startNodeId, u_int finishNodeId, const DNodeHashTable & givenPois) {
+vector<u_int> DijkstraBiDir::calcOptimalPath(u_int startNodeId, u_int finishNodeId, const NodeHashTable & givenPois) {
     try {
         startNode = graph.getNodeById(startNodeId);
         finishNode = graph.getNodeById(finishNodeId);
@@ -40,47 +42,50 @@ vector<u_int> DijkstraBiDir::calcOptimalPath(u_int startNodeId, u_int finishNode
 
     while (!pQueue.empty() || !pQueueReversed.empty()) {
 
-        /////////// pQUEUE /////////
 
-        //Analise the node on top of the priority queue
+        /////////// pQUEUE /////////
         updateTopNode(); //set this->topDNode
 
-        //Check if node is a dead end
-        if(isTopNodeDeadEnd()) {
-            removeNodeFromQueue();
-        }else{
-            //Analise next nodes and updateQueue
-            updateQueue();
-        }
+        //Analise the node on top of the priority queue
+        if(topDNode.getTotalWeight() != DBL_MAX) {
+            //Check if node is a dead end
+            if (isTopNodeDeadEnd()) {
+                removeNodeFromQueue();
+            } else {
+                //Analise next nodes and updateQueue
+                updateQueue();
+            }
+
+        }else break;
 
         ///////// REVERSED pQUEUE /////////
-        //Analise the node on top of the priority queue
         updateReversedTopNode(); //set this->topDNode
 
-        //Check if node is a dead end
-        if(isReversedTopNodeDeadEnd()) {
-            removeReversedTopNodeFromQueue();
-        }else{
-            //Analise next nodes and updateQueue
-            updateReversedQueue();
-        }
+        //Analise the node on top of the priority queue
+        if(topDNodeReversed.getTotalWeight() != DBL_MAX) {
 
-        /*cout << "top node is " << topDNode.getId() << " and has weight " << topDNode.getTotalWeight() << endl;
-        cout << "top node reversed is " << topDNodeReversed.getId() << " and has weight " << topDNodeReversed.getTotalWeight() << endl;*/
+            //Check if node is a dead end
+            if (isReversedTopNodeDeadEnd()) {
+                removeReversedTopNodeFromQueue();
+            } else {
+                //Analise next nodes and updateQueue
+                updateReversedQueue();
+            }
 
-        if(isCheckedNode(topDNodeReversed.getId())){ //if node found in reverse search was already found in regular search
-            updateBestPoi(topDNodeReversed);
-        }
+        }else break;
 
-        if(isReverseCheckedNode(topDNode.getId())){ //if node found in regular search was already found in reverse search
+        if (isReverseCheckedNode(
+                topDNode.getId())) { //if node found in regular search was already found in reverse search
             updateBestPoi(topDNode);
         }
 
-        if((topDNode.getTotalWeight() >= 2*bestPOIWeight || topDNodeReversed.getTotalWeight() >= 2*bestPOIWeight) || (foundAPOI = false && bestPOIId != UINT_MAX)){
+        if (isCheckedNode(
+                topDNodeReversed.getId())) { //if node found in reverse search was already found in regular search
+            updateBestPoi(topDNodeReversed);
+        }
+
+        if((topDNode.getTotalWeight() >= bestPOIWeight && topDNodeReversed.getTotalWeight() >= bestPOIWeight) || (foundAPOI = false && bestPOIId != UINT_MAX)){ //if you have only found one POI and it's already common to both searches, it will be the optimal and you can stop
             //FOUND OPTIMAL SOLUTION
-            cout << "Found optimal solution for the given POI's. Final weight is " << bestPOIWeight << " through node with id " << bestPOIId << endl;
-            cout << "Regular search weight: " << (*checkedDNodes.find(bestPOIId)).getTotalWeight() << endl;
-            cout << "Reverse search weight: " << (*checkedDNodesReversed.find(bestPOIId)).getTotalWeight() << endl;
             buildPath();
             break;
         }
@@ -140,7 +145,7 @@ bool DijkstraBiDir::isReverseCheckedNode(u_int nodeId) const {
     return (checkedDNodesReversed.find(nodeId) != checkedDNodesReversed.end());
 }
 
-bool DijkstraBiDir::isNodePOI(const DNode & node) const{
+bool DijkstraBiDir::isNodePOI(const Node & node) const{
     return pois.find(node) != pois.end();
 }
 
@@ -196,4 +201,12 @@ void DijkstraBiDir::printSolution(){
              << "  ";
     }
     cout << endl;
+}
+
+Node DijkstraBiDir::getBestPOI(){
+    return graph.getNodeById(bestPOIId);
+}
+
+bool DijkstraBiDir::foundSolution() const {
+    return !(checkedDNodes.empty() || lastSolution.empty());
 }

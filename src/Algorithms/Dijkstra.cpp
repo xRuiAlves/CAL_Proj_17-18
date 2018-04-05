@@ -169,3 +169,7 @@ void Dijkstra::initDataStructures() {
 double Dijkstra::getSolutionWeight() const{
     return solutionTotalCost;
 }
+
+bool Dijkstra::foundSolution() const {
+    return !(checkedDNodes.empty() || getCheckedNode(finishNode.getId()).getTotalWeight() == DBL_MAX);
+}

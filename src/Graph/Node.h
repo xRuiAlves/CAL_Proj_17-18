@@ -4,6 +4,7 @@
 #include "../Utilities/defs.h"
 #include "Edge.h"
 #include <cmath>
+#include <unordered_set>
 
 
 // Node class, used by graph class
@@ -14,6 +15,10 @@ protected:
     double x;
     double y;
     std::string name;
+public:
+    const std::string &getName() const;
+
+protected:
     std::vector< Edge > edges;
 
 private:
@@ -62,5 +67,20 @@ public:
 
     bool operator==(const Node & other) const;
 };
+
+
+
+struct NodeHash {
+    bool operator()(const Node &d1, const Node &d2) const {
+        return d1.getId() == d2.getId();
+    }
+
+    int operator()(const Node &d) const {
+        return d.getId();
+    }
+};
+
+typedef std::unordered_set<Node, NodeHash, NodeHash> NodeHashTable;
+
 
 #endif //CAL_NODE_H

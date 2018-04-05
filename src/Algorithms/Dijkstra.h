@@ -96,6 +96,8 @@ public:
     void printSolution();
 
     double getSolutionWeight() const;
+
+    bool foundSolution() const;
 };
 
 #endif //CAL_DIJKSTRA_H

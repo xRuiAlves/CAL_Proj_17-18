@@ -9,18 +9,6 @@
 
 using namespace std;
 
-struct NodeHash {
-    bool operator()(const Node &d1, const Node &d2) const {
-        return d1.getId() == d2.getId();
-    }
-
-    int operator()(const Node &d) const {
-        return d.getId();
-    }
-};
-
-typedef unordered_set<Node, NodeHash, NodeHash> NodeHashTable;
-
 class GraphSearchAlgorithm {
 protected:
     const Graph &graph;

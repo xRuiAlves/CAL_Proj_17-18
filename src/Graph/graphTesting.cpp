@@ -43,7 +43,7 @@ void generateRandomGridGraph(int n, Graph & g) {
     }
 }
 
-int main() {
+int not_main() {
 
     std::cout << "Starting tests ..." << std::endl;
 
@@ -54,8 +54,8 @@ int main() {
 
     Graph g1 = Graph();
 
-    //generateRandomGridGraph(100, g1);
-
+    generateRandomGridGraph(200, g1);
+/*
 
 
     u_int id0 = g1.addNode(0,0,"Rio Tinto");
@@ -78,9 +78,9 @@ int main() {
     g1.addEdge(id5, id4, 5);
     g1.addEdge(id4, id5, 5);
     g1.addEdge(id6, id5, 100);
-
-    u_int startNodeID = 0;
-    u_int finishNodeID = 5;
+*/
+    u_int startNodeID = 2;
+    u_int finishNodeID = 6000;
 
 
 
@@ -171,8 +171,10 @@ int main() {
     cout << "\n\n---------Dijkstra Bidirectional---------\n";
 
     DijkstraBiDir dbd = DijkstraBiDir(g1);
-    DNodeHashTable pois;
-    pois.insert(g1.getNodeById(3));
+    NodeHashTable pois;
+    pois.insert(g1.getNodeById(1));
+    pois.insert(g1.getNodeById(100));
+    pois.insert(g1.getNodeById(302));
 
     milliseconds t5 = duration_cast< milliseconds >(
             system_clock::now().time_since_epoch()
@@ -191,7 +193,7 @@ int main() {
 
     cout << "Checking validity of solution:" << endl;
 
-    for(DNodeHashTable::iterator it = pois.begin(); it != pois.end(); it++){
+    for(NodeHashTable::iterator it = pois.begin(); it != pois.end(); it++){
         cout << "CALCULATING WEIGHT THROUGH POI " << (*it).getId() << endl;
         testBidir1.calcOptimalPath(startNodeID, (*it).getId());
         testBidir2.calcOptimalPath((*it).getId(), finishNodeID);
