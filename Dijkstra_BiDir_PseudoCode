@@ -19,7 +19,3 @@ TSP(G,Vi,Vf,POIs):
         return append(dijkstraResult,reverse(reverseDijkstraResult))
     else
         return nil
-        
-termConditionWasFound():
-    return pQueuesContainSamePOI() and
-           pQueuesTops >= bestSolutionThroughPOI
