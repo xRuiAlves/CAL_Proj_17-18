@@ -1,0 +1,46 @@
+/* G - Grafo, Vi - Vértice de Origem , 
+   Vf - Vértice de Destino, POIs - Conjunto de Vértices Intermédios */
+TSP(G,Vi,Vf,POIs):          
+    // Calcular ordem de Visita
+    ordemVisita <- {}
+    calcOrdemVisita(G,Vi,Vf,POIs, ordemVisita)
+    
+    // Verificar se ordem de visita contem todos os POIs
+    if isComplete(ordemVisita) then    
+        // Construir Caminho
+        return buildPath(ordemVisita, G)
+    else
+        return nil
+    
+
+calcOrdemVisita(G,Vi,Vf,POIs,ordemVisita):
+    insert(ordemVisita, Vi)
+    
+    // Verificar se é possível construir o caminho a partir do vértice
+    if canAccess(Vi,POIs) and canAccess(Vi,Vf) then
+        nextVisit <- findNearestPOI(Vi,POIs,G)
+        remove(POIs, nextVisit)
+        calcOrdemVisita(G,nextVisit,Vf,POIs, ordemVisita)
+        
+        // Verificar se a recursão teve sucesso
+        if isComplete(ordemVisita) then
+            return
+        else
+            // Vértice Indesejado, fazer back-trace
+            remove(OrdemVisita, Vi)
+            return      
+    else
+        // Vértice Indesejado, fazer back-trace
+        remove(OrdemVisita, Vi)
+        return
+        
+        
+buildPath(ordemVisita, G):
+    finalPath <- {}
+
+    // Encontrar melhor caminho entre A0->A1, A1->A2, ..., An-1 -> An
+    for each Vertex in ordemVisita do
+        // bestPath pode ser um algoritmo como Dijkstra ou A-Star
+        append(finalPath, bestPath(Vertex,nextVertex))
+        
+    return finalPath
