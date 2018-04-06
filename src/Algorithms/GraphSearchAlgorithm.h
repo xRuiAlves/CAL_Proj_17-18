@@ -22,6 +22,9 @@ public:
     // Returns hash table with the nodes that are reachable starting in startNode
     virtual NodeHashTable performSearch(u_int startNodeId) = 0;
 
+    // Verifies if it is possible to reach node with id 'finishNodeId' from node with id 'startNodeId'
+    virtual bool isPathPossible(u_int startNodeId, u_int finishNodeId) = 0;
+
     // Prints NodeHashTable contents
     void printSolution() const;
 
