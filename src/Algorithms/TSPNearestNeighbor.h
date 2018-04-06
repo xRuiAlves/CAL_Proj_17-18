@@ -56,6 +56,8 @@ public:
 
     vector<u_int> calcPath(u_int startNodeId, u_int finishNodeId, const vector<u_int> & pois);
 
+    vector<u_int> getVisitOrder() const;
+
     void printSolution();
 
     double getSolutionWeight() const;

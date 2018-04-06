@@ -163,3 +163,7 @@ void TSPNearestNeighbor::append_vector(vector<u_int> & v1, const vector<u_int> &
         v1.push_back(i);
     }
 }
+
+vector<u_int> TSPNearestNeighbor::getVisitOrder() const {
+    return this->visitOrder;
+}
