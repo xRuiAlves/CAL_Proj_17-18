@@ -55,7 +55,7 @@ int not_main() {
 
     Graph g1 = Graph();
 
-    generateRandomGridGraph(60, g1);
+    generateRandomGridGraph(100, g1);
 /*
 
 
@@ -81,14 +81,14 @@ int not_main() {
     g1.addEdge(id6, id5, 100);
 */
     u_int startNodeID = 2;
-    u_int finishNodeID = 100;
+    u_int finishNodeID = 500;
 
 
 
     /*************************************/
     /****           DIJKSTRA          ****/
     /*************************************/
-/*
+
     Dijkstra d = Dijkstra(g1);
 
     cout << "\n\n---------DIJKSTRA---------\n";
@@ -102,12 +102,12 @@ int not_main() {
     );
 
     d.printSolution();
-*/
+
 
     /*************************************/
     /****              A*             ****/
     /*************************************/
-/*
+
     AStar a = AStar(g1);
 
     cout << "\n\n---------A*---------\n";
@@ -123,12 +123,12 @@ int not_main() {
 
     a.printSolution();
 
-*/
+
 
     /*************************************/
     /****              DFS            ****/
     /*************************************/
-/*
+
     DFS dfs = DFS(g1);
 
     cout << "\n\n---------DFS---------\n";
@@ -137,18 +137,18 @@ int not_main() {
     );
 
     NodeHashTable dfsResult = dfs.performSearch(startNodeID);
-    dfs.printSolution();
+    //dfs.printSolution();
 
     milliseconds t3b = duration_cast< milliseconds >(
             system_clock::now().time_since_epoch()
     );
 
 
-*/
+
     /*************************************/
     /****              BFS            ****/
     /*************************************/
-/*
+
     BFS bfs = BFS(g1);
 
     cout << "\n\n---------BFS---------\n";
@@ -157,18 +157,18 @@ int not_main() {
     );
 
     NodeHashTable bfsResult = bfs.performSearch(startNodeID);
-    bfs.printSolution();
+    //bfs.printSolution();
 
     milliseconds t4b = duration_cast< milliseconds >(
             system_clock::now().time_since_epoch()
     );
 
 
-*/
+
     /*************************************/
     /****  DIJKSTRA BI DIRECTIONAL    ****/
     /*************************************/
-/*
+
     cout << "\n\n---------Dijkstra Bidirectional---------\n";
 
     DijkstraBiDir dbd = DijkstraBiDir(g1);
@@ -201,7 +201,7 @@ int not_main() {
         cout << testBidir1.getSolutionWeight() + testBidir2.getSolutionWeight() << endl;
     }
 
-*/
+
     /*************************************/
     /****     TSP Nearest Neighbor    ****/
     /*************************************/
@@ -209,7 +209,7 @@ int not_main() {
     cout << "\n\n---------TSP Nearest Neighbor---------\n";
 
     TSPNearestNeighbor t = TSPNearestNeighbor(g1);
-    vector<u_int> tsp_pois = {6,4,20,25,50,60,65,180,155,44};
+    vector<u_int> tsp_pois = {6,4,20,25};
 
     milliseconds t6 = duration_cast< milliseconds >(
             system_clock::now().time_since_epoch()
@@ -228,6 +228,7 @@ int not_main() {
     /*************************************/
     /***  2-opt Iterative Improvement  ***/
     /*************************************/
+
     milliseconds t7;
     milliseconds t7b;
 
@@ -257,24 +258,22 @@ int not_main() {
 
 
 
-
-
     /*************************************/
     /****      TIME TEST RESULTS      ****/
     /*************************************/
 
-    //cout << "\n\nDijkstra time: " << t1b.count() - t1.count() << " milliseconds" << endl;
-    //cout << "A* time: " << t2b.count() - t2.count() << " milliseconds" << endl;
-    //cout << "DFS time: " << t3b.count() - t3.count() << " milliseconds" << endl;
-    //cout << "BFS time: " << t4b.count() - t4.count() << " milliseconds" << endl;
-    //cout << "DijkstraBiDir time: " << t5b.count() - t5.count() << " milliseconds" << endl;
+    cout << "\n\nDijkstra time: " << t1b.count() - t1.count() << " milliseconds" << endl;
+    cout << "A* time: " << t2b.count() - t2.count() << " milliseconds" << endl;
+    cout << "DFS time: " << t3b.count() - t3.count() << " milliseconds" << endl;
+    cout << "BFS time: " << t4b.count() - t4.count() << " milliseconds" << endl;
+    cout << "DijkstraBiDir time: " << t5b.count() - t5.count() << " milliseconds" << endl;
     cout << "\n\nTSP Nearest Neighbor time: " << t6b.count() - t6.count() << " milliseconds" << endl;
     cout << "2-Opt time: " << t7b.count() - t7.count() << " milliseconds" << endl;
-/*
+
     cout << "\nGraph Data:" << endl;
     cout << "Number of nodes: " << g1.getNumNodes() << endl;
     cout << "Number of edges: " << g1.getNumEdges() << endl << endl;
-*/
+
     std::cout << "\nProgram ran successfully." << std::endl;
 
     return 0;
