@@ -35,6 +35,9 @@ public:
 	// Add a new edge connecting two nodes
 	bool addEdge(u_int nodeId1 , u_int nodeId2 , const double & weight);
 
+    // Add a new edge connecting two nodes
+    bool addEdge(u_int nodeId1 , u_int nodeId2 , const double & weight, const std::string& name);
+
 	// Returns a pair with the Edge value and a boolean that says if the node exists or not ;
 	// if the boolean is false, value makes no sense
 	std::pair<double,bool> getEdgeVal(u_int nodeId1 , u_int nodeId2) const;

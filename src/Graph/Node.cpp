@@ -26,13 +26,13 @@ Node::Node() :
 }
 
 
-bool Node::addNodeConnection(u_int destNodeId , const double & weight){
+bool Node::addNodeConnection(u_int destNodeId , const double & weight, const std::string & name){
     if (getConnectionIndex(destNodeId) != -1){
         return false;
     }
 
     // Add the node connection
-    edges.push_back( Edge(destNodeId, weight) );
+    edges.push_back( Edge(destNodeId, weight, name) );
     return true;
 }
 

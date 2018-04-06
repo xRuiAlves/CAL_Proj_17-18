@@ -24,6 +24,13 @@ public:
     u_int id;
 };
 
+class GraphLoadFailed : public Exception {
+public:
+    GraphLoadFailed(const std::string & fileName) : fileName(fileName) {}
+
+    std::string fileName;
+};
+
 
 
 

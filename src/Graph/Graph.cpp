@@ -15,6 +15,11 @@ u_int Graph::addNode(double x, double y, const std::string & name){
 
 
 bool Graph::addEdge(u_int nodeId1 , u_int nodeId2 , const double & weight) {
+
+    addEdge(nodeId1, nodeId2, weight, "");
+}
+
+bool Graph::addEdge(u_int nodeId1, u_int nodeId2, const double &weight, const std::string &name) {
     if (nodeId1 == nodeId2) {
         return false;
     }
@@ -30,8 +35,7 @@ bool Graph::addEdge(u_int nodeId1 , u_int nodeId2 , const double & weight) {
     }
 
     // Add the node connections
-    nodes.at(node1index).addNodeConnection(node2index, weight);
-    return true;    // Success
+    return nodes.at(node1index).addNodeConnection(node2index, weight, name);
 }
 
 
@@ -92,3 +96,5 @@ u_int Graph::getNumEdges() const {
 
     return numEdges;
 }
+
+

@@ -4,6 +4,7 @@
 
 #include "UI.h"
 #include "../Graph/Graph.h"
+#include "../Utilities/mapParser.h"
 #include "../Algorithms/Dijkstra.h"
 #include "../Algorithms/AStar.h"
 #include "../Algorithms/DFS.h"
@@ -21,13 +22,13 @@ using namespace std::chrono;
 
 void generateRandomGridGraph(int n, Graph & g);
 
-Graph loadedGraph;
+static Graph loadedGraph;
 
 void closeFunction(){
-    cout << "\n\n\nPress ENTER to quit.";
-    int caracters = getchar();
+    cout << "\n\nPress ENTER to continue.";
+    int character = getchar();
 
-    if(caracters == 10)	// enter key is pressed
+    if(character == '\n')	// enter key is pressed
         return;
     else
         cin.ignore(1000, '\n');
@@ -74,7 +75,7 @@ u_int getUnsignedIntInputInclusive(u_int lowerBound, u_int higherBound, string e
 
 int main(){
     loadedGraph = Graph();
-    generateRandomGridGraph(200, loadedGraph);
+    generateRandomGridGraph(10, loadedGraph);
 
     //TODO DELETE EVERYTHING ABOVE THIS INSIDE THE MAIN METHOD
     createMenu("Easy Pilot - Main Menu", {
@@ -106,11 +107,19 @@ void loadSmallMap(){
     closeFunction();
 }
 void loadMediumMap(){
-    cout << "YAY LOADING SMALL MAP!" << endl;
+    cout << "YAY LOADING MEDIUM MAP!" << endl;
     closeFunction();
 }
 void loadBigMap(){
-    cout << "YAY LOADING SMALL MAP!" << endl;
+    try {
+        loadedGraph = parseMap("../maps/map_big_A.txt", "../maps/map_big_B.txt", "../maps/map_big_C.txt");
+        cout << "\nSucessfuly loaded map with " << loadedGraph.getNumNodes() << " node and "
+             << loadedGraph.getNumEdges() << " edges." << endl;
+    }
+    catch (GraphLoadFailed err){
+        cerr << "Failed to load graph: Could not open " << err.fileName << "." << endl;
+    }
+
     closeFunction();
 }
 

@@ -50,7 +50,7 @@ public:
     const std::vector<Edge>& getEdges() const;
 
     // Add a connection
-    bool addNodeConnection(u_int destNodeId, const double & weight);
+    bool addNodeConnection(u_int destNodeId, const double & weight, const std::string & name);
 
     // Get Euclidian Distance to other node
     double getDistanceToOtherNode(const Node & otherNode) const;

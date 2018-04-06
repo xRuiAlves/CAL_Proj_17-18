@@ -7,9 +7,11 @@ class Edge{
 public:
     u_int destNodeId;
     double value;
+    std::string name;
 
     Edge();
     Edge(u_int destNodeId, const double & value);
+    Edge(u_int destNodeId, const double & value, const std::string & name);
 };
 
 
