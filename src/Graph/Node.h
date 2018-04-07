@@ -14,6 +14,12 @@ protected:
     u_int id;
     double x;
     double y;
+public:
+    double getX() const;
+
+    double getY() const;
+
+protected:
     std::string name;
 public:
     const std::string &getName() const;

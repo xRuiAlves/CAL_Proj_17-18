@@ -8,11 +8,20 @@ Graph::Graph(){
 u_int Graph::addNode(double x, double y, const std::string & name){
     u_int id = nodes.size();
     nodes.push_back( Node(id, x, y, name) );
-
+    if(id==0){
+        this->boundBot = y;
+        this->boundLeft = x;
+        this->boundRight = x;
+        this->boundTop = y;
+    }else{
+        if(x > boundRight) boundRight = x;
+        else if(x < boundLeft) boundLeft = x;
+        if(y > boundTop) boundTop = y;
+        else if (y < boundBot) boundBot = y;
+    }
     // Return the node's id
     return id;
 }
-
 
 bool Graph::addEdge(u_int nodeId1 , u_int nodeId2 , const double & weight) {
 
@@ -97,4 +106,29 @@ u_int Graph::getNumEdges() const {
     return numEdges;
 }
 
+int Graph::getNodeIndex(u_int nodeId) const {
+    for (int i=0 ; i<nodes.size() ; i++){
+        if(nodes.at(i).getId() == nodeId) {
+            return i;	// Found it
+        }
+    }
 
+    // Node not found
+    return -1;
+}
+
+double Graph::getBoundBot() const {
+    return boundBot;
+}
+
+double Graph::getBoundTop() const {
+    return boundTop;
+}
+
+double Graph::getBoundLeft() const {
+    return boundLeft;
+}
+
+double Graph::getBoundRight() const {
+    return boundRight;
+}

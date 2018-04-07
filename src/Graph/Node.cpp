@@ -81,3 +81,11 @@ bool Node::operator==(const Node & other) const{
 const std::string &Node::getName() const {
     return name;
 }
+
+double Node::getX() const {
+    return x;
+}
+
+double Node::getY() const {
+    return y;
+}

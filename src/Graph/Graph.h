@@ -12,19 +12,24 @@
 
 class Graph {
 private:
+	double boundBot;
+	double boundTop;
+public:
+	double getBoundBot() const;
+
+	double getBoundTop() const;
+
+	double getBoundLeft() const;
+
+	double getBoundRight() const;
+
+private:
+	double boundLeft;
+	double boundRight;
 	std::vector< Node > nodes;
 
 	// Get the index of the node with id 'id' , -1 if not found
-	int getNodeIndex(u_int nodeId) const {
-		for (int i=0 ; i<nodes.size() ; i++){
-			if(nodes.at(i).getId() == nodeId) {
-				return i;	// Found it
-			}
-		}
-
-		// Node not found
-		return -1;
-	}
+	int getNodeIndex(u_int nodeId) const;
 
 public:
 	Graph();
