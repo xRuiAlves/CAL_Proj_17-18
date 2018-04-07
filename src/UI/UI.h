@@ -7,6 +7,7 @@
 
 #include "../Utilities/defs.h"
 #include "../GraphViewer/cpp/graphviewer.h"
+#include "../Graph/Node.h"
 
 using namespace std;
 
@@ -27,6 +28,7 @@ void menuShortestPath();
         void viewGraphInViewer();
         void showGraphInTerm();
     void menuSearch();
+    void dspTwoNodes();
     void menuDijkstraAStar();
         void calcDijkstra();
         void calcAStar();
@@ -38,8 +40,12 @@ void menuShortestPath();
 GraphViewer* generateGV();
 GraphViewer* generateGV(double minX, double minY, double maxX, double maxY, bool drawEdges, int vertexSize, const string &vertexColor, bool dashedEdges);
 GraphViewer* generateGraphForNodes(const vector<u_int> &nodes);
+GraphViewer* generateGraphForNodes(const NodeHashTable &region);
 
-void showShortestPath(vector<u_int> path);
+GraphViewer* showShortestPath(vector<u_int> path);
+void showRegion(NodeHashTable dfsResult, u_int startNodeId);
+
+void closeViewer(GraphViewer* gv);
 
 void showNodes();
 u_int getNodeInput(string msg);
