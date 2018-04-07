@@ -1,0 +1,27 @@
+2opt(visitOrder):       /* Ordem de visita inicial dos vértices */   
+    bestVisitOrder <- visitOrder
+  
+    while visitOrderImproves() do
+        loopStart:    
+    
+        bestDistance <- calculateDistance(bestVisitOrder)
+        for (i=1 ; i<=numNodesToBeSwapped-1 ; i++) do
+            for (k=i+1 ; k<=numNodesToBeSwapped ; k++) do
+                newVisitOrder <- perform2optSwap(bestVisitOrder, i, k)
+                newDistance <- calculateDistance(newVisitOrder)
+                if newDistance < bestDistance then
+                    bestDistance <- newDistance
+                    bestVisitOrder <- newVisitOrder
+                    goto loopStart
+                    
+    return bestVisitOrder
+    
+    
+// Reverte ordem do vetor visitOrder entre os indices i e k, inclusivé
+perform2optSwap(visitOrder,i,k):
+    while i<k do
+        swap(visitOrder[i], visitOrder[k])
+        i++
+        k--
+    
+    return visitOrder
