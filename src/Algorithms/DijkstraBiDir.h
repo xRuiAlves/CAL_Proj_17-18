@@ -25,7 +25,8 @@ private:
     NodeHashTable pois;
     double bestPOIWeight = DBL_MAX;
     u_int bestPOIId = UINT_MAX;
-    bool foundAPOI = false;
+    u_int regularSearchPOICounter = 0;
+    u_int reverseSearchPOICounter = 0;
 
 
     // Clears the data structures for new calculation, populates DNodes pQueue and Reversed edges
@@ -51,6 +52,10 @@ private:
 
     // Removes the topDNode from the pQueue
     void removeReversedTopNodeFromQueue();
+
+    void reverseSearch();
+
+    void regularSearch();
 };
 
 

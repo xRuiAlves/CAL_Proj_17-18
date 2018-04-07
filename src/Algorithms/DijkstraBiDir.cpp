@@ -3,6 +3,7 @@
 //
 
 #include "DijkstraBiDir.h"
+#include <thread>
 
 DijkstraBiDir::DijkstraBiDir(const Graph &graph) : Dijkstra(graph){}
 
@@ -13,7 +14,8 @@ void DijkstraBiDir::initDataStructures(){
     populateReversedEdges();
     populateReversedQueue();
     bestPOIId = UINT_MAX;
-    foundAPOI = false;
+    regularSearchPOICounter = 0;
+    reverseSearchPOICounter = 0;
 }
 
 void DijkstraBiDir::populateReversedEdges(){
@@ -40,62 +42,87 @@ vector<u_int> DijkstraBiDir::calcOptimalPath(u_int startNodeId, u_int finishNode
     this->pois = givenPois;
     initDataStructures();
 
-    while (!pQueue.empty() || !pQueueReversed.empty()) {
+    std::thread t([=](){reverseSearch();});
+    regularSearch();
+    t.join();
+
+    buildPath();
+
+    return lastSolution;
+}
 
 
-        /////////// pQUEUE /////////
-        updateTopNode(); //set this->topDNode
+void DijkstraBiDir::regularSearch(){
 
-        //Analise the node on top of the priority queue
-        if(topDNode.getTotalWeight() != DBL_MAX) {
-            //Check if node is a dead end
-            if (isTopNodeDeadEnd()) {
-                removeNodeFromQueue();
-            } else {
-                //Analise next nodes and updateQueue
-                updateQueue();
-            }
+    updateTopNode(); //set this->topDNode
 
-        }else break;
+    while(!pQueue.empty() && topDNode.getTotalWeight() != DBL_MAX) {
+        //Check if node is a dead end
+        if (isTopNodeDeadEnd()) {
+            removeNodeFromQueue();
+        } else {
+            //Analise next nodes and updateQueue
+            updateQueue();
+        }
 
-        ///////// REVERSED pQUEUE /////////
-        updateReversedTopNode(); //set this->topDNode
+        if (isNodePOI(topDNode)) {
+            regularSearchPOICounter++;
+        }
 
-        //Analise the node on top of the priority queue
-        if(topDNodeReversed.getTotalWeight() != DBL_MAX) {
+        //***LOOP BREAKING CONDITIONS***
+        if (isReverseCheckedNode(topDNode.getId()) && isNodePOI(topDNode)) { //if node found in regular search was already found in reverse search
 
-            //Check if node is a dead end
-            if (isReversedTopNodeDeadEnd()) {
-                removeReversedTopNodeFromQueue();
-            } else {
-                //Analise next nodes and updateQueue
-                updateReversedQueue();
-            }
-
-        }else break;
-
-        if (isReverseCheckedNode(
-                topDNode.getId())) { //if node found in regular search was already found in reverse search
             updateBestPoi(topDNode);
+
+            if (regularSearchPOICounter == 1 && reverseSearchPOICounter == 1) {
+                break;
+            }
         }
 
-        if (isCheckedNode(
-                topDNodeReversed.getId())) { //if node found in reverse search was already found in regular search
-            updateBestPoi(topDNodeReversed);
-        }
-
-        if((topDNode.getTotalWeight() >= bestPOIWeight && topDNodeReversed.getTotalWeight() >= bestPOIWeight) || (foundAPOI = false && bestPOIId != UINT_MAX)){ //if you have only found one POI and it's already common to both searches, it will be the optimal and you can stop
-            //FOUND OPTIMAL SOLUTION
-            buildPath();
+        if (topDNode.getTotalWeight() >= bestPOIWeight) {
             break;
         }
 
-        if(isNodePOI(topDNode) || isNodePOI(topDNodeReversed)){
-            foundAPOI = true;
-        }
+        updateTopNode();
     }
 
-    return lastSolution;
+}
+
+void DijkstraBiDir::reverseSearch(){
+
+    updateReversedTopNode(); //set this->topDNode
+
+    //Analise the node on top of the priority queue
+    while(!pQueueReversed.empty() && topDNodeReversed.getTotalWeight() != DBL_MAX){
+
+        //Check if node is a dead end
+        if (isReversedTopNodeDeadEnd()) {
+            removeReversedTopNodeFromQueue();
+        } else {
+            //Analise next nodes and updateQueue
+            updateReversedQueue();
+        }
+
+        if(isNodePOI(topDNodeReversed)){
+            reverseSearchPOICounter++;
+        }
+
+        //***LOOP BREAKING CONDITIONS***
+        if (isCheckedNode(topDNodeReversed.getId()) && isNodePOI(topDNodeReversed)) { //if node found in reverse search was already found in regular search
+
+            updateBestPoi(topDNodeReversed);
+
+            if(regularSearchPOICounter == 1 && reverseSearchPOICounter == 1){
+                break;
+            }
+        }
+
+        if(topDNodeReversed.getTotalWeight() >= bestPOIWeight){
+            break;
+        }
+
+        updateReversedTopNode();
+    }
 }
 
 void DijkstraBiDir::populateReversedQueue() {
@@ -131,13 +158,11 @@ void DijkstraBiDir::updateReversedTopNode(){
 }
 
 void DijkstraBiDir::updateBestPoi(const DNode & commonNode) {
-    if(isNodePOI(commonNode)){
         double nodeTotalWeight = (*checkedDNodes.find(commonNode)).getTotalWeight() + (*checkedDNodesReversed.find(commonNode)).getTotalWeight();
         if(nodeTotalWeight < bestPOIWeight){
             bestPOIWeight = nodeTotalWeight;
             bestPOIId = commonNode.getId();
         }
-    }
 }
 
 // Check if the current node has been analised (if it has, it will be in checkedDNodes)
@@ -156,16 +181,19 @@ void DijkstraBiDir::buildPath() {
 
     lastSolution.clear();
 
-    u_int currDNodeId = this->bestPOIId;
-    while (currDNodeId != UINT_MAX) {
-        lastSolution.insert(lastSolution.begin(), currDNodeId);
-        currDNodeId = getCheckedNode(currDNodeId).getLastNodeId();
-    }
+    if(bestPOIId != UINT_MAX/* || pois.empty() // to add if implementing dijkstraBiDir for no POIs*/) { //if a solution was found
 
-    currDNodeId = (*checkedDNodesReversed.find(bestPOIId)).getLastNodeId();
-    while (currDNodeId != UINT_MAX) {
-        lastSolution.push_back(currDNodeId);
-        currDNodeId = (*checkedDNodesReversed.find(currDNodeId)).getLastNodeId();
+        u_int currDNodeId = this->bestPOIId;
+        while (currDNodeId != UINT_MAX) {
+            lastSolution.insert(lastSolution.begin(), currDNodeId);
+            currDNodeId = getCheckedNode(currDNodeId).getLastNodeId();
+        }
+
+        currDNodeId = (*checkedDNodesReversed.find(bestPOIId)).getLastNodeId();
+        while (currDNodeId != UINT_MAX) {
+            lastSolution.push_back(currDNodeId);
+            currDNodeId = (*checkedDNodesReversed.find(currDNodeId)).getLastNodeId();
+        }
     }
 }
 
