@@ -1,7 +1,3 @@
-//
-// Created by reeckset on 05-04-2018.
-//
-
 #include "UI.h"
 #include "../Graph/Graph.h"
 #include "../Utilities/mapParser.h"
@@ -11,16 +7,16 @@
 #include "../Algorithms/BFS.h"
 #include "../Algorithms/DijkstraBiDir.h"
 #include "../Algorithms/TSPNearestNeighbor.h"
+#include "../Algorithms/Two_Opt.h"
 #include <ctime>
 #include <chrono>
-#include <random>
 #include <sstream>
 
 using namespace std;
 using namespace std::chrono;
 
 
-void generateRandomGridGraph(int n, Graph & g);
+void generateTestGraph(Graph & g);
 
 static Graph loadedGraph;
 
@@ -75,44 +71,69 @@ u_int getUnsignedIntInputInclusive(u_int lowerBound, u_int higherBound, string e
 
 int main(){
     loadedGraph = Graph();
-    generateRandomGridGraph(10, loadedGraph);
+
+    for (u_int i=0 ; i<loadedGraph.getNumNodes() ; i++) {
+        Node n = loadedGraph.getNodeById(i);
+        cout << i << endl;
+        for (Edge e : n.getEdges()) {
+            cout << "\t" << e.destNodeId << " - " << e.name << " - " << e.value << endl;
+        }
+    }
 
     //TODO DELETE EVERYTHING ABOVE THIS INSIDE THE MAIN METHOD
     createMenu("Easy Pilot - Main Menu", {
             {"Load Map", menuLoadMap},
-            {"Navigate", menuShortestPath}
+            {"Navigate", menuOperateGraph}
     });
     return 0;
 }
 
 void menuLoadMap(){
     createMenu("Easy Pilot - Load Map", {
-            {"Small Map -> Castro Daire", loadSmallMap},
+            {"Test Map", loadTestMap},
+            {"Small Map -> Asprela", loadSmallMap},
             {"Medium Map -> Senhora da Hora", loadMediumMap},
             {"Big Map -> Oporto", loadBigMap}
     });
 }
 
-void menuShortestPath(){
+void menuOperateGraph(){
+    if (loadedGraph.getNumNodes() == 0) {
+        cout << "\n*** WARNING: No Graph in program memory. ***\nPlease load a Map first." << endl;
+        closeFunction();
+        return;
+    }
+
     createMenu("Easy Pilot - Navigator", {
             {"Visualize Map", viewGraph},
-            {"Test Path Possibility", dspTwoNodes},
+            {"Test Path Possibility", dfsTwoNodes},
             {"Location Connectivity", menuSearch},
             {"Path Between Two Locations", menuDijkstraAStar},
             {"Path Between Two Locations through best POI", menuDijBiDir},
-            {"Path Between Two Locations through several POI", menuTSP}
+            {"Path Between Two Locations through several POIs", menuTSP}
     });
 }
 
+void loadTestMap(){
+    cout << "\nLoading map ..." << endl;
+    generateTestGraph(loadedGraph);
+    cout << "\nMap loaded successfully.";
+    closeFunction();
+
+}
+
 void loadSmallMap(){
+    cout << "\nLoading map ..." << endl;
     loadMap("../maps/map_small_A.txt","../maps/map_small_B.txt","../maps/map_small_C.txt");
     closeFunction();
 }
 void loadMediumMap(){
+    cout << "\nLoading map ..." << endl;
     loadMap("../maps/map_medium_A.txt","../maps/map_medium_B.txt","../maps/map_medium_C.txt");
     closeFunction();
 }
 void loadBigMap(){
+    cout << "\nLoading map ..." << endl;
     loadMap("../maps/map_big_A.txt","../maps/map_big_B.txt","../maps/map_big_C.txt");
     closeFunction();
 }
@@ -124,7 +145,7 @@ void loadMap(const string &a, const string &b, const string &c){
              << loadedGraph.getNumEdges() << " edges." << endl;
     }
     catch (GraphLoadFailed err){
-        cerr << "Failed to load graph: Could not open " << err.fileName << "." << endl;
+        cout << "\nFailed to load graph: Could not open " << err.fileName << "." << endl;
     }
 }
 
@@ -242,22 +263,16 @@ void menuDijBiDir(){
     u_int startNodeId = getNodeInput("Please insert the id for the starting location");
     u_int finishNodeId = getNodeInput("Please insert the id for the finish location");
     showNodes();
-    cout << endl << "Insert the IDs for the locations of the possible drive-through locations separated by white spaces:" << endl;
-    stringstream ss;
-    string inputstr;
-    std::getline( cin, inputstr);
-    ss << inputstr;
-    bool validInput = true;
-    u_int chosenId;
+
+    vector<u_int> pois = getPOIsFromUser();
     NodeHashTable chosenPOIs;
-    while(ss >> chosenId){
-        chosenPOIs.insert(chosenId);
-        if(chosenId < 0 || chosenId >= loadedGraph.getNumNodes()){
-            validInput = false;
-            break;
-        }
+    for (u_int id : pois) {
+        chosenPOIs.insert(loadedGraph.getNodeById(id));
     }
-    if(validInput){
+
+    GraphViewer *gv = nullptr; 
+
+    if(!chosenPOIs.empty()){
         DijkstraBiDir dbd = DijkstraBiDir(loadedGraph);
 
         milliseconds t0 = duration_cast< milliseconds >(system_clock::now().time_since_epoch());
@@ -265,50 +280,44 @@ void menuDijBiDir(){
         vector<u_int> result = dbd.calcOptimalPath(startNodeId, finishNodeId, chosenPOIs);
 
         milliseconds t1 = duration_cast< milliseconds >(system_clock::now().time_since_epoch());
-        //if(dbd.foundSolution()) {
+        if(dbd.foundSolution()) {
             cout << "Ran Dijkstra algorithm in both directions in " << t1.count() - t0.count() << " milliseconds and found path with "
                  << dbd.getSolutionWeight() << " m going through " << dbd.getBestPOI().getName() << " (ID=" << dbd.getBestPOI().getId() << ")" << endl;
-        /*}else {
+        }else {
             cout << "Ran Dijkstra algorithm in both directions in " << t1.count() - t0.count() << " milliseconds and found no available path through any of the given locations"
                  << endl;
-        }*/
+        }
 
         if(result.size() > 1) {
-            GraphViewer *gv = showShortestPath(result);
+            gv = showShortestPath(result);
             gv->setVertexSize(dbd.getBestPOI().getId(), 50);
             gv->setVertexColor(dbd.getBestPOI().getId(), "blue");
-            closeViewer(gv);
         }
 
     }else{
         cout << "The inserted locations are not valid. Exiting to menu..." << endl;
     }
 
-    closeFunction();
+    closeViewer(gv);
 }
+
 void menuTSP(){
+    createMenu("Easy Pilot - Path Between Two Locations through several POIs", {
+            {"Using Nearest Neighbor Heuristic", menuTSPNearestNeighbor},
+            {"Using Iterative 2-Opt Improvement", menuTSP2opt}
+    });
+}
+
+void menuTSPNearestNeighbor(){
     u_int startNodeId = getNodeInput("Please insert the id for the starting location");
     u_int finishNodeId = getNodeInput("Please insert the id for the finish location");
     showNodes();
-    cout << endl << "Insert the IDs for the locations of the possible drive-through locations separated by white spaces:" << endl;
-    stringstream ss;
-    string inputstr;
-    getline( cin, inputstr);
-    ss << inputstr;
-    bool validInput = true;
-    u_int chosenId;
-    vector<u_int> chosenPOIs;
-    while(ss >> chosenId){
-        chosenPOIs.push_back(chosenId);
-        if(chosenId < 0 || chosenId >= loadedGraph.getNumNodes()){
-            validInput = false;
-            break;
-        }
-    }
 
-    GraphViewer *gv;
+    vector<u_int> chosenPOIs = getPOIsFromUser();
 
-    if(validInput){
+    GraphViewer *gv = nullptr;
+
+    if(!chosenPOIs.empty()){
 
         TSPNearestNeighbor tsp(loadedGraph);
 
@@ -333,6 +342,88 @@ void menuTSP(){
     }
 
     closeViewer(gv);
+}
+
+void menuTSP2opt() {
+    u_int startNodeId = getNodeInput("Please insert the id for the starting location");
+    u_int finishNodeId = getNodeInput("Please insert the id for the finish location");
+
+    cout << "\nPlease enter a positive number of iterations for 2-opt" << endl;
+    u_int numIterations = getUnsignedIntInputInclusive(1, 20, "Please enter a positive number of iterations.");
+    cout << endl;
+
+    showNodes();
+    vector<u_int> chosenPOIs = getPOIsFromUser();
+
+    GraphViewer *gv = nullptr; 
+
+    if(!chosenPOIs.empty()){
+
+        TSPNearestNeighbor tsp(loadedGraph);
+
+        milliseconds t0 = duration_cast< milliseconds >(system_clock::now().time_since_epoch());
+
+        vector<u_int> result = tsp.calcPath(startNodeId,finishNodeId,chosenPOIs);
+
+        milliseconds t1 = duration_cast< milliseconds >(system_clock::now().time_since_epoch());
+
+        if(!result.empty()) {
+            cout << "Nearest Neighbor Heuristic successfully found a path in " << t1.count() - t0.count() << " milliseconds with a distance of " << tsp.getSolutionWeight() << "m" << endl;
+            Two_Opt topt(loadedGraph);
+            double weight;
+
+            milliseconds t2 = duration_cast< milliseconds >(system_clock::now().time_since_epoch());
+
+            result = topt.performImprovement(tsp.getVisitOrder(), tsp.getSolutionWeight(), numIterations);
+            result = topt.buildSolution(result, weight);
+
+            milliseconds t3 = duration_cast< milliseconds >(system_clock::now().time_since_epoch());
+            cout << "2-Opt algorithm ran for " << t3.count() - t2.count() << " miliseconds and ";
+
+            if (weight == tsp.getSolutionWeight()) {
+                cout << "could not obtain a better solution." << endl;
+            }
+            else {
+                cout << "improved the solution to a distance of " << weight << "m." << endl;
+                cout << "Total improvement:  " << tsp.getSolutionWeight() - weight << "m." << endl;
+            }
+
+            gv = showShortestPath(result);
+            for(u_int id : chosenPOIs) {
+                gv->setVertexSize(id, 50);
+                gv->setVertexColor(id, "blue");
+            }
+        }else{
+            cout << "Could not find path between given locations" << endl;
+        }
+    }else{
+        cout << "The inserted locations are not valid. Exiting to menu..." << endl;
+    }
+
+    closeViewer(gv);
+}
+
+vector<u_int> getPOIsFromUser() {
+    vector<u_int> chosenPOIs;
+    stringstream ss;
+    string inputstr;
+
+    cout << endl << "Insert the IDs for the locations of the possible drive-through locations separated by white spaces:" << endl;
+
+    getline(cin, inputstr);
+    ss << inputstr;
+
+
+    u_int chosenId;
+    while(ss >> chosenId){
+        chosenPOIs.push_back(chosenId);
+        if(chosenId < 0 || chosenId >= loadedGraph.getNumNodes()){
+            chosenPOIs.clear();
+            break;
+        }
+    }
+
+    return chosenPOIs;
 }
 
 u_int getNodeInput(string msg){
@@ -412,15 +503,16 @@ GraphViewer* generateGV(double minX, double minY, double maxX, double maxY, bool
         gv->addNode(i, (int)(xPercent*windowWidth), (int)(yPercent*windowHeight));
         gv->setVertexSize(i, vertexSize);
     }
+
     if(drawEdges) {
-        int id1, id2;
+        int edgeId=0;
+        vector<Edge> edges;
         for (u_int i = 0; i < loadedGraph.getNumNodes(); i++) {
-            for (Edge e : loadedGraph.getNodeById(i).getEdges()) {
+            edges = loadedGraph.getNodeById(i).getEdges();
+            for (Edge e : edges) {
                 if (e.destNodeId < loadedGraph.getNumNodes()) {
-                    id1 = min(i, e.destNodeId);
-                    id2 = max(i, e.destNodeId);
-                    gv->removeEdge(id1 * loadedGraph.getNumNodes() + id2);
-                    gv->addEdge(id1 * loadedGraph.getNumNodes() + id2, i, e.destNodeId, EdgeType::UNDIRECTED);
+                    gv->removeEdge(edgeId++);
+                    gv->addEdge(edgeId++,i , e.destNodeId, EdgeType::DIRECTED);
                 }
             }
         }
@@ -491,7 +583,7 @@ GraphViewer* showShortestPath(vector<u_int> path) {
     return gv;
 }
 
-void dspTwoNodes() {
+void dfsTwoNodes() {
     u_int startNodeId = getNodeInput("Please insert the id for the starting location");
     u_int finishNodeId = getNodeInput("Please insert the id for the finish location");
 

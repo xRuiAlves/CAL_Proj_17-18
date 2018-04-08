@@ -20,21 +20,24 @@ static u_int getUnsignedIntInputInclusive(u_int lowerBound, u_int higherBound, s
 void loadMap(const string &a, const string &b, const string &c);
 
 void menuLoadMap();
+    void loadTestMap();
     void loadSmallMap();
     void loadMediumMap();
     void loadBigMap();
-void menuShortestPath();
+void menuOperateGraph();
     void viewGraph();
         void viewGraphInViewer();
         void showGraphInTerm();
     void menuSearch();
-    void dspTwoNodes();
+    void dfsTwoNodes();
     void menuDijkstraAStar();
         void calcDijkstra();
         void calcAStar();
         void calcDijkstraAndAStar();
     void menuDijBiDir();
     void menuTSP();
+        void menuTSPNearestNeighbor();
+        void menuTSP2opt();
 
 
 GraphViewer* generateGV();
@@ -49,6 +52,7 @@ void closeViewer(GraphViewer* gv);
 
 void showNodes();
 u_int getNodeInput(string msg);
+vector<u_int> getPOIsFromUser();
 
 
 

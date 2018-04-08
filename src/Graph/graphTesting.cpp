@@ -44,6 +44,44 @@ void generateRandomGridGraph(int n, Graph & g) {
     }
 }
 
+void generateTestGraph(Graph & g) {
+    u_int id0 = g.addNode(2, 6, "Place 0");
+    u_int id1 = g.addNode(0, 7, "Place 1");
+    u_int id2 = g.addNode(0, 5, "Place 2");
+    u_int id3 = g.addNode(1, 0, "Place 3");
+    u_int id4 = g.addNode(3, 7, "Place 4");
+    u_int id5 = g.addNode(3, 6, "Place 5");
+    u_int id6 = g.addNode(3, 5, "Place 6");
+    u_int id7 = g.addNode(6, 6, "Place 7");
+    u_int id8 = g.addNode(5, 5, "Place 8");
+    u_int id9 = g.addNode(5, 4, "Place 9");
+    u_int id10 = g.addNode(6, 1, "Place 10");
+    u_int id11 = g.addNode(7, 2, "Place 11");
+
+    g.addEdge(id0,id1,g.getNodeById(id0).getDistanceToOtherNode(g.getNodeById(id1)), "Road 0");
+    g.addEdge(id0,id2,g.getNodeById(id0).getDistanceToOtherNode(g.getNodeById(id2)), "Road 1");
+    g.addEdge(id0,id4,g.getNodeById(id0).getDistanceToOtherNode(g.getNodeById(id4)), "Road 2");
+    g.addEdge(id0,id5,g.getNodeById(id0).getDistanceToOtherNode(g.getNodeById(id5)), "Road 3");
+    g.addEdge(id0,id6,g.getNodeById(id0).getDistanceToOtherNode(g.getNodeById(id5)), "Road 4");
+    g.addEdge(id1,id2,g.getNodeById(id1).getDistanceToOtherNode(g.getNodeById(id2)), "Road 5");
+    g.addEdge(id1,id6,g.getNodeById(id1).getDistanceToOtherNode(g.getNodeById(id6)), "Road 6");
+    g.addEdge(id2,id3,g.getNodeById(id2).getDistanceToOtherNode(g.getNodeById(id3)), "Road 7");
+    g.addEdge(id2,id6,g.getNodeById(id2).getDistanceToOtherNode(g.getNodeById(id6)), "Road 8");
+    g.addEdge(id3,id2,g.getNodeById(id3).getDistanceToOtherNode(g.getNodeById(id2)), "Road 9");
+    g.addEdge(id3,id9,g.getNodeById(id3).getDistanceToOtherNode(g.getNodeById(id9)), "Road 10");
+    g.addEdge(id4,id5,g.getNodeById(id4).getDistanceToOtherNode(g.getNodeById(id5)), "Road 11");
+    g.addEdge(id5,id6,g.getNodeById(id5).getDistanceToOtherNode(g.getNodeById(id6)), "Road 12");
+    g.addEdge(id5,id7,g.getNodeById(id5).getDistanceToOtherNode(g.getNodeById(id7)), "Road 13");
+    g.addEdge(id6,id0,g.getNodeById(id6).getDistanceToOtherNode(g.getNodeById(id0)), "Road 14");
+    g.addEdge(id6,id8,g.getNodeById(id0).getDistanceToOtherNode(g.getNodeById(id1)), "Road 15");
+    g.addEdge(id7,id11,g.getNodeById(id7).getDistanceToOtherNode(g.getNodeById(id11)), "Road 16");
+    g.addEdge(id8,id9,g.getNodeById(id8).getDistanceToOtherNode(g.getNodeById(id9)), "Road 17");
+    g.addEdge(id9,id3,g.getNodeById(id9).getDistanceToOtherNode(g.getNodeById(id3)), "Road 18");
+    g.addEdge(id9,id6,g.getNodeById(id9).getDistanceToOtherNode(g.getNodeById(id6)), "Road 19");
+    g.addEdge(id10,id11,g.getNodeById(id10).getDistanceToOtherNode(g.getNodeById(id11)), "Road 20");
+    g.addEdge(id11,id10,g.getNodeById(id11).getDistanceToOtherNode(g.getNodeById(id10)), "Road 21");
+}
+
 int not_main() {
 
     std::cout << "Starting tests ..." << std::endl;
