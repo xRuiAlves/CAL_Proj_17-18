@@ -16,6 +16,7 @@ void DijkstraBiDir::initDataStructures(){
     bestPOIId = UINT_MAX;
     regularSearchPOICounter = 0;
     reverseSearchPOICounter = 0;
+    finishedSearch = false;
 }
 
 void DijkstraBiDir::populateReversedEdges(){
@@ -56,7 +57,7 @@ void DijkstraBiDir::regularSearch(){
 
     updateTopNode(); //set this->topDNode
 
-    while(!pQueue.empty() && topDNode.getTotalWeight() != DBL_MAX) {
+    while(!pQueue.empty() && topDNode.getTotalWeight() != DBL_MAX && !finishedSearch) {
         //Check if node is a dead end
         if (isTopNodeDeadEnd()) {
             removeNodeFromQueue();
@@ -74,9 +75,16 @@ void DijkstraBiDir::regularSearch(){
 
             updateBestPoi(topDNode);
 
-            if (regularSearchPOICounter == 1 && reverseSearchPOICounter == 1) {
+            if ((regularSearchPOICounter == 1 && reverseSearchPOICounter == 1)) {
+                finishedSearch = true;
                 break;
             }
+        }
+
+        if(isReverseCheckedNode(topDNode.getId()) && pois.empty()){ //If there are no POIs, stop on the first common node
+            bestPOIId = topDNode.getId();
+            finishedSearch = true;
+            break;
         }
 
         if (topDNode.getTotalWeight() >= bestPOIWeight) {
@@ -93,7 +101,7 @@ void DijkstraBiDir::reverseSearch(){
     updateReversedTopNode(); //set this->topDNode
 
     //Analise the node on top of the priority queue
-    while(!pQueueReversed.empty() && topDNodeReversed.getTotalWeight() != DBL_MAX){
+    while(!pQueueReversed.empty() && topDNodeReversed.getTotalWeight() != DBL_MAX && !finishedSearch){
 
         //Check if node is a dead end
         if (isReversedTopNodeDeadEnd()) {
@@ -112,9 +120,16 @@ void DijkstraBiDir::reverseSearch(){
 
             updateBestPoi(topDNodeReversed);
 
-            if(regularSearchPOICounter == 1 && reverseSearchPOICounter == 1){
+            if ((regularSearchPOICounter == 1 && reverseSearchPOICounter == 1)) {
+                finishedSearch = true;
                 break;
             }
+        }
+
+        if(isCheckedNode(topDNodeReversed.getId()) && pois.empty()){ //If there are no POIs, stop on the first common node
+            bestPOIId = topDNodeReversed.getId();
+            finishedSearch = true;
+            break;
         }
 
         if(topDNodeReversed.getTotalWeight() >= bestPOIWeight){
@@ -175,13 +190,15 @@ bool DijkstraBiDir::isNodePOI(const Node & node) const{
 }
 
 void DijkstraBiDir::buildPath() {
-    this->solutionTotalCost = (*checkedDNodesReversed.find(bestPOIId)).getTotalWeight() + (*checkedDNodes.find(bestPOIId)).getTotalWeight();
-    this->checkedDNodesReversed.insert(topDNodeReversed);
-    this->checkedDNodes.insert(topDNode);
 
     lastSolution.clear();
 
-    if(bestPOIId != UINT_MAX/* || pois.empty() // to add if implementing dijkstraBiDir for no POIs*/) { //if a solution was found
+    if(bestPOIId != UINT_MAX) { //if a solution was found
+        this->solutionTotalCost = (*checkedDNodesReversed.find(bestPOIId)).getTotalWeight() +
+                                  (*checkedDNodes.find(bestPOIId)).getTotalWeight();
+
+        this->checkedDNodesReversed.insert(topDNodeReversed);
+        this->checkedDNodes.insert(topDNode);
 
         u_int currDNodeId = this->bestPOIId;
         while (currDNodeId != UINT_MAX) {

@@ -27,6 +27,7 @@ private:
     u_int bestPOIId = UINT_MAX;
     u_int regularSearchPOICounter = 0;
     u_int reverseSearchPOICounter = 0;
+    bool finishedSearch = false;
 
 
     // Clears the data structures for new calculation, populates DNodes pQueue and Reversed edges

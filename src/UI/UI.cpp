@@ -174,6 +174,7 @@ void menuSearch(){
 void menuDijkstraAStar(){
     createMenu("Easy Pilot - Optimal path between two locations",
                {{"Optimal path using Dijkstra algorithm", calcDijkstra},
+                {"Optimal path using DIjkstra algorithm in both directions", calcDijBiDirNoPOIs},
                        {"Optimal path using A* algorithm", calcAStar},
                 {"Dijkstra and A* algorithms comparison", calcDijkstraAndAStar}});
 }
@@ -301,6 +302,34 @@ void menuDijBiDir(){
     closeViewer(gv);
 }
 
+void calcDijBiDirNoPOIs(){
+    u_int startNodeId = getNodeInput("Please insert the id for the starting location");
+    u_int finishNodeId = getNodeInput("Please insert the id for the finish location");
+
+    NodeHashTable chosenPOIs;
+
+    GraphViewer *gv = nullptr;
+
+    DijkstraBiDir dbd = DijkstraBiDir(loadedGraph);
+
+    milliseconds t0 = duration_cast< milliseconds >(system_clock::now().time_since_epoch());
+
+    vector<u_int> result = dbd.calcOptimalPath(startNodeId, finishNodeId, chosenPOIs);
+
+    milliseconds t1 = duration_cast< milliseconds >(system_clock::now().time_since_epoch());
+    if(dbd.foundSolution()) {
+        cout << "Ran Dijkstra algorithm in both directions in " << t1.count() - t0.count() << " milliseconds and found path with "
+             << dbd.getSolutionWeight() << " m going" << endl;
+    }else {
+        cout << "Ran Dijkstra algorithm in both directions in " << t1.count() - t0.count() << " milliseconds and found no available path"
+             << endl;
+    }
+
+    gv = showShortestPath(result);
+
+    closeViewer(gv);
+}
+
 void menuTSP(){
     createMenu("Easy Pilot - Path Between Two Locations through several POIs", {
             {"Using Nearest Neighbor Heuristic", menuTSPNearestNeighbor},
@@ -331,7 +360,7 @@ void menuTSPNearestNeighbor(){
             cout << "Successfully found a path in " << t1.count() - t0.count() << " milliseconds with a distance of " << tsp.getSolutionWeight() << "m" << endl;
             gv = showShortestPath(result);
             for(u_int id : chosenPOIs) {
-                gv->setVertexSize(id, 50);
+                gv->setVertexSize(id, 40);
                 gv->setVertexColor(id, "blue");
             }
         }else{
@@ -485,7 +514,7 @@ GraphViewer* generateGV(double minX, double minY, double maxX, double maxY, bool
     double graphWidth = maxX - minX;
 
     int windowHeight = 700;
-    int windowWidth = windowHeight * graphWidth/graphHeight;
+    int windowWidth = max((int)(windowHeight * graphWidth/graphHeight), 700);
     GraphViewer *gv = new GraphViewer(windowWidth, windowHeight, false);
     gv->setBackground("background.jpg");
     gv->createWindow(windowWidth, windowHeight);
@@ -504,9 +533,9 @@ GraphViewer* generateGV(double minX, double minY, double maxX, double maxY, bool
         gv->setVertexSize(i, vertexSize);
     }
 
-    if(drawEdges) {
-        int edgeId=0;
-        vector<Edge> edges;
+        if(drawEdges) {
+            int edgeId=0;
+            vector<Edge> edges;
         for (u_int i = 0; i < loadedGraph.getNumNodes(); i++) {
             edges = loadedGraph.getNodeById(i).getEdges();
             for (Edge e : edges) {
@@ -550,7 +579,7 @@ GraphViewer* generateGraphForNodes(const vector<u_int> &nodes){
 
     GraphViewer *gv = generateGV(minX - 1, minY - 1,
                                  maxX + 1, maxY + 1,
-                                 false, 10, "gray", true);
+                                 false, 4, "gray", true);
 
     return gv;
 }
@@ -566,8 +595,10 @@ GraphViewer* showShortestPath(vector<u_int> path) {
         gv->addEdge(i, path.at(i - 1), path.at(i), EdgeType::DIRECTED);
         gv->setEdgeDashed(i, false);
         gv->setEdgeThickness(i, 4);
+        gv->setEdgeColor(i, "orange");
         if (i != path.size() - 1) {
             gv->setVertexColor(path.at(i), "yellow");
+            gv->setVertexSize(path.at(i), 15);
         }
     }
 

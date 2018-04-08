@@ -32,6 +32,7 @@ void menuOperateGraph();
     void dfsTwoNodes();
     void menuDijkstraAStar();
         void calcDijkstra();
+        void calcDijBiDirNoPOIs();
         void calcAStar();
         void calcDijkstraAndAStar();
     void menuDijBiDir();
