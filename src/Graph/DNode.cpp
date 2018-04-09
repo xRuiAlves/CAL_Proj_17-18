@@ -37,16 +37,6 @@ DNode::DNode(u_int id) : Node(id){
 }
 
 
-void DNode::setLastNodeId(u_int lastNodeId) {
-    this->lastNodeId = lastNodeId;
-}
-
-
-void DNode::setTotalWeight(double totalWeight) {
-    this->totalWeight = totalWeight;
-}
-
-
 u_int DNode::getLastNodeId() const {
     return lastNodeId;
 }

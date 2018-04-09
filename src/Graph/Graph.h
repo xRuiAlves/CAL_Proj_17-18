@@ -12,20 +12,13 @@
 
 class Graph {
 private:
-	double boundBot;
-	double boundTop;
 public:
-	double getBoundBot() const;
-
-	double getBoundTop() const;
-
-	double getBoundLeft() const;
-
-	double getBoundRight() const;
 
 private:
 	double boundLeft;
 	double boundRight;
+	double boundBot;
+	double boundTop;
 	std::vector< Node > nodes;
 
 	// Get the index of the node with id 'id' , -1 if not found
@@ -62,6 +55,18 @@ public:
 
 	// Returns the number of edges in the graph
 	u_int getNumEdges() const;
+
+    // Returns the minimum Node Y coordinate
+	double getBoundBot() const;
+
+    // Returns the maximum Node Y coordinate
+	double getBoundTop() const;
+
+    // Returns the minimum Node X coordinate
+	double getBoundLeft() const;
+
+    // Returns the maximum Node X coordinate
+	double getBoundRight() const;
 };
 
 

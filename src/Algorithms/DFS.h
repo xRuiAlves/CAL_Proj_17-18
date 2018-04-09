@@ -5,7 +5,10 @@
 
 class DFS : public GraphSearchAlgorithm {
 private:
+    // Visits a node, adding it to the 'visitedNodes' hash table if it has not been visited yet
     void visitNode(const Node & node);
+
+    // Visits a node and verifies if it is the 'target node' (finish Node)
     bool visitNodeWithCondition(const Node & node, const Node & finishNode);
 
 public:

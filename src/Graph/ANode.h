@@ -9,6 +9,7 @@ private:
     double distToFinish;
     double heuristicWeight;
 public:
+    // Constructors
     ANode(const Node & node);
     ANode(double distToFinish);
     ANode(const Node &  node , u_int lastNodeId , double totalWeight, double distToFinish);
@@ -17,12 +18,10 @@ public:
     ANode(const DNode &  dnode, double distToFinish);
     ANode(u_int id, double distToFinish);
 
+    // Returns node 'heuristicWeight' value
     double getHeuristicWeight() const;
-    double getDistToFinish() const;
 
-    double setTotalWeight(double weight);
-    double setDistToFinish(double dist);
-
+    // ANode 'Less than' operator
     bool operator<(const ANode& d2) const;
 };
 

@@ -78,7 +78,7 @@ bool Node::operator==(const Node & other) const{
     return this->id == other.id;
 }
 
-const std::string &Node::getName() const {
+string Node::getName() const {
     return name;
 }
 

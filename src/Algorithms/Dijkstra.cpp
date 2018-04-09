@@ -136,11 +136,6 @@ DNode Dijkstra::getCheckedNode(u_int id) const{
     return *(this->checkedDNodes.find(DNode(id)));
 }
 
-// Checks if a Node Id is valid within the graph
-bool Dijkstra::isNodeIdValid(u_int nodeID) const{
-    return (nodeID < graph.getNumNodes());
-}
-
 // Clears the data structures for new calculation and populates DNodes pQueue
 void Dijkstra::initDataStructures() {
     checkedDNodes.clear();

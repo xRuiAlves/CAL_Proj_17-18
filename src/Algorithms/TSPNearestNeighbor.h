@@ -54,10 +54,13 @@ private:
 public:
     TSPNearestNeighbor(const Graph &graph);
 
+    // Calculates path between two nodes, passing through all the points of interest
     vector<u_int> calcPath(u_int startNodeId, u_int finishNodeId, const vector<u_int> & pois);
 
+    // Returns a vector with the Points of Interest Visit Order
     vector<u_int> getVisitOrder() const;
 
+    // Returns the solution weight, if there is a solution at the present moment
     double getSolutionWeight() const;
 };
 

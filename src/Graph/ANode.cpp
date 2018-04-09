@@ -51,18 +51,3 @@ ANode::ANode(const DNode &  dnode, double distToFinish) : DNode(dnode) {
 double ANode::getHeuristicWeight() const {
     return this->heuristicWeight;
 }
-
-double ANode::getDistToFinish() const {
-    return this->distToFinish;
-}
-
-double ANode::setTotalWeight(double totalWeight) {
-    this->totalWeight = totalWeight;
-    this->heuristicWeight = this->totalWeight + this->distToFinish;
-}
-
-
-double ANode::setDistToFinish(double dist) {
-    this->distToFinish = dist;
-    this->heuristicWeight = this->totalWeight + this->distToFinish;
-}

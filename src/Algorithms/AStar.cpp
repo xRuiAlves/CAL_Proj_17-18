@@ -17,11 +17,8 @@ void AStar::populateQueue() {
         distancesToFinish.push_back(n.getDistanceToOtherNode(finishNode));
 
         if(i == this->startNode.getId()){
-            //this->pQueue.emplace(this->graph.getNodeById(i),
-            //                     0);
             this->pQueueWeighted.emplace(n, 0, n.getDistanceToOtherNode(finishNode));
         } else {
-            //this->pQueue.emplace(this->graph.getNodeById(i));
             this->pQueueWeighted.emplace(n);
         }
     }
@@ -37,7 +34,6 @@ void AStar::updateQueue(){
             continue;
         }
 
-        //ANode currNode = getANodeById(e.destNodeId);
         ANode currNode = ANode(graph.getNodeById(e.destNodeId),
                                topANode.getId(),
                                topANode.getTotalWeight()+ e.value,
@@ -53,12 +49,10 @@ bool AStar::foundOptimalSolution() {
 }
 
 void AStar::removeNodeFromQueue() {
-    //this->pQueue.erase(topDNode);
     this->pQueueWeighted.erase(topANode);
 }
 
 void AStar::updateTopNode(){
-    //this->topDNode = *(pQueue.begin());
     this->topANode = *(pQueueWeighted.begin());
 }
 

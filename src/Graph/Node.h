@@ -6,27 +6,11 @@
 #include <cmath>
 #include <unordered_set>
 
+using namespace std;
 
 // Node class, used by graph class
 // Every node has its own unique ID, which makes the node Unique and "locatable"
 class Node{
-protected:
-    u_int id;
-    double x;
-    double y;
-public:
-    double getX() const;
-
-    double getY() const;
-
-protected:
-    std::string name;
-public:
-    const std::string &getName() const;
-
-protected:
-    std::vector< Edge > edges;
-
 private:
     // Gets the connection with the Node (with id) passed in as parameter index , -1 if not found
     int getConnectionIndex(u_int destNodeId) const{
@@ -41,6 +25,13 @@ private:
         return -1;
     }
 
+protected:
+    u_int id;
+    double x;
+    double y;
+    string name;
+    std::vector< Edge > edges;
+
 public:
 
     // Empty Constructor
@@ -51,6 +42,15 @@ public:
 
     // Construct node with its value
     Node(u_int id, double x, double y, const std::string &name);
+
+    // Returns node x position
+    double getX() const;
+
+    // Returns node y position
+    double getY() const;
+
+    // Returns node string identifier
+    string getName() const;
 
     // Returns all the edges in the node
     const std::vector<Edge>& getEdges() const;
@@ -71,10 +71,15 @@ public:
     // Returns the number of edges in the Node
     u_int getNumEdges() const;
 
+    // Node equality Operator
     bool operator==(const Node & other) const;
 };
 
 
+
+/////////////////////////////////////
+//////     NODE HASH TABLE     //////
+/////////////////////////////////////
 
 struct NodeHash {
     bool operator()(const Node &d1, const Node &d2) const {

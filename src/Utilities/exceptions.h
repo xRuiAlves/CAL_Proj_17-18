@@ -3,20 +3,21 @@
 
 #include "defs.h"
 
+// Generic Exception Class
 class Exception {
 public:
     Exception() {}
 };
 
-
+// Exception Class that represents an invalid node ID
 class InvalidNodeId : public Exception {
-private:
 public:
     InvalidNodeId(u_int id) : id(id) {}
 
     u_int id;
 };
 
+// Exception Class that represents a Node not found within a Graph
 class NodeNotFound : public Exception {
 public:
     NodeNotFound(u_int id) : id(id) {}
@@ -24,6 +25,7 @@ public:
     u_int id;
 };
 
+// Exception Class that represents an invalid node ID
 class GraphLoadFailed : public Exception {
 public:
     GraphLoadFailed(const std::string & fileName) : fileName(fileName) {}

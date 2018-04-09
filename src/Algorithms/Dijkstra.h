@@ -14,18 +14,6 @@
 
 using namespace std;
 
-struct DNodeHash {
-    bool operator()(const DNode &d1, const DNode &d2) const {
-        return d1 == d2;
-    }
-
-    int operator()(const DNode &d) const {
-        return d.getId();
-    }
-};
-
-typedef unordered_set<DNode, DNodeHash, DNodeHash> DNodeHashTable;
-
 class Dijkstra {
 protected:
     // Data Structures
@@ -46,9 +34,6 @@ protected:
 
     // Check if the current node has been analised (if it has, it will be in checkedDNodes)
     bool isCheckedNode(u_int nodeId) const;
-
-    // Gets the node in the queue for a specified id (returns node with weight -1 if it cant find it)
-    // virtual DNode getDNodeInQueueById(u_int id) const;
 
     // Updates a DNode in the pQueue
     void updateNodeOnQueue(const DNode & currDNode, set<DNode> & queue);
@@ -77,9 +62,6 @@ protected:
     // Retrived a node in checkedNodes by its id
     DNode getCheckedNode(u_int id) const;
 
-    // Checks if a Node Id is valid within the graph
-    bool isNodeIdValid(u_int nodeID) const;
-
     // Clears the data structures for new calculation and populates DNodes pQueue
     virtual void initDataStructures();
 
@@ -89,11 +71,13 @@ public:
 
     Dijkstra(const Graph &graph);
 
-    // CALCULATE OPTIMAL PATH
+    // Calculates optimal path between two nodes
     vector<u_int> calcOptimalPath(u_int startNodeId, u_int finishNodeId);
 
+    // Returns the solution weight, if there is a solution at the present moment
     double getSolutionWeight() const;
 
+    // Verifies if there is a solution at the present moment
     bool foundSolution() const;
 };
 

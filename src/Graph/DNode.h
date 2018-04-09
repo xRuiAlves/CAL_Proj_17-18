@@ -19,17 +19,39 @@ public:
     DNode(u_int id);
     DNode(u_int id , u_int lastNodeId);
 
-    // Getters and Setters
-    void setLastNodeId(u_int lastNodeId);
-    void setTotalWeight(double totalWeight);
+    // Returns the 'lastNodeId' value
     u_int getLastNodeId() const;
+
+    // Returns the node's 'totalWeight' value
     double getTotalWeight() const;
 
-    // Operators
+    // DNode 'Less than' operator
     virtual bool operator<(const DNode& d2) const;
+
+    // DNode Equality operator
     bool operator==(const DNode& d2) const;
+
+    // DNode Difference Operator
     bool operator!=(const DNode& d2) const;
 };
+
+
+
+/////////////////////////////////////
+//////     DNODE HASH TABLE     //////
+/////////////////////////////////////
+
+struct DNodeHash {
+    bool operator()(const DNode &d1, const DNode &d2) const {
+        return d1 == d2;
+    }
+
+    int operator()(const DNode &d) const {
+        return d.getId();
+    }
+};
+
+typedef unordered_set<DNode, DNodeHash, DNodeHash> DNodeHashTable;
 
 
 #endif /* DNODE_H_ */

@@ -3,12 +3,12 @@
 
 #include "../Utilities/defs.h"
 
-class Edge{
-public:
+struct Edge{
     u_int destNodeId;
     double value;
     std::string name;
 
+    // Constructors
     Edge();
     Edge(u_int destNodeId, const double & value);
     Edge(u_int destNodeId, const double & value, const std::string & name);

@@ -14,6 +14,7 @@ protected:
     const Graph &graph;
     NodeHashTable visitedNodes;
 
+    // Verifies if the node has already been visited
     bool isNodeVisited(const Node & node) const;
 
 public:

@@ -139,8 +139,6 @@ int not_main() {
             system_clock::now().time_since_epoch()
     );
 
-    d.printSolution();
-
 
     /*************************************/
     /****              A*             ****/
@@ -158,8 +156,6 @@ int not_main() {
     milliseconds t2b = duration_cast< milliseconds >(
             system_clock::now().time_since_epoch()
     );
-
-    a.printSolution();
 
 
 
@@ -225,8 +221,6 @@ int not_main() {
             system_clock::now().time_since_epoch()
     );
 
-    dbd.printSolution();
-
     AStar testBidir1 = AStar(g1);
     AStar testBidir2 = AStar(g1);
 
@@ -258,8 +252,6 @@ int not_main() {
     milliseconds t6b = duration_cast< milliseconds >(
             system_clock::now().time_since_epoch()
     );
-
-    t.printSolution();
 
     vector<u_int> visitOrder = t.getVisitOrder();
 
