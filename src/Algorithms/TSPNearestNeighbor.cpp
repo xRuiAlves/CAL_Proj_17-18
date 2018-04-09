@@ -33,21 +33,6 @@ vector<u_int> TSPNearestNeighbor::calcPath(u_int startNodeId, u_int finishNodeId
     }
 }
 
-void TSPNearestNeighbor::printSolution() {
-    cout << endl;
-    if(lastSolution.empty()){
-        cout << "No solution available. Run calcOptimalSolution before printing." << endl;
-        return;
-    }
-    else {
-        cout << "Successfully generated with a total weight of " << solutionTotalCost << ":" << endl;
-        for(u_int nodeId : lastSolution){
-            cout << nodeId << " ";
-        }
-        cout << endl;
-    }
-}
-
 double TSPNearestNeighbor::getSolutionWeight() const {
     return solutionTotalCost;
 }

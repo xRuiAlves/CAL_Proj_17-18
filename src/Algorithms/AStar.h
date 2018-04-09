@@ -10,8 +10,6 @@
 #include "../Graph/ANode.h"
 
 class AStar : public Dijkstra {
-public:
-    AStar(const Graph &graph);
 private:
     set<ANode> pQueueWeighted; // stores the ANodes with the A* weight function
     vector<double> distancesToFinish;
@@ -34,6 +32,9 @@ private:
     void updateQueue();
 
     void buildPath();
+
+public:
+    AStar(const Graph &graph);
 };
 
 

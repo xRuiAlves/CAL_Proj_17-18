@@ -58,8 +58,6 @@ public:
 
     vector<u_int> getVisitOrder() const;
 
-    void printSolution();
-
     double getSolutionWeight() const;
 };
 

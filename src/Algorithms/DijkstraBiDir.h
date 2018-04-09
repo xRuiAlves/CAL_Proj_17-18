@@ -10,13 +10,6 @@
 typedef vector<Edge> EdgeList;
 
 class DijkstraBiDir : public Dijkstra {
-public:
-    DijkstraBiDir(const Graph &graph);
-    vector<u_int> calcOptimalPath(u_int startNodeId, u_int finishNodeId, const NodeHashTable & pois);
-    void printSolution();
-    Node getBestPOI();
-    bool foundSolution() const;
-
 private:
     vector<EdgeList> reversedEdges;
     set<DNode> pQueueReversed;
@@ -57,6 +50,12 @@ private:
     void reverseSearch();
 
     void regularSearch();
+
+public:
+    DijkstraBiDir(const Graph &graph);
+    vector<u_int> calcOptimalPath(u_int startNodeId, u_int finishNodeId, const NodeHashTable & pois);
+    Node getBestPOI();
+    bool foundSolution() const;
 };
 
 

@@ -47,24 +47,6 @@ bool Dijkstra::queueIsEmpty() const {
     return this->pQueue.empty();
 }
 
-void Dijkstra::printSolution(){
-    cout << endl;
-    if(checkedDNodes.empty()){
-        cout << "No solution available. Run calcOptimalSolution before printing." << endl;
-        return;
-    }
-    cout << "Optimal path between " << this->startNode.getId() << " and " << this->finishNode.getId() << endl;
-    if(getCheckedNode(finishNode.getId()).getTotalWeight() == DBL_MAX){
-        cout << "No path could be calculated. Could not print." << endl;
-        return;
-    }
-    cout << "Successfully generated with a total weight of " << solutionTotalCost << ":" << endl;
-    for(u_int nodeId : lastSolution){
-        cout << nodeId << " ";
-    }
-    cout << endl;
-}
-
 void Dijkstra::removeNodeFromQueue() {
     this->pQueue.erase(topDNode);
 }

@@ -92,9 +92,6 @@ public:
     // CALCULATE OPTIMAL PATH
     vector<u_int> calcOptimalPath(u_int startNodeId, u_int finishNodeId);
 
-    //Prints the solution found
-    void printSolution();
-
     double getSolutionWeight() const;
 
     bool foundSolution() const;

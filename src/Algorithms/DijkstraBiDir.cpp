@@ -223,31 +223,6 @@ void DijkstraBiDir::removeReversedTopNodeFromQueue() {
     this->pQueueReversed.erase(topDNodeReversed);
 }
 
-void DijkstraBiDir::printSolution(){
-    cout << endl;
-    if(checkedDNodes.empty()){
-        cout << "No solution available. Run calcOptimalSolution before printing." << endl;
-        return;
-    }
-    cout << "Optimal path between " << this->startNode.getId() << " and " << this->finishNode.getId() << endl;
-    if(lastSolution.empty()){
-        cout << "No path could be calculated. Could not print." << endl;
-        return;
-    }
-    cout << "Successfully generated with a total weight of " << solutionTotalCost << ":" << endl;
-    for(u_int nodeId : lastSolution){
-        cout << nodeId  /*
-             << " - W : "
-             << checkedDNodes.find(nodeId)->getTotalWeight()
-             << " distToEnd: "
-             << checkedDNodes.find(nodeId)->getDistanceToOtherNode(finishNode)
-             << " Path Weight: "
-             << checkedDNodes.find(nodeId)->getTotalWeight() - checkedDNodes.find(nodeId)->getDistanceToOtherNode(finishNode) */
-             << "  ";
-    }
-    cout << endl;
-}
-
 Node DijkstraBiDir::getBestPOI(){
     return graph.getNodeById(bestPOIId);
 }
