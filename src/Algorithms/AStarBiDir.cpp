@@ -14,7 +14,7 @@ void AStarBiDir::initDataStructures(){
     populateReversedEdges();
     populateReversedQueue();
     populateDistancesToStart();
-    bestPOIId = UINT_MAX;
+    commonNode = UINT_MAX;
     finishedSearch = false;
 }
 
@@ -65,7 +65,7 @@ void AStarBiDir::regularSearch(){
         }
 
         if (isReverseCheckedNode(topANode.getId())) { //if node found in regular search was already found in reverse search
-            bestPOIId = topANode.getId();
+            commonNode = topANode.getId();
             finishedSearch = true;
             break;
         }
@@ -91,7 +91,7 @@ void AStarBiDir::reverseSearch(){
         }
 
         if (isCheckedNode(topNodeReversed.getId())) { //if node found in reverse search was already found in regular search
-            bestPOIId = topNodeReversed.getId();
+            commonNode = topNodeReversed.getId();
             finishedSearch = true;
             break;
         }
@@ -136,14 +136,6 @@ void AStarBiDir::updateReversedTopNode(){
     this->topNodeReversed = *(pQueueReversed.begin());
 }
 
-void AStarBiDir::updateBestPoi(const DNode & commonNode) {
-    double nodeTotalWeight = (*checkedDNodes.find(commonNode)).getTotalWeight() + (*checkedDNodesReversed.find(commonNode)).getTotalWeight();
-    if(nodeTotalWeight < bestPOIWeight){
-        bestPOIWeight = nodeTotalWeight;
-        bestPOIId = commonNode.getId();
-    }
-}
-
 // Check if the current node has been analised (if it has, it will be in checkedDNodes)
 bool AStarBiDir::isReverseCheckedNode(u_int nodeId) const {
     return (checkedDNodesReversed.find(nodeId) != checkedDNodesReversed.end());
@@ -153,20 +145,20 @@ void AStarBiDir::buildPath() {
 
     lastSolution.clear();
 
-    if(bestPOIId != UINT_MAX) { //if a solution was found
-        this->solutionTotalCost = (*checkedDNodesReversed.find(bestPOIId)).getTotalWeight() +
-                                  (*checkedDNodes.find(bestPOIId)).getTotalWeight();
+    if(commonNode != UINT_MAX) { //if a solution was found
+        this->solutionTotalCost = (*checkedDNodesReversed.find(commonNode)).getTotalWeight() +
+                                  (*checkedDNodes.find(commonNode)).getTotalWeight();
 
         this->checkedDNodesReversed.insert(topNodeReversed);
         this->checkedDNodes.insert(topANode);
 
-        u_int currDNodeId = this->bestPOIId;
+        u_int currDNodeId = this->commonNode;
         while (currDNodeId != UINT_MAX) {
             lastSolution.insert(lastSolution.begin(), currDNodeId);
             currDNodeId = getCheckedNode(currDNodeId).getLastNodeId();
         }
 
-        currDNodeId = (*checkedDNodesReversed.find(bestPOIId)).getLastNodeId();
+        currDNodeId = (*checkedDNodesReversed.find(commonNode)).getLastNodeId();
         while (currDNodeId != UINT_MAX) {
             lastSolution.push_back(currDNodeId);
             currDNodeId = (*checkedDNodesReversed.find(currDNodeId)).getLastNodeId();

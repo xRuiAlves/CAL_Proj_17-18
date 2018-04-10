@@ -18,34 +18,28 @@ private:
     ANode topNodeReversed;
     DNodeHashTable checkedDNodesReversed;
     double bestPOIWeight = DBL_MAX;
-    u_int bestPOIId = UINT_MAX;
+    u_int commonNode = UINT_MAX;
     bool finishedSearch = false;
 
 
-    // Clears the data structures for new calculation, populates DNodes pQueue and Reversed edges
+    // Clears the data structures for new calculation, populates ANodes pQueue and Reversed edges
     void initDataStructures();
 
     // Populates the reversed edges container
     void populateReversedEdges();
 
-    // Populates the priority queue for the reversed Dijkstra Expansion
+    // Populates the priority queue for the reversed A* Expansion
     void populateReversedQueue();
 
-    // Updates the priority queue for the reversed Dijsktra Expansion
+    // Updates the priority queue for the reversed A* Expansion
     void updateReversedQueue();
 
-    // Check if the current node has been analised by the reversed Dijsktra Expansion
+    // Check if the current node has been analised by the reversed A* Expansion
     // Iif it has, it will be in checkedDNodesReversed
     bool isReverseCheckedNode(u_int nodeId) const;
 
-    // Verify if the node is in the POIs Hash Table
-    bool isNodePOI(const Node & node) const;
-
     // Updates the topDNodeReversed
     void updateReversedTopNode();
-
-    // Updates the current best point of interest
-    void updateBestPoi(const DNode & commonNode);
 
     // Takes the finish node that should be on top of the queue and creates a path from recurrent previous nodes
     void buildPath();
@@ -56,10 +50,10 @@ private:
     // Removes the topDNode from the pQueue
     void removeReversedTopNodeFromQueue();
 
-    // Reversed Dijkstra Expansion 'main loop'
+    // Reversed A* Expansion 'main loop'
     void reverseSearch();
 
-    // Regular Dijkstra Expansion 'main loop'
+    // Regular A* Expansion 'main loop'
     void regularSearch();
 
     void populateDistancesToStart();
@@ -69,9 +63,6 @@ public:
 
     // Calculates optimal path between two nodes, passing through all the points of interest
     vector<u_int> calcOptimalPath(u_int startNodeId, u_int finishNodeId);
-
-    // Returns the Node chosen as the best POI
-    Node getBestPOI();
 
     // Verifies if there is a solution at the present moment
     bool foundSolution() const;

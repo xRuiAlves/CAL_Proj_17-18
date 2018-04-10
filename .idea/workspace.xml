@@ -12,10 +12,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d2e51ff3-6721-45dc-8f82-389c9263ef6a" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/src/Graph/graphTesting.cpp" afterPath="$PROJECT_DIR$/src/Graph/graphTesting.cpp" />
-      <change beforePath="$PROJECT_DIR$/src/UI/UI.cpp" afterPath="$PROJECT_DIR$/src/UI/UI.cpp" />
-      <change beforePath="$PROJECT_DIR$/src/UI/UI.h" afterPath="$PROJECT_DIR$/src/UI/UI.h" />
+      <change beforePath="$PROJECT_DIR$/src/Algorithms/AStarBiDir.cpp" afterPath="$PROJECT_DIR$/src/Algorithms/AStarBiDir.cpp" />
+      <change beforePath="$PROJECT_DIR$/src/Algorithms/AStarBiDir.h" afterPath="$PROJECT_DIR$/src/Algorithms/AStarBiDir.h" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -53,8 +51,8 @@
           <file leaf-file-name="AStarBiDir.cpp" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/Algorithms/AStarBiDir.cpp">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="364">
-                  <caret line="81" column="28" lean-forward="false" selection-start-line="81" selection-start-column="28" selection-end-line="81" selection-end-column="28" />
+                <state relative-caret-position="544">
+                  <caret line="16" column="14" lean-forward="false" selection-start-line="16" selection-start-column="14" selection-end-line="16" selection-end-column="14" />
                   <folding>
                     <element signature="e#45#68#0" expanded="true" />
                   </folding>
@@ -105,8 +103,8 @@
           <file leaf-file-name="AStarBiDir.h" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/Algorithms/AStarBiDir.h">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="136">
-                  <caret line="16" column="10" lean-forward="false" selection-start-line="16" selection-start-column="10" selection-end-line="16" selection-end-column="10" />
+                <state relative-caret-position="680">
+                  <caret line="20" column="20" lean-forward="false" selection-start-line="20" selection-start-column="10" selection-end-line="20" selection-end-column="20" />
                   <folding />
                 </state>
               </provider>
@@ -244,7 +242,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>foun</find>
       <find>Inserted</find>
       <find>updateNodeO</find>
       <find>addEdge</find>
@@ -274,6 +271,7 @@
       <find>solutionTotalCost</find>
       <find>checkedD</find>
       <find>topDNode</find>
+      <find>best</find>
     </findStrings>
     <replaceStrings>
       <replace>topNodeReversed</replace>
@@ -329,13 +327,13 @@
         <option value="$PROJECT_DIR$/src/Algorithms/DijkstraBiDir.h" />
         <option value="$PROJECT_DIR$/src/Algorithms/DijkstraBiDir.cpp" />
         <option value="$PROJECT_DIR$/src/UI/UI.h" />
-        <option value="$PROJECT_DIR$/src/Algorithms/AStarBiDir.h" />
         <option value="$PROJECT_DIR$/src/Algorithms/AStar.h" />
         <option value="$PROJECT_DIR$/src/Algorithms/AStar.cpp" />
         <option value="$PROJECT_DIR$/src/UI/UI.cpp" />
         <option value="$PROJECT_DIR$/src/Graph/graphTesting.cpp" />
-        <option value="$PROJECT_DIR$/src/Algorithms/AStarBiDir.cpp" />
         <option value="$PROJECT_DIR$/src/Graph/Edge.h" />
+        <option value="$PROJECT_DIR$/src/Algorithms/AStarBiDir.h" />
+        <option value="$PROJECT_DIR$/src/Algorithms/AStarBiDir.cpp" />
       </list>
     </option>
   </component>
@@ -501,24 +499,23 @@
       <workItem from="1523176897010" duration="8345000" />
       <workItem from="1523311705036" duration="828000" />
       <workItem from="1523355174740" duration="1991000" />
-      <workItem from="1523388206320" duration="11483000" />
+      <workItem from="1523388206320" duration="12499000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="199910000" />
+    <option name="totallyTimeSpent" value="200926000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="35" width="3840" height="2125" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12708333" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39818764" sideWeight="0.7611979" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39818764" sideWeight="0.7596354" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32961783" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3283582" sideWeight="0.21223958" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3283582" sideWeight="0.21380208" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3283582" sideWeight="0.78776044" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3283582" sideWeight="0.7861979" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -935,24 +932,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Algorithms/AStarBiDir.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="16" column="10" lean-forward="false" selection-start-line="16" selection-start-column="10" selection-end-line="16" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Algorithms/AStarBiDir.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="364">
-          <caret line="81" column="28" lean-forward="false" selection-start-line="81" selection-start-column="28" selection-end-line="81" selection-end-column="28" />
-          <folding>
-            <element signature="e#45#68#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Algorithms/DijkstraBiDir.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="476">
@@ -966,6 +945,24 @@
         <state relative-caret-position="34">
           <caret line="1" column="8" lean-forward="false" selection-start-line="1" selection-start-column="8" selection-end-line="1" selection-end-column="8" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Algorithms/AStarBiDir.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="680">
+          <caret line="20" column="20" lean-forward="false" selection-start-line="20" selection-start-column="10" selection-end-line="20" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Algorithms/AStarBiDir.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="544">
+          <caret line="16" column="14" lean-forward="false" selection-start-line="16" selection-start-column="14" selection-end-line="16" selection-end-column="14" />
+          <folding>
+            <element signature="e#45#68#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
