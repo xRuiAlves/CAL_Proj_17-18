@@ -28,7 +28,9 @@ void AStar::updateQueue(){
     pQueueWeighted.erase(pQueueWeighted.begin());
     checkedDNodes.insert(DNode(topANode));
 
-    for (Edge e : this->topANode.getEdges()) {
+    vector<Edge> edges = this->topANode.getEdges();
+
+    for (Edge e : edges) {
 
         if (isCheckedNode(e.destNodeId)) { // Already checked this node
             continue;
@@ -39,7 +41,7 @@ void AStar::updateQueue(){
                                topANode.getTotalWeight()+ e.value,
                                distancesToFinish.at(e.destNodeId));
 
-        updateNodeOnQueue(currNode);
+        updateNodeOnQueue(currNode, pQueueWeighted);
     }
 }
 
@@ -56,13 +58,13 @@ void AStar::updateTopNode(){
     this->topANode = *(pQueueWeighted.begin());
 }
 
-void AStar::updateNodeOnQueue(const ANode & currNode) {
+void AStar::updateNodeOnQueue(const ANode & currNode, set<ANode> &queue) {
 
-    for (set<ANode>::iterator it=pQueueWeighted.begin() ; it!=pQueueWeighted.end() ; it++) {
+    for (set<ANode>::iterator it=queue.begin() ; it!=queue.end() ; it++) {
         if (it->getId() == currNode.getId()) {
             if (currNode.getHeuristicWeight() < it->getHeuristicWeight()) {
-                pQueueWeighted.erase(it);
-                pQueueWeighted.insert(currNode);
+                queue.erase(it);
+                queue.insert(currNode);
             }
             return;
         }

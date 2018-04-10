@@ -10,7 +10,7 @@
 #include "../Graph/ANode.h"
 
 class AStar : public Dijkstra {
-private:
+protected:
     set<ANode> pQueueWeighted; // stores the ANodes with the A* weight function
     vector<double> distancesToFinish;
     ANode topANode;
@@ -34,7 +34,7 @@ private:
     void updateTopNode();
 
     // Updates a node in the ANode priority Queue, by removing it, changing it and inserting it again
-    void updateNodeOnQueue(const ANode & currNode);
+    void updateNodeOnQueue(const ANode & currNode, set<ANode> &queue);
 
     // Updates the priority Queue
     void updateQueue();
