@@ -215,8 +215,7 @@ void DijkstraBiDir::buildPath() {
 }
 
 bool DijkstraBiDir::isReversedTopNodeDeadEnd() const {
-    bool a = reversedEdges.at(topDNodeReversed.getId()).empty();
-    return a;
+    return reversedEdges.at(topDNodeReversed.getId()).empty();
 }
 
 void DijkstraBiDir::removeReversedTopNodeFromQueue() {

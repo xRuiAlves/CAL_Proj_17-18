@@ -71,6 +71,9 @@ public:
     // Returns the number of edges in the Node
     u_int getNumEdges() const;
 
+    // Verifies if the node has no edge connections starting in itself
+    bool isDeadEnd() const;
+
     // Node equality Operator
     bool operator==(const Node & other) const;
 };

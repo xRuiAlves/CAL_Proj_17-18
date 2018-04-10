@@ -123,7 +123,7 @@ void Dijkstra::updateTopNode(){
 
 // Checks if the node on top of the queue is a dead end
 bool Dijkstra::isTopNodeDeadEnd() const {
-    return (this->topDNode.getEdges().empty());
+    return topDNode.isDeadEnd();
 }
 
 // Checks if the optimal solution has been found (if final node is on top of the queue)
