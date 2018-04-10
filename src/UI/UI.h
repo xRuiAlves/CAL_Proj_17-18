@@ -34,6 +34,7 @@ void menuOperateGraph();
         void calcDijkstra();
         void calcDijBiDirNoPOIs();
         void calcAStar();
+        void calcAStarBiDir();
         void calcDijkstraAndAStar();
     void menuDijBiDir();
     void menuTSP();

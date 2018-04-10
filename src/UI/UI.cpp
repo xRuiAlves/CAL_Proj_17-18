@@ -8,6 +8,7 @@
 #include "../Algorithms/DijkstraBiDir.h"
 #include "../Algorithms/TSPNearestNeighbor.h"
 #include "../Algorithms/Two_Opt.h"
+#include "../Algorithms/AStarBiDir.h"
 #include <ctime>
 #include <chrono>
 #include <sstream>
@@ -176,6 +177,7 @@ void menuDijkstraAStar(){
                {{"Optimal path using Dijkstra algorithm", calcDijkstra},
                 {"Optimal path using DIjkstra algorithm in both directions", calcDijBiDirNoPOIs},
                        {"Optimal path using A* algorithm", calcAStar},
+                {"Optimal path using A* algorithm in both directions", calcAStarBiDir},
                 {"Dijkstra and A* algorithms comparison", calcDijkstraAndAStar}});
 }
 
@@ -225,6 +227,32 @@ void calcAStar(){
     }
 
     closeViewer(showShortestPath(result));
+}
+
+void calcAStarBiDir(){
+    u_int startNodeId = getNodeInput("Please insert the id for the starting location");
+    u_int finishNodeId = getNodeInput("Please insert the id for the finish location");
+
+    GraphViewer *gv = nullptr;
+
+    AStarBiDir adb = AStarBiDir(loadedGraph);
+
+    milliseconds t0 = duration_cast< milliseconds >(system_clock::now().time_since_epoch());
+
+    vector<u_int> result = adb.calcOptimalPath(startNodeId, finishNodeId);
+
+    milliseconds t1 = duration_cast< milliseconds >(system_clock::now().time_since_epoch());
+    if(adb.foundSolution()) {
+        cout << "Ran A* algorithm in both directions in " << t1.count() - t0.count() << " milliseconds and found path with "
+             << adb.getSolutionWeight() << " m going" << endl;
+    }else {
+        cout << "Ran A* algorithm in both directions in " << t1.count() - t0.count() << " milliseconds and found no available path"
+             << endl;
+    }
+
+    gv = showShortestPath(result);
+
+    closeViewer(gv);
 }
 
 void calcDijkstraAndAStar(){
