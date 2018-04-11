@@ -8,6 +8,7 @@
 #include "../Algorithms/DijkstraBiDir.h"
 #include "../Algorithms/Two_Opt.h"
 #include "../Algorithms/TSPNearestNeighbor.h"
+#include "../Algorithms/AStarBiDir.h"
 #include <ctime>
 #include <chrono>
 #include <random>
@@ -93,8 +94,8 @@ int not_main() {
 
     Graph g1 = Graph();
 
-    generateRandomGridGraph(100, g1);
-/*
+    //generateRandomGridGraph(100, g1);
+
 
 
     u_int id0 = g1.addNode(0,0,"Rio Tinto");
@@ -117,9 +118,9 @@ int not_main() {
     g1.addEdge(id5, id4, 5);
     g1.addEdge(id4, id5, 5);
     g1.addEdge(id6, id5, 100);
-*/
-    u_int startNodeID = 2;
-    u_int finishNodeID = 500;
+
+    u_int startNodeID = 1;
+    u_int finishNodeID = 5;
 
 
 
@@ -139,6 +140,7 @@ int not_main() {
             system_clock::now().time_since_epoch()
     );
 
+    cout << d.getSolutionWeight() << endl;
 
     /*************************************/
     /****              A*             ****/
@@ -158,6 +160,7 @@ int not_main() {
     );
 
 
+    cout << a.getSolutionWeight() << endl;
 
     /*************************************/
     /****              DFS            ****/
@@ -197,47 +200,32 @@ int not_main() {
             system_clock::now().time_since_epoch()
     );
 
-
-
     /*************************************/
-    /****  DIJKSTRA BI DIRECTIONAL    ****/
+    /****  ASTAR BI DIRECTIONAL    ****/
     /*************************************/
 
-    cout << "\n\n---------Dijkstra Bidirectional---------\n";
+    cout << "\n\n---------AStar Bidirectional---------\n";
 
-    DijkstraBiDir dbd = DijkstraBiDir(g1);
-    NodeHashTable pois;
-    pois.insert(g1.getNodeById(1));
-    pois.insert(g1.getNodeById(100));
-    pois.insert(g1.getNodeById(302));
+    AStarBiDir dbd = AStarBiDir(g1);
+
 
     milliseconds t5 = duration_cast< milliseconds >(
             system_clock::now().time_since_epoch()
     );
 
-    dbd.calcOptimalPath(startNodeID, finishNodeID, pois);
+    dbd.calcOptimalPath(startNodeID, finishNodeID);
 
     milliseconds t5b = duration_cast< milliseconds >(
             system_clock::now().time_since_epoch()
     );
 
-    AStar testBidir1 = AStar(g1);
-    AStar testBidir2 = AStar(g1);
-
-    cout << "Checking validity of solution:" << endl;
-
-    for(NodeHashTable::iterator it = pois.begin(); it != pois.end(); it++){
-        cout << "CALCULATING WEIGHT THROUGH POI " << (*it).getId() << endl;
-        testBidir1.calcOptimalPath(startNodeID, (*it).getId());
-        testBidir2.calcOptimalPath((*it).getId(), finishNodeID);
-        cout << testBidir1.getSolutionWeight() + testBidir2.getSolutionWeight() << endl;
-    }
+    cout << dbd.getSolutionWeight() << endl;
 
 
     /*************************************/
     /****     TSP Nearest Neighbor    ****/
     /*************************************/
-
+/*
     cout << "\n\n---------TSP Nearest Neighbor---------\n";
 
     TSPNearestNeighbor t = TSPNearestNeighbor(g1);
@@ -258,7 +246,7 @@ int not_main() {
     /*************************************/
     /***  2-opt Iterative Improvement  ***/
     /*************************************/
-
+/*
     milliseconds t7;
     milliseconds t7b;
 
@@ -296,9 +284,9 @@ int not_main() {
     cout << "A* time: " << t2b.count() - t2.count() << " milliseconds" << endl;
     cout << "DFS time: " << t3b.count() - t3.count() << " milliseconds" << endl;
     cout << "BFS time: " << t4b.count() - t4.count() << " milliseconds" << endl;
-    cout << "DijkstraBiDir time: " << t5b.count() - t5.count() << " milliseconds" << endl;
-    cout << "\n\nTSP Nearest Neighbor time: " << t6b.count() - t6.count() << " milliseconds" << endl;
-    cout << "2-Opt time: " << t7b.count() - t7.count() << " milliseconds" << endl;
+    cout << "AStarBiDir time: " << t5b.count() - t5.count() << " milliseconds" << endl;
+  /*  cout << "\n\nTSP Nearest Neighbor time: " << t6b.count() - t6.count() << " milliseconds" << endl;
+    cout << "2-Opt time: " << t7b.count() - t7.count() << " milliseconds" << endl;*/
 
     cout << "\nGraph Data:" << endl;
     cout << "Number of nodes: " << g1.getNumNodes() << endl;
