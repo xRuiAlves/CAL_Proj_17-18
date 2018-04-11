@@ -187,10 +187,14 @@ void calcDijkstra(){
     u_int finishNodeId = getNodeInput("Please insert the id for the finish location");
 
     Dijkstra d = Dijkstra(loadedGraph);
+    DFS dfs = DFS(loadedGraph);
 
     milliseconds t0 = duration_cast< milliseconds >(system_clock::now().time_since_epoch());
 
-    vector<u_int> result = d.calcOptimalPath(startNodeId, finishNodeId);
+    vector<u_int> result;
+    if (dfs.isPathPossible(startNodeId, finishNodeId)) {
+        result = d.calcOptimalPath(startNodeId, finishNodeId);
+    }
 
     milliseconds t1 = duration_cast< milliseconds >(system_clock::now().time_since_epoch());
 
@@ -210,20 +214,24 @@ void calcAStar(){
     u_int finishNodeId = getNodeInput("Please insert the id for the finish location");
 
     AStar a = AStar(loadedGraph);
+    DFS dfs = DFS(loadedGraph);
+
+    milliseconds t0 = duration_cast< milliseconds >(system_clock::now().time_since_epoch());
+
+    vector<u_int> result;
+    if (dfs.isPathPossible(startNodeId, finishNodeId)) {
+        result = a.calcOptimalPath(startNodeId, finishNodeId);
+    }
 
     milliseconds t1 = duration_cast< milliseconds >(system_clock::now().time_since_epoch());
 
-    vector<u_int> result = a.calcOptimalPath(startNodeId, finishNodeId);
-
-    milliseconds t2 = duration_cast< milliseconds >(system_clock::now().time_since_epoch());
-
 
     if(a.foundSolution()) {
-        cout << "Ran A* algorithm in " << t2.count() - t1.count() << " milliseconds and found path with "
+        cout << "Ran A* algorithm in " << t1.count() - t0.count() << " milliseconds and found path with "
              << a.getSolutionWeight() << " m" << endl;
     }else {
 
-        cout << "Ran A* algorithm in " << t2.count() - t1.count() << " milliseconds and found no available path"
+        cout << "Ran A* algorithm in " << t1.count() - t0.count() << " milliseconds and found no available path"
              << endl;
     }
 
@@ -237,12 +245,17 @@ void calcAStarBiDir(){
     GraphViewer *gv = nullptr;
 
     AStarBiDir adb = AStarBiDir(loadedGraph);
+    DFS dfs = DFS(loadedGraph);
 
     milliseconds t0 = duration_cast< milliseconds >(system_clock::now().time_since_epoch());
 
-    vector<u_int> result = adb.calcOptimalPath(startNodeId, finishNodeId);
+    vector<u_int> result;
+    if (dfs.isPathPossible(startNodeId, finishNodeId)) {
+        result = adb.calcOptimalPath(startNodeId, finishNodeId);
+    }
 
     milliseconds t1 = duration_cast< milliseconds >(system_clock::now().time_since_epoch());
+
     if(adb.foundSolution()) {
         cout << "Ran A* algorithm in both directions in " << t1.count() - t0.count() << " milliseconds and found path with "
              << adb.getSolutionWeight() << " m going" << endl;
@@ -262,16 +275,24 @@ void calcDijkstraAndAStar(){
 
     Dijkstra d = Dijkstra(loadedGraph);
     AStar a = AStar(loadedGraph);
+    DFS dfs = DFS(loadedGraph);
 
     milliseconds t0 = duration_cast< milliseconds >(system_clock::now().time_since_epoch());
 
-    vector<u_int> result = d.calcOptimalPath(startNodeId, finishNodeId);
+    vector<u_int> result;
+    bool isPathPossible = dfs.isPathPossible(startNodeId, finishNodeId);
+    if (isPathPossible) {
+        result = d.calcOptimalPath(startNodeId, finishNodeId);
+    }
 
     milliseconds t1 = duration_cast< milliseconds >(system_clock::now().time_since_epoch());
 
-    a.calcOptimalPath(startNodeId, finishNodeId);
+    if (isPathPossible) {
+        a.calcOptimalPath(startNodeId, finishNodeId);
+    }
 
     milliseconds t2 = duration_cast< milliseconds >(system_clock::now().time_since_epoch());
+
     if (d.foundSolution()) {
         cout << "Ran Dijkstra algorithm in " << t1.count() - t0.count() << " milliseconds and found path with "
              << d.getSolutionWeight() << " m" << endl;
@@ -282,7 +303,7 @@ void calcDijkstraAndAStar(){
         cout << "Ran Dijkstra algorithm in " << t1.count() - t0.count() << " milliseconds and found no available path"
              << endl;
 
-        cout << "Ran A* algorithm in " << t2.count() - t1.count() << " milliseconds and found no available path"
+        cout << "Ran A* algorithm in " << t1.count() - t0.count() << " milliseconds and found no available path"
              << endl;
     }
 
@@ -295,18 +316,26 @@ void calcAStarAndAStarBiDir(){
 
     AStar a(loadedGraph);
     AStarBiDir abd(loadedGraph);
+    DFS dfs = DFS(loadedGraph);
 
     NodeHashTable pois;
 
     milliseconds t0 = duration_cast< milliseconds >(system_clock::now().time_since_epoch());
 
-    vector<u_int> result = a.calcOptimalPath(startNodeId, finishNodeId);
+    vector<u_int> result;
+    bool isPathPossible = dfs.isPathPossible(startNodeId, finishNodeId);
+    if (isPathPossible) {
+        result = a.calcOptimalPath(startNodeId, finishNodeId);
+    }
 
     milliseconds t1 = duration_cast< milliseconds >(system_clock::now().time_since_epoch());
 
-    abd.calcOptimalPath(startNodeId, finishNodeId);
+    if (isPathPossible) {
+        abd.calcOptimalPath(startNodeId, finishNodeId);
+    }
 
     milliseconds t2 = duration_cast< milliseconds >(system_clock::now().time_since_epoch());
+
     if (a.foundSolution()) {
         cout << "Ran A* algorithm in " << t1.count() - t0.count() << " milliseconds and found path with "
              << a.getSolutionWeight() << " m" << endl;
@@ -317,7 +346,7 @@ void calcAStarAndAStarBiDir(){
         cout << "Ran A* algorithm in " << t1.count() - t0.count() << " milliseconds and found no available path"
              << endl;
 
-        cout << "Ran A* algorithm in both directions in " << t2.count() - t1.count() << " milliseconds and found no available path"
+        cout << "Ran A* algorithm in both directions in " << t1.count() - t0.count() << " milliseconds and found no available path"
              << endl;
     }
 
@@ -375,12 +404,17 @@ void calcDijBiDirNoPOIs(){
     GraphViewer *gv = nullptr;
 
     DijkstraBiDir dbd = DijkstraBiDir(loadedGraph);
+    DFS dfs = DFS(loadedGraph);
 
     milliseconds t0 = duration_cast< milliseconds >(system_clock::now().time_since_epoch());
 
-    vector<u_int> result = dbd.calcOptimalPath(startNodeId, finishNodeId, chosenPOIs);
+    vector<u_int> result;
+    if (dfs.isPathPossible(startNodeId,finishNodeId)) {
+        result = dbd.calcOptimalPath(startNodeId, finishNodeId, chosenPOIs);
+    }
 
     milliseconds t1 = duration_cast< milliseconds >(system_clock::now().time_since_epoch());
+
     if(dbd.foundSolution()) {
         cout << "Ran Dijkstra algorithm in both directions in " << t1.count() - t0.count() << " milliseconds and found path with "
              << dbd.getSolutionWeight() << " m going" << endl;
