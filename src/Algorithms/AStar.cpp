@@ -72,7 +72,7 @@ void AStar::updateNodeOnQueue(const ANode & currNode, set<ANode> &queue) {
 }
 
 bool AStar::isTopNodeDeadEnd() const {
-    return (this->topANode.getEdges().empty());
+    return topANode.isDeadEnd();
 }
 
 void AStar::buildPath() {

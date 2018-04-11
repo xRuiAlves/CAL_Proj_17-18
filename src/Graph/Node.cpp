@@ -89,3 +89,7 @@ double Node::getX() const {
 double Node::getY() const {
     return y;
 }
+
+bool Node::isDeadEnd() const {
+    return edges.empty();
+}
