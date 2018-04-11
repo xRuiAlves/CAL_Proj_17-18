@@ -175,10 +175,11 @@ void menuSearch(){
 void menuDijkstraAStar(){
     createMenu("Easy Pilot - Optimal path between two locations",
                {{"Optimal path using Dijkstra algorithm", calcDijkstra},
-                {"Optimal path using DIjkstra algorithm in both directions", calcDijBiDirNoPOIs},
-                       {"Optimal path using A* algorithm", calcAStar},
-                {"Optimal path using A* algorithm in both directions", calcAStarBiDir},
-                {"Dijkstra and A* algorithms comparison", calcDijkstraAndAStar}});
+                {"[Bidirectional] Optimal path using Dijkstra algorithm", calcDijBiDirNoPOIs},
+                {"Optimal path using A* algorithm", calcAStar},
+                {"[Bidirectional] Optimal path using A* algorithm", calcAStarBiDir},
+                {"[Comparison] Dijkstra and A* algorithms", calcDijkstraAndAStar},
+                {"[Comparison] A* and Bidirectional A* algorithms", calcAStarAndAStarBiDir}});
 }
 
 void calcDijkstra(){
@@ -282,6 +283,41 @@ void calcDijkstraAndAStar(){
              << endl;
 
         cout << "Ran A* algorithm in " << t2.count() - t1.count() << " milliseconds and found no available path"
+             << endl;
+    }
+
+    closeViewer(showShortestPath(result));
+}
+
+void calcAStarAndAStarBiDir(){
+    u_int startNodeId = getNodeInput("Please insert the id for the starting location");
+    u_int finishNodeId = getNodeInput("Please insert the id for the finish location");
+
+    AStar a(loadedGraph);
+    AStarBiDir abd(loadedGraph);
+
+    NodeHashTable pois;
+
+    milliseconds t0 = duration_cast< milliseconds >(system_clock::now().time_since_epoch());
+
+    vector<u_int> result = a.calcOptimalPath(startNodeId, finishNodeId);
+
+    milliseconds t1 = duration_cast< milliseconds >(system_clock::now().time_since_epoch());
+
+    abd.calcOptimalPath(startNodeId, finishNodeId);
+
+    milliseconds t2 = duration_cast< milliseconds >(system_clock::now().time_since_epoch());
+    if (a.foundSolution()) {
+        cout << "Ran A* algorithm in " << t1.count() - t0.count() << " milliseconds and found path with "
+             << a.getSolutionWeight() << " m" << endl;
+
+        cout << "Ran A* algorithm in both directions in " << t2.count() - t1.count() << " milliseconds and found path with "
+             << abd.getSolutionWeight() << " m" << endl;
+    } else {
+        cout << "Ran A* algorithm in " << t1.count() - t0.count() << " milliseconds and found no available path"
+             << endl;
+
+        cout << "Ran A* algorithm in both directions in " << t2.count() - t1.count() << " milliseconds and found no available path"
              << endl;
     }
 

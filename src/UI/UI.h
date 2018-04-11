@@ -36,6 +36,7 @@ void menuOperateGraph();
         void calcAStar();
         void calcAStarBiDir();
         void calcDijkstraAndAStar();
+        void calcAStarAndAStarBiDir();
     void menuDijBiDir();
     void menuTSP();
         void menuTSPNearestNeighbor();

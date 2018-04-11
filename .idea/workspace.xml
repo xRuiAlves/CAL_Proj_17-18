@@ -12,8 +12,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d2e51ff3-6721-45dc-8f82-389c9263ef6a" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/src/Algorithms/AStarBiDir.cpp" afterPath="$PROJECT_DIR$/src/Algorithms/AStarBiDir.cpp" />
-      <change beforePath="$PROJECT_DIR$/src/Algorithms/AStarBiDir.h" afterPath="$PROJECT_DIR$/src/Algorithms/AStarBiDir.h" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/src/UI/UI.cpp" afterPath="$PROJECT_DIR$/src/UI/UI.cpp" />
+      <change beforePath="$PROJECT_DIR$/src/UI/UI.h" afterPath="$PROJECT_DIR$/src/UI/UI.h" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -31,8 +32,8 @@
           <file leaf-file-name="UI.cpp" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/UI/UI.cpp">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="374">
-                  <caret line="72" column="4" lean-forward="false" selection-start-line="72" selection-start-column="4" selection-end-line="72" selection-end-column="4" />
+                <state relative-caret-position="514">
+                  <caret line="303" column="0" lean-forward="true" selection-start-line="303" selection-start-column="0" selection-end-line="303" selection-end-column="0" />
                   <folding />
                 </state>
               </provider>
@@ -41,7 +42,7 @@
           <file leaf-file-name="Dijkstra.cpp" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/Algorithms/Dijkstra.cpp">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="384">
+                <state relative-caret-position="2244">
                   <caret line="66" column="6" lean-forward="false" selection-start-line="66" selection-start-column="6" selection-end-line="68" selection-end-column="1" />
                   <folding />
                 </state>
@@ -51,8 +52,8 @@
           <file leaf-file-name="AStarBiDir.cpp" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/Algorithms/AStarBiDir.cpp">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="544">
-                  <caret line="16" column="14" lean-forward="false" selection-start-line="16" selection-start-column="14" selection-end-line="16" selection-end-column="14" />
+                <state relative-caret-position="1088">
+                  <caret line="155" column="35" lean-forward="true" selection-start-line="155" selection-start-column="35" selection-end-line="155" selection-end-column="35" />
                   <folding>
                     <element signature="e#45#68#0" expanded="true" />
                   </folding>
@@ -63,7 +64,7 @@
           <file leaf-file-name="stl_set.h" pinned="false" current-in-tab="false">
             <entry file="file:///usr/include/c++/5/bits/stl_set.h">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="371">
+                <state relative-caret-position="13158">
                   <caret line="387" column="0" lean-forward="false" selection-start-line="387" selection-start-column="0" selection-end-line="387" selection-end-column="0" />
                   <folding />
                 </state>
@@ -73,7 +74,7 @@
           <file leaf-file-name="thread" pinned="false" current-in-tab="false">
             <entry file="file:///usr/include/c++/5/thread">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="575">
+                <state relative-caret-position="4930">
                   <caret line="145" column="0" lean-forward="false" selection-start-line="145" selection-start-column="0" selection-end-line="145" selection-end-column="0" />
                   <folding />
                 </state>
@@ -83,7 +84,7 @@
           <file leaf-file-name="functional" pinned="false" current-in-tab="false">
             <entry file="file:///usr/include/c++/5/functional">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="439">
+                <state relative-caret-position="53006">
                   <caret line="1559" column="0" lean-forward="false" selection-start-line="1559" selection-start-column="0" selection-end-line="1559" selection-end-column="0" />
                   <folding />
                 </state>
@@ -93,7 +94,7 @@
           <file leaf-file-name="move.h" pinned="false" current-in-tab="false">
             <entry file="file:///usr/include/c++/5/bits/move.h">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="371">
+                <state relative-caret-position="2584">
                   <caret line="76" column="0" lean-forward="false" selection-start-line="76" selection-start-column="0" selection-end-line="76" selection-end-column="0" />
                   <folding />
                 </state>
@@ -113,7 +114,7 @@
           <file leaf-file-name="DNode.cpp" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/Graph/DNode.cpp">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="371">
+                <state relative-caret-position="1530">
                   <caret line="45" column="0" lean-forward="false" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
                   <folding />
                 </state>
@@ -123,7 +124,7 @@
           <file leaf-file-name="graphTesting.cpp" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/Graph/graphTesting.cpp">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="306">
+                <state relative-caret-position="2890">
                   <caret line="85" column="8" lean-forward="false" selection-start-line="85" selection-start-column="8" selection-end-line="85" selection-end-column="8" />
                   <folding />
                 </state>
@@ -137,8 +138,8 @@
           <file leaf-file-name="UI.h" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/UI/UI.h">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="777">
-                  <caret line="36" column="8" lean-forward="false" selection-start-line="36" selection-start-column="8" selection-end-line="36" selection-end-column="30" />
+                <state relative-caret-position="782">
+                  <caret line="38" column="35" lean-forward="false" selection-start-line="38" selection-start-column="35" selection-end-line="38" selection-end-column="35" />
                   <folding>
                     <element signature="e#80#110#0" expanded="true" />
                   </folding>
@@ -149,7 +150,7 @@
           <file leaf-file-name="Node.cpp" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/Graph/Node.cpp">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="371">
+                <state relative-caret-position="2006">
                   <caret line="59" column="1" lean-forward="false" selection-start-line="59" selection-start-column="1" selection-end-line="59" selection-end-column="1" />
                   <folding />
                 </state>
@@ -159,7 +160,7 @@
           <file leaf-file-name="DijkstraBiDir.cpp" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/Algorithms/DijkstraBiDir.cpp">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="476">
+                <state relative-caret-position="4182">
                   <caret line="123" column="16" lean-forward="false" selection-start-line="123" selection-start-column="16" selection-end-line="123" selection-end-column="16" />
                   <folding />
                 </state>
@@ -176,7 +177,7 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="Edge.h" pinned="false" current-in-tab="true">
+          <file leaf-file-name="Edge.h" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/Graph/Edge.h">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="34">
@@ -186,10 +187,10 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="AStar.cpp" pinned="false" current-in-tab="false">
+          <file leaf-file-name="AStar.cpp" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/Algorithms/AStar.cpp">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="894">
+                <state relative-caret-position="816">
                   <caret line="45" column="0" lean-forward="false" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
                   <folding />
                 </state>
@@ -199,7 +200,7 @@
           <file leaf-file-name="ANode.cpp" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/Graph/ANode.cpp">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="680">
+                <state relative-caret-position="1088">
                   <caret line="32" column="44" lean-forward="false" selection-start-line="32" selection-start-column="44" selection-end-line="32" selection-end-column="44" />
                   <folding />
                 </state>
@@ -219,7 +220,7 @@
           <file leaf-file-name="AStar.h" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/Algorithms/AStar.h">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="579">
+                <state relative-caret-position="1224">
                   <caret line="36" column="51" lean-forward="false" selection-start-line="36" selection-start-column="51" selection-end-line="36" selection-end-column="51" />
                   <folding />
                 </state>
@@ -242,7 +243,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Inserted</find>
       <find>updateNodeO</find>
       <find>addEdge</find>
       <find>&gt;&gt;</find>
@@ -272,6 +272,7 @@
       <find>checkedD</find>
       <find>topDNode</find>
       <find>best</find>
+      <find>DI</find>
     </findStrings>
     <replaceStrings>
       <replace>topNodeReversed</replace>
@@ -326,13 +327,13 @@
         <option value="$PROJECT_DIR$/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/src/Algorithms/DijkstraBiDir.h" />
         <option value="$PROJECT_DIR$/src/Algorithms/DijkstraBiDir.cpp" />
-        <option value="$PROJECT_DIR$/src/UI/UI.h" />
         <option value="$PROJECT_DIR$/src/Algorithms/AStar.h" />
         <option value="$PROJECT_DIR$/src/Algorithms/AStar.cpp" />
-        <option value="$PROJECT_DIR$/src/UI/UI.cpp" />
         <option value="$PROJECT_DIR$/src/Graph/graphTesting.cpp" />
         <option value="$PROJECT_DIR$/src/Graph/Edge.h" />
         <option value="$PROJECT_DIR$/src/Algorithms/AStarBiDir.h" />
+        <option value="$PROJECT_DIR$/src/UI/UI.h" />
+        <option value="$PROJECT_DIR$/src/UI/UI.cpp" />
         <option value="$PROJECT_DIR$/src/Algorithms/AStarBiDir.cpp" />
       </list>
     </option>
@@ -499,27 +500,29 @@
       <workItem from="1523176897010" duration="8345000" />
       <workItem from="1523311705036" duration="828000" />
       <workItem from="1523355174740" duration="1991000" />
-      <workItem from="1523388206320" duration="12499000" />
+      <workItem from="1523388206320" duration="13202000" />
+      <workItem from="1523437737833" duration="2000" />
+      <workItem from="1523445135542" duration="1227000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="200926000" />
+    <option name="totallyTimeSpent" value="202858000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="35" width="3840" height="2125" extended-state="6" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12708333" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39818764" sideWeight="0.7596354" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39818764" sideWeight="0.7549479" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32961783" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3283582" sideWeight="0.21380208" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.510661" sideWeight="0.21848959" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3011727" sideWeight="0.7815104" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3283582" sideWeight="0.7861979" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.38219616" sideWeight="0.46380207" order="11" side_tool="false" content_ui="tabs" x="762" y="152" width="440" height="616" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -666,7 +669,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="749">
           <caret line="125" column="0" lean-forward="false" selection-start-line="125" selection-start-column="0" selection-end-line="125" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -730,7 +732,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="476">
           <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -766,7 +767,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="918">
           <caret line="27" column="24" lean-forward="false" selection-start-line="27" selection-start-column="24" selection-end-line="27" selection-end-column="24" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -774,7 +774,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="986">
           <caret line="29" column="7" lean-forward="false" selection-start-line="29" selection-start-column="7" selection-end-line="29" selection-end-column="7" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -782,7 +781,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="59704">
           <caret line="1756" column="2" lean-forward="false" selection-start-line="1756" selection-start-column="2" selection-end-line="1756" selection-end-column="2" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -790,7 +788,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="20740">
           <caret line="610" column="16" lean-forward="false" selection-start-line="610" selection-start-column="16" selection-end-line="610" selection-end-column="16" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -798,7 +795,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="98192">
           <caret line="2888" column="19" lean-forward="false" selection-start-line="2888" selection-start-column="19" selection-end-line="2888" selection-end-column="19" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -818,19 +814,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/UI/UI.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="777">
-          <caret line="36" column="8" lean-forward="false" selection-start-line="36" selection-start-column="8" selection-end-line="36" selection-end-column="30" />
-          <folding>
-            <element signature="e#80#110#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///usr/include/c++/5/bits/move.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="371">
+        <state relative-caret-position="2584">
           <caret line="76" column="0" lean-forward="false" selection-start-line="76" selection-start-column="0" selection-end-line="76" selection-end-column="0" />
           <folding />
         </state>
@@ -838,7 +824,7 @@
     </entry>
     <entry file="file:///usr/include/c++/5/functional">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="439">
+        <state relative-caret-position="53006">
           <caret line="1559" column="0" lean-forward="false" selection-start-line="1559" selection-start-column="0" selection-end-line="1559" selection-end-column="0" />
           <folding />
         </state>
@@ -846,7 +832,7 @@
     </entry>
     <entry file="file:///usr/include/c++/5/thread">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="575">
+        <state relative-caret-position="4930">
           <caret line="145" column="0" lean-forward="false" selection-start-line="145" selection-start-column="0" selection-end-line="145" selection-end-column="0" />
           <folding />
         </state>
@@ -854,7 +840,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Algorithms/AStar.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="579">
+        <state relative-caret-position="1224">
           <caret line="36" column="51" lean-forward="false" selection-start-line="36" selection-start-column="51" selection-end-line="36" selection-end-column="51" />
           <folding />
         </state>
@@ -862,23 +848,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Algorithms/Dijkstra.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="384">
+        <state relative-caret-position="2244">
           <caret line="66" column="6" lean-forward="false" selection-start-line="66" selection-start-column="6" selection-end-line="68" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Algorithms/AStar.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="894">
-          <caret line="45" column="0" lean-forward="false" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file:///usr/include/c++/5/bits/stl_set.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="371">
+        <state relative-caret-position="13158">
           <caret line="387" column="0" lean-forward="false" selection-start-line="387" selection-start-column="0" selection-end-line="387" selection-end-column="0" />
           <folding />
         </state>
@@ -886,7 +864,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Graph/Node.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="371">
+        <state relative-caret-position="2006">
           <caret line="59" column="1" lean-forward="false" selection-start-line="59" selection-start-column="1" selection-end-line="59" selection-end-column="1" />
           <folding />
         </state>
@@ -902,23 +880,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Graph/ANode.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="680">
+        <state relative-caret-position="1088">
           <caret line="32" column="44" lean-forward="false" selection-start-line="32" selection-start-column="44" selection-end-line="32" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/UI/UI.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="72" column="4" lean-forward="false" selection-start-line="72" selection-start-column="4" selection-end-line="72" selection-end-column="4" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Graph/graphTesting.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
+        <state relative-caret-position="2890">
           <caret line="85" column="8" lean-forward="false" selection-start-line="85" selection-start-column="8" selection-end-line="85" selection-end-column="8" />
           <folding />
         </state>
@@ -926,7 +896,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Graph/DNode.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="371">
+        <state relative-caret-position="1530">
           <caret line="45" column="0" lean-forward="false" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
           <folding />
         </state>
@@ -934,7 +904,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Algorithms/DijkstraBiDir.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
+        <state relative-caret-position="4182">
           <caret line="123" column="16" lean-forward="false" selection-start-line="123" selection-start-column="16" selection-end-line="123" selection-end-column="16" />
           <folding />
         </state>
@@ -956,10 +926,36 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/UI/UI.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="782">
+          <caret line="38" column="35" lean-forward="false" selection-start-line="38" selection-start-column="35" selection-end-line="38" selection-end-column="35" />
+          <folding>
+            <element signature="e#80#110#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/UI/UI.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="514">
+          <caret line="303" column="0" lean-forward="true" selection-start-line="303" selection-start-column="0" selection-end-line="303" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Algorithms/AStar.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="816">
+          <caret line="45" column="0" lean-forward="false" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Algorithms/AStarBiDir.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="544">
-          <caret line="16" column="14" lean-forward="false" selection-start-line="16" selection-start-column="14" selection-end-line="16" selection-end-column="14" />
+        <state relative-caret-position="1088">
+          <caret line="155" column="35" lean-forward="true" selection-start-line="155" selection-start-column="35" selection-end-line="155" selection-end-column="35" />
           <folding>
             <element signature="e#45#68#0" expanded="true" />
           </folding>
