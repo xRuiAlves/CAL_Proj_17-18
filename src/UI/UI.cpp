@@ -9,6 +9,7 @@
 #include "../Algorithms/TSPNearestNeighbor.h"
 #include "../Algorithms/Two_Opt.h"
 #include "../Algorithms/AStarBiDir.h"
+#include "../Algorithms/StringSearch.h"
 #include <ctime>
 #include <chrono>
 #include <sstream>
@@ -20,6 +21,7 @@ using namespace std::chrono;
 void generateTestGraph(Graph & g);
 
 static Graph loadedGraph;
+static vector<string> loadedNodes;
 
 void closeFunction(){
     cout << "\n\nPress ENTER to continue.";
@@ -142,6 +144,7 @@ void loadBigMap(){
 void loadMap(const string &a, const string &b, const string &c){
     try {
         loadedGraph = parseMap(a, b, c);
+        loadNodes();
         cout << "\nSucessfuly loaded map with " << loadedGraph.getNumNodes() << " node and "
              << loadedGraph.getNumEdges() << " edges." << endl;
     }
@@ -151,7 +154,7 @@ void loadMap(const string &a, const string &b, const string &c){
 }
 
 void menuSearch(){
-    u_int startNodeId = getNodeInput("Please insert the id for the starting location");
+    u_int startNodeId = getNodeInput("Please insert the starting location");
     BFS bfs = BFS(loadedGraph);
     DFS dfs = DFS(loadedGraph);
     milliseconds t0 = duration_cast< milliseconds >(system_clock::now().time_since_epoch());
@@ -183,8 +186,8 @@ void menuDijkstraAStar(){
 }
 
 void calcDijkstra(){
-    u_int startNodeId = getNodeInput("Please insert the id for the starting location");
-    u_int finishNodeId = getNodeInput("Please insert the id for the finish location");
+    u_int startNodeId = getNodeInput("Please insert the starting location");
+    u_int finishNodeId = getNodeInput("Please insert the finish location");
 
     Dijkstra d = Dijkstra(loadedGraph);
     DFS dfs = DFS(loadedGraph);
@@ -210,8 +213,8 @@ void calcDijkstra(){
 }
 
 void calcAStar(){
-    u_int startNodeId = getNodeInput("Please insert the id for the starting location");
-    u_int finishNodeId = getNodeInput("Please insert the id for the finish location");
+    u_int startNodeId = getNodeInput("Please insert the starting location");
+    u_int finishNodeId = getNodeInput("Please insert the finish location");
 
     AStar a = AStar(loadedGraph);
     DFS dfs = DFS(loadedGraph);
@@ -239,8 +242,8 @@ void calcAStar(){
 }
 
 void calcAStarBiDir(){
-    u_int startNodeId = getNodeInput("Please insert the id for the starting location");
-    u_int finishNodeId = getNodeInput("Please insert the id for the finish location");
+    u_int startNodeId = getNodeInput("Please insert the starting location");
+    u_int finishNodeId = getNodeInput("Please insert the finish location");
 
     GraphViewer *gv = nullptr;
 
@@ -270,8 +273,8 @@ void calcAStarBiDir(){
 }
 
 void calcDijkstraAndAStar(){
-    u_int startNodeId = getNodeInput("Please insert the id for the starting location");
-    u_int finishNodeId = getNodeInput("Please insert the id for the finish location");
+    u_int startNodeId = getNodeInput("Please insert the starting location");
+    u_int finishNodeId = getNodeInput("Please insert the finish location");
 
     Dijkstra d = Dijkstra(loadedGraph);
     AStar a = AStar(loadedGraph);
@@ -311,8 +314,8 @@ void calcDijkstraAndAStar(){
 }
 
 void calcAStarAndAStarBiDir(){
-    u_int startNodeId = getNodeInput("Please insert the id for the starting location");
-    u_int finishNodeId = getNodeInput("Please insert the id for the finish location");
+    u_int startNodeId = getNodeInput("Please insert the starting location");
+    u_int finishNodeId = getNodeInput("Please insert the finish location");
 
     AStar a(loadedGraph);
     AStarBiDir abd(loadedGraph);
@@ -354,8 +357,8 @@ void calcAStarAndAStarBiDir(){
 }
 
 void menuDijBiDir(){
-    u_int startNodeId = getNodeInput("Please insert the id for the starting location");
-    u_int finishNodeId = getNodeInput("Please insert the id for the finish location");
+    u_int startNodeId = getNodeInput("Please insert the starting location");
+    u_int finishNodeId = getNodeInput("Please insert the finish location");
     showNodes();
 
     vector<u_int> pois = getPOIsFromUser();
@@ -396,8 +399,8 @@ void menuDijBiDir(){
 }
 
 void calcDijBiDirNoPOIs(){
-    u_int startNodeId = getNodeInput("Please insert the id for the starting location");
-    u_int finishNodeId = getNodeInput("Please insert the id for the finish location");
+    u_int startNodeId = getNodeInput("Please insert the starting location");
+    u_int finishNodeId = getNodeInput("Please insert the finish location");
 
     NodeHashTable chosenPOIs;
 
@@ -436,8 +439,8 @@ void menuTSP(){
 }
 
 void menuTSPNearestNeighbor(){
-    u_int startNodeId = getNodeInput("Please insert the id for the starting location");
-    u_int finishNodeId = getNodeInput("Please insert the id for the finish location");
+    u_int startNodeId = getNodeInput("Please insert the starting location");
+    u_int finishNodeId = getNodeInput("Please insert the finish location");
     showNodes();
 
     vector<u_int> chosenPOIs = getPOIsFromUser();
@@ -472,8 +475,8 @@ void menuTSPNearestNeighbor(){
 }
 
 void menuTSP2opt() {
-    u_int startNodeId = getNodeInput("Please insert the id for the starting location");
-    u_int finishNodeId = getNodeInput("Please insert the id for the finish location");
+    u_int startNodeId = getNodeInput("Please insert the starting location");
+    u_int finishNodeId = getNodeInput("Please insert the finish location");
 
     cout << "\nPlease enter a positive number of iterations for 2-opt" << endl;
     u_int numIterations = getUnsignedIntInputInclusive(1, 20, "Please enter a positive number of iterations.");
@@ -556,26 +559,48 @@ vector<u_int> getPOIsFromUser() {
 u_int getNodeInput(string msg){
     showNodes();
     cout << endl << msg << endl;
+    cout << "You may now search for the node you want:" << endl;
+    string stringInput;
+    getline(cin, stringInput);
+    for(int i = 0; i < loadedNodes.size(); i++){
+        if(StringSearch::searchString(loadedNodes.at(i), stringInput) > 0){
+            cout << loadedNodes.at(i) << endl;
+        }
+    }
+    cout << endl << msg << endl << "Please insert now the id for the location:" << endl;
+    return getUnsignedIntInputInclusive(0, loadedGraph.getNumNodes() - 1, "Invalid id. Please insert an id for a location presented on screen");;
+}
+
+u_int getNodeInputId(string msg){ //TODO DELETE IF NOT NECESSARY
+    showNodes();
+    cout << endl << msg << endl;
     return getUnsignedIntInputInclusive(0, loadedGraph.getNumNodes() - 1, "Invalid id. Please insert an id for a location presented on screen");
 }
 
-void showNodes(){
+void loadNodes(){
     Node currNode;
     for(size_t i = 0; i < loadedGraph.getNumNodes(); i++){
         currNode = loadedGraph.getNodeById(i);
+        string currNodeName;
         if(currNode.getNumEdges() == 0) {
-            cout << currNode.getId() << " - " << "[Isolated]" << endl;
+            currNodeName = to_string(currNode.getId()) + " - [Isolated]";
         }else{
-            cout << currNode.getId() << " - ";
+            currNodeName = to_string(currNode.getId()) + " - ";
             for(int j = 0; j < currNode.getNumEdges(); j++){
                 Edge e = currNode.getEdges().at(j);
-                cout << (e.name == "" ? "Unknown" : e.name);
+                currNodeName += (e.name == "" ? "Unknown" : e.name);
                 if(j != currNode.getNumEdges() - 1){
-                    cout << ", ";
+                    currNodeName += ", ";
                 }
             }
-            cout << endl;
         }
+        loadedNodes.push_back(currNodeName);
+    }
+}
+
+void showNodes(){
+    for(string s : loadedNodes){
+        cout << s << endl;
     }
 }
 
@@ -713,8 +738,8 @@ GraphViewer* showShortestPath(vector<u_int> path) {
 }
 
 void dfsTwoNodes() {
-    u_int startNodeId = getNodeInput("Please insert the id for the starting location");
-    u_int finishNodeId = getNodeInput("Please insert the id for the finish location");
+    u_int startNodeId = getNodeInput("Please insert the starting location");
+    u_int finishNodeId = getNodeInput("Please insert the finish location");
 
     DFS dfs = DFS(loadedGraph);
 

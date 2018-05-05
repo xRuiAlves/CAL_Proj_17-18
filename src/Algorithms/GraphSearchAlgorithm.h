@@ -25,7 +25,6 @@ public:
 
     // Verifies if it is possible to reach node with id 'finishNodeId' from node with id 'startNodeId'
     virtual bool isPathPossible(u_int startNodeId, u_int finishNodeId) = 0;
-
 };
 
 

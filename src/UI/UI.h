@@ -54,6 +54,8 @@ void showRegion(NodeHashTable dfsResult, u_int startNodeId);
 void closeViewer(GraphViewer* gv);
 
 void showNodes();
+void loadNodes();
+u_int getNodeInputId(string msg);
 u_int getNodeInput(string msg);
 vector<u_int> getPOIsFromUser();
 
