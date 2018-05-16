@@ -56,6 +56,8 @@ void closeViewer(GraphViewer* gv);
 void showNodes();
 void loadNodes();
 u_int getNodeInputId(string msg);
+u_int getNodeInputExactSearch(string msg);
+u_int getNodeInputApproximateSearch(string msg);
 u_int getNodeInput(string msg);
 vector<u_int> getPOIsFromUser();
 

@@ -9,9 +9,11 @@
 #include <vector>
 
 namespace StringSearch {
-    int kmpMatcher(std::string text, std::string pattern);
-    std::vector<int> getPrefixFunc(std::string p);
-    int searchString(std::string text, std::string pattern);
+    bool hasKmpMatch(const std::string & text, const std::string & pattern);
+    std::vector<int> getPrefixFunc(const std::string & p);
+    int stringDistance(const std::string & text, const std::string & pattern);
+    std::vector<int> getStringsByDistance(const std::vector<std::string> & text, const std::string & pattern);
+    int getBestDistance(const std::string & text, const std::string & pattern);
 };
 
 
