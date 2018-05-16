@@ -56,14 +56,16 @@ vector<int> StringSearch::getPrefixFunc(const string & p){
 vector<int> StringSearch::getStringsByDistance(const vector<string> & text, const string & pattern) {
     multimap<int, int> distances;
     for (int i = 0; i < text.size(); i++) {
-        distances.insert(
-                pair<int, int>(getBestDistance(text[i], pattern), i));
+        distances.insert(pair<int, int>(getBestDistance(text[i], pattern), i));
     }
 
     vector<int> results;
     int resultSize = 15;
     for (multimap<int, int>::iterator it = distances.begin(); it != distances.end() && resultSize > 0; it++) {
         results.push_back(it->second);
+        if(it->first > 0.3*pattern.length()){
+            break;
+        }
         resultSize--;
     }
 

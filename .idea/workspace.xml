@@ -12,12 +12,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d2e51ff3-6721-45dc-8f82-389c9263ef6a" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/src/Algorithms/StringSearch.cpp" afterPath="$PROJECT_DIR$/src/Algorithms/StringSearch.cpp" />
-      <change beforePath="$PROJECT_DIR$/src/Algorithms/StringSearch.h" afterPath="$PROJECT_DIR$/src/Algorithms/StringSearch.h" />
-      <change beforePath="$PROJECT_DIR$/src/UI/UI.cpp" afterPath="$PROJECT_DIR$/src/UI/UI.cpp" />
-      <change beforePath="$PROJECT_DIR$/src/UI/UI.h" afterPath="$PROJECT_DIR$/src/UI/UI.h" />
-      <change beforePath="$PROJECT_DIR$/stringCompare.cpp" afterPath="" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -40,11 +35,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="StringSearch.cpp" pinned="false" current-in-tab="true">
+      <file leaf-file-name="StringSearch.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Algorithms/StringSearch.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="797">
-              <caret line="63" column="24" lean-forward="true" selection-start-line="63" selection-start-column="24" selection-end-line="63" selection-end-column="24" />
+            <state relative-caret-position="965">
+              <caret line="72" column="0" lean-forward="false" selection-start-line="72" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
               <folding>
                 <element signature="e#45#70#0" expanded="true" />
               </folding>
@@ -72,11 +67,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UI.cpp" pinned="false" current-in-tab="false">
+      <file leaf-file-name="UI.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/UI/UI.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="341">
-              <caret line="567" column="44" lean-forward="false" selection-start-line="567" selection-start-column="44" selection-end-line="567" selection-end-column="44" />
+            <state relative-caret-position="845">
+              <caret line="585" column="30" lean-forward="true" selection-start-line="585" selection-start-column="30" selection-end-line="585" selection-end-column="30" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -223,8 +218,8 @@
         <option value="$PROJECT_DIR$/src/Algorithms/stringCompare.cpp" />
         <option value="$PROJECT_DIR$/src/UI/UI.h" />
         <option value="$PROJECT_DIR$/src/UI/UI.cpp" />
-        <option value="$PROJECT_DIR$/src/Algorithms/StringSearch.cpp" />
         <option value="$PROJECT_DIR$/src/Algorithms/StringSearch.h" />
+        <option value="$PROJECT_DIR$/src/Algorithms/StringSearch.cpp" />
       </list>
     </option>
   </component>
@@ -390,12 +385,12 @@
       <workItem from="1525360627543" duration="230000" />
       <workItem from="1525529114725" duration="7209000" />
       <workItem from="1525720468703" duration="450000" />
-      <workItem from="1526475799679" duration="8886000" />
+      <workItem from="1526475799679" duration="9868000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="230168000" />
+    <option name="totallyTimeSpent" value="231150000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="540" y="27" width="3840" height="2102" extended-state="7" />
@@ -445,8 +440,13 @@
           <line>82</line>
           <option name="timeStamp" value="144" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/Algorithms/StringSearch.cpp</url>
+          <line>71</line>
+          <option name="timeStamp" value="153" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="150" />
+      <option name="time" value="154" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="CMakeRunConfiguration">
@@ -457,6 +457,7 @@
         <watch expression="topDNode.getTotalWeight()" />
         <watch expression="loadedGraph" />
         <watch expression="idMap" />
+        <watch expression="results" />
       </configuration>
     </watches-manager>
   </component>
@@ -773,16 +774,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/UI/UI.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="341">
-          <caret line="567" column="44" lean-forward="false" selection-start-line="567" selection-start-column="44" selection-end-line="567" selection-end-column="44" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/UI/UI.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="966">
@@ -803,10 +794,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Algorithms/StringSearch.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="797">
-          <caret line="63" column="24" lean-forward="true" selection-start-line="63" selection-start-column="24" selection-end-line="63" selection-end-column="24" />
+        <state relative-caret-position="965">
+          <caret line="72" column="0" lean-forward="false" selection-start-line="72" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
           <folding>
             <element signature="e#45#70#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/UI/UI.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="845">
+          <caret line="585" column="30" lean-forward="true" selection-start-line="585" selection-start-column="30" selection-end-line="585" selection-end-column="30" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
           </folding>
         </state>
       </provider>
