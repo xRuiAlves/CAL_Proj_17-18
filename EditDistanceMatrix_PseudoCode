@@ -1,0 +1,18 @@
+editDistanceMatrix(P,T):
+    distance <- {{}}
+
+    for i ← 0 to length(P) do:
+        distance[i,0] ← i
+    for j ← 0 to length(T) do:
+        distance[0,j] ← j
+        
+    for i ← 1 to length(P) do:
+        for j ← 1 to length(T) do:
+            if (P[i] == T[j]) then:
+                distance[i][j] ← distance[i-1][j-1]
+            else:
+                distance[i][j] ← 1 + min(distance[i-1][j-1],
+                                         distance[i-1][j],
+                                         distance[i,j-1])
+    
+    return distance[length(P)][length(T)]
