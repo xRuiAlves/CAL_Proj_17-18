@@ -1,0 +1,20 @@
+editDistanceOptimized(P,T):
+    distance <- {}
+    
+    for j ← 0 to length(T) do:
+        distance[j] ← j
+    
+    for i ← 1 to length(P) do:
+        oldValue ← distance[0]
+        distance[0] ← i
+        for j ← 1 to length(T) do:
+            if (P[i] == T[j]) then:
+                newValue ← oldValue
+            else:
+                newValue ← 1 + min(old,
+                                   distance[j],
+                                   distance[j-1])
+            old ← distance[j]
+            distance[j] ← newValue
+            
+    return distance[length(T)]
