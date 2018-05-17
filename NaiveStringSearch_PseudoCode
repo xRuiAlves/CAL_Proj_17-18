@@ -1,0 +1,17 @@
+patternMatcher(P,T):       // Assumindo |P| < |T| !!
+    matchesCounter ← 0
+    numIters ← length(T) - length(P)
+    
+    for i ← 0 to numIters do:
+        matchFound ← true
+        for j ← 0 to length(P) do:
+            if (p[j] != t[j+i]) then:
+                matchFound ← false
+                break
+            else:
+                continue
+        
+        if matchFound then:
+            matchesCounter ← matchesCounter + 1
+
+    return matchesCounter
