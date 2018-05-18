@@ -13,7 +13,7 @@ namespace StringSearch {
     std::vector<int> getPrefixFunc(const std::string & p);
     int stringDistance(const std::string & text, const std::string & pattern);
     std::vector<int> getStringsByDistance(const std::vector<std::string> & text, const std::string & pattern);
-    int getBestDistance(const std::string & text, const std::string & pattern);
+    int getBestDistance(std::string text, std::string pattern);
 };
 
 

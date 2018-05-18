@@ -62,24 +62,35 @@ vector<int> StringSearch::getStringsByDistance(const vector<string> & text, cons
     vector<int> results;
     int resultSize = 15;
     for (multimap<int, int>::iterator it = distances.begin(); it != distances.end() && resultSize > 0; it++) {
-        results.push_back(it->second);
-        if(it->first > 0.3*pattern.length()){
+        if(it->first == INT32_MAX){
             break;
         }
+        results.push_back(it->second);
         resultSize--;
     }
 
     return results;
 }
 
-int StringSearch::getBestDistance(const string & text, const string & pattern){
+int StringSearch::getBestDistance(string text, string pattern){
     int minDistance = INT32_MAX;
+
+    if(pattern.length() > text.length()) {
+        string tmp = text;
+        text = pattern;
+        pattern = tmp;
+    }
+
     for(int i = 0; i < text.length()-pattern.length();i++){
         string newText = text.substr(i, pattern.length());
         int currDistance = stringDistance(newText, pattern);
         if(currDistance < minDistance){
             minDistance = currDistance;
         }
+    }
+
+    if(minDistance > 0.3*pattern.length()){
+        minDistance = INT32_MAX;
     }
     return minDistance;
 }

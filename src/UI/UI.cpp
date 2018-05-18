@@ -572,8 +572,15 @@ u_int getNodeInput(string msg){
 
 u_int getNodeInputApproximateSearch(string msg){
     string stringInput;
-    getline(cin, stringInput);
-    vector<int> foundNodes = StringSearch::getStringsByDistance(loadedNodes,stringInput);
+    vector<int> foundNodes = {};
+    while(true) {
+        getline(cin, stringInput);
+        foundNodes = StringSearch::getStringsByDistance(loadedNodes, stringInput);
+        if(!foundNodes.empty()){
+            break;
+        }
+        cout << "No results found. Please try another search" << endl;
+    }
     for(int i = 0; i < foundNodes.size(); i++){
             cout << loadedNodes.at(foundNodes.at(i)) << endl;
     }
@@ -583,19 +590,21 @@ u_int getNodeInputApproximateSearch(string msg){
 
 u_int getNodeInputExactSearch(string msg){
     string stringInput;
-    getline(cin, stringInput);
-    for(int i = 0; i < loadedNodes.size(); i++){
-        if(StringSearch::hasKmpMatch(loadedNodes.at(i), stringInput)){
-            cout << loadedNodes.at(i) << endl;
+    bool foundResults = false;
+    while(true) {
+        getline(cin, stringInput);
+        for (int i = 0; i < loadedNodes.size(); i++) {
+            if (StringSearch::hasKmpMatch(loadedNodes.at(i), stringInput)) {
+                cout << loadedNodes.at(i) << endl;
+                foundResults = true;
+            }
         }
+        if(foundResults){
+            break;
+        }
+        cout << "No results found. Please try another search" << endl;
     }
     cout << endl << msg << endl << "Please insert now the id for the location:" << endl;
-    return getUnsignedIntInputInclusive(0, loadedGraph.getNumNodes() - 1, "Invalid id. Please insert an id for a location presented on screen");
-}
-
-u_int getNodeInputId(string msg){ //TODO DELETE IF NOT NECESSARY
-    showNodes();
-    cout << endl << msg << endl;
     return getUnsignedIntInputInclusive(0, loadedGraph.getNumNodes() - 1, "Invalid id. Please insert an id for a location presented on screen");
 }
 
