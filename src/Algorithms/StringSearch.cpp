@@ -55,8 +55,20 @@ vector<int> StringSearch::getPrefixFunc(const string & p){
 
 vector<int> StringSearch::getStringsByDistance(const vector<string> & text, const string & pattern) {
     multimap<int, int> distances;
-    for (int i = 0; i < text.size(); i++) {
-        distances.insert(pair<int, int>(getBestDistance(text[i], pattern), i));
+
+    vector<string> keywords = StringSearch::split(pattern, ' ');
+
+    for (int i = 0; i < text.size(); i++) { // for each source string, find its distance value to the pattern (aka keywords)
+        int totalDistance = 0;
+        for (int k = 0; k < keywords.size(); k++) {
+            int currDistance = getBestDistance(text[i], keywords[k]);
+
+            totalDistance += (currDistance == INT32_MAX) ? keywords[k].length() : currDistance;
+        }
+        if (totalDistance == pattern.length() - (keywords.size() - 1)){ // If totalDistance is equal to the amount of characters of the keywords -> means there is no match
+            totalDistance = INT32_MAX;
+        }
+        distances.insert(pair<int, int>(totalDistance, i));
     }
 
     vector<int> results;
@@ -123,4 +135,20 @@ int StringSearch::stringDistance(const string & text, const string & pattern) {
 
     // The last distance vector element contains the distance value between 'text' and 'pattern'
     return distance[text.size()-1];
+}
+
+vector<string> StringSearch::split(string source, char character){
+    vector<string> result;
+    string nextString = "";
+
+    for(int i = 0; i < source.length(); i++){
+        if(source[i] == character){
+            result.push_back(nextString);
+            nextString = "";
+            continue;
+        }
+        nextString += source[i];
+    }
+    result.push_back(nextString);
+    return result;
 }

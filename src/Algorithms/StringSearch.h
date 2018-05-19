@@ -14,7 +14,8 @@ namespace StringSearch {
     int stringDistance(const std::string & text, const std::string & pattern);
     std::vector<int> getStringsByDistance(const std::vector<std::string> & text, const std::string & pattern);
     int getBestDistance(std::string text, std::string pattern);
-};
+    std::vector<std::string> split(std::string source, char character);
+    };
 
 
 #endif //CAL_STRINGSEARCH_H

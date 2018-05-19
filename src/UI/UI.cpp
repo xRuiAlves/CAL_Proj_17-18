@@ -22,6 +22,7 @@ void generateTestGraph(Graph & g);
 
 static Graph loadedGraph;
 static vector<string> loadedNodes;
+static const vector<string> defaultDistricts = {"Mercúrio", "Vénus", "Terra", "Marte", "Júpiter", "Saturno", "Urano", "Neptuno", "Plutão"};
 
 void closeFunction(){
     cout << "\n\nPress ENTER to continue.";
@@ -74,7 +75,7 @@ u_int getUnsignedIntInputInclusive(u_int lowerBound, u_int higherBound, string e
 
 int main(){
     loadedGraph = Graph();
-
+    srand (time(NULL));
     for (u_int i=0 ; i<loadedGraph.getNumNodes() ; i++) {
         Node n = loadedGraph.getNodeById(i);
         cout << i << endl;
@@ -625,6 +626,7 @@ void loadNodes(){
                 }
             }
         }
+        currNodeName += " -> " + defaultDistricts.at(rand() % defaultDistricts.size());
         loadedNodes.push_back(currNodeName);
     }
 }
