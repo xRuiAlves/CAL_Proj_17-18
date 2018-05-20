@@ -86,14 +86,13 @@ vector<int> StringSearch::getStringsByDistance(const vector<string> & text, cons
 
 int StringSearch::getBestDistance(string text, string pattern){
     int minDistance = INT32_MAX;
-
     if(pattern.length() > text.length()) {
         string tmp = text;
         text = pattern;
         pattern = tmp;
     }
 
-    for(int i = 0; i < text.length()-pattern.length();i++){
+    for(int i = 0; i < text.length()-pattern.length()+1; i++){
         string newText = text.substr(i, pattern.length());
         int currDistance = stringDistance(newText, pattern);
         if(currDistance < minDistance){
