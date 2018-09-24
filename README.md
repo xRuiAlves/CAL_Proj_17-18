@@ -4,7 +4,7 @@ Project developed in the CAL course unit
 ### Project Infos
 * **Date:** 2nd Year, 2nd Semester, 2017/2018
 * **Topic:** Projects proposed in classes
-* **Course:** Conceção e Análise de Algorítmos (CGRA) | Algorithms Analysis and Conception
+* **Course:** Conceção e Análise de Algorítmos (CAL) | Algorithms Analysis and Conception
 * **Course Link:** https://sigarra.up.pt/feup/pt/UCURR_GERAL.FICHA_UC_VIEW?pv_ocorrencia_id=399894
 * **In Collaboration With:** Henrique Lima ([reeckset](https://github.com/reeckset)) | Ângelo Teixeira ([imnotteixeira](https://github.com/imnotteixeira))
 
